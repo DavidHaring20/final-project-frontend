@@ -1,0 +1,44 @@
+#! /bin/sh
+
+set -eu;
+set -o errexit;
+set -o pipefail;
+
+VARKEY=nxdua8hejapwk6lpu8jwx6gybyhctgbwtxe2dr56uu0olcxcvv;
+
+echo -e "Building \e[32m$BUILD\e[39m build.";
+echo "BUILD=$BUILD" >> /.env.build;
+echo "VARKEY=$VARKEY" >> /.env.build;
+
+apk add --no-cache npm;
+
+wget https://github.com/herloct/url-parser/releases/download/1.0.0-beta4/url-parser-Linux-x86_64 \
+  -O /usr/bin/url-parser;
+chmod +x /usr/bin/url-parser;
+
+# @see https://gitlab.com/gitlab-org/gitlab-runner/-/issues/25804
+# @see https://gitlab.com/gitlab-org/gitlab-ui/-/issues/614
+# @see https://github.com/vuejs/vue-cli/issues/1453
+(cd /code && npm install);
+
+if [[ "$BUILD" == "release" ]]; then
+
+  rm -f /code/.env.local;
+  echo "BASE_URL=x://${VARKEY}_BASE_HOST/${VARKEY}_BASE_PATH" >> /code/.env.local;
+  echo "API_URL=${VARKEY}_API_URL" >> /code/.env.local;
+
+  . /code/.env.local;
+
+  (cd /code && npm run build);
+
+  cp -r /code/dist /app;
+
+  rm -fR /code;
+  rm -fR /root/.npm;
+
+  apk add --no-cache caddy;
+  apk del --no-cache npm;
+
+fi;
+
+chmod +x /start;

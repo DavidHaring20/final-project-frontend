@@ -1,0 +1,75 @@
+
+image: docker:19.03.5
+
+variables:
+  DOCKER_HOST: 'tcp://docker:2376'
+  DOCKER_TLS_CERTDIR: '/certs'
+  DOCKER_DRIVER: overlay
+
+services:
+  - docker:19.03.5-dind
+
+before_script:
+  - set -eu
+  - set -o errexit
+  - set -o pipefail
+
+stages:
+  - build
+  - publish
+
+build:debug:
+  stage: build
+  needs: []
+  script:
+    - mkdir ./artifacts
+    - docker build
+        --force-rm
+        --no-cache
+        --network host
+        --build-arg BUILD=debug
+        --tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}-debug"
+        .
+    - docker save "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}-debug" > "./artifacts/${CI_COMMIT_REF_NAME}-debug.tar"
+  artifacts:
+    paths:
+      - ./artifacts
+
+build:release:
+  stage: build
+  needs: []
+  only:
+    - master
+    - /^[0-9]+\.[0-9]+(\.[0-9]+)?$/
+  script:
+    - mkdir ./artifacts
+    - docker build
+        --force-rm
+        --no-cache
+        --network host
+        --build-arg BUILD=release
+        --tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
+        .
+    - docker save "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}" > "./artifacts/${CI_COMMIT_REF_NAME}.tar"
+  artifacts:
+    paths:
+      - ./artifacts
+
+publish:
+  stage: publish
+  needs:
+    - job: build:debug
+      artifacts: true
+    - job: build:release
+      artifacts: true
+  only:
+    - master
+    - /^[0-9]+\.[0-9]+(\.[0-9]+)?$/
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - docker load --input "./artifacts/${CI_COMMIT_REF_NAME}-debug.tar"
+    - docker load --input "./artifacts/${CI_COMMIT_REF_NAME}.tar"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}-debug"
+    - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"

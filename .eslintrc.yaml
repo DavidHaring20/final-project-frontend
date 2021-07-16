@@ -1,0 +1,18 @@
+
+root: true
+env:
+  node: true
+extends:
+  - plugin:vue/essential
+  - eslint:recommended
+parserOptions:
+  parser: babel-eslint
+noInlineConfig: true
+rules:
+  no-constant-condition: off
+  no-empty: off
+  no-extra-semi: off
+  no-unreachable: off
+  no-unused-vars: off
+  vue/no-unused-vars: off
+  vue/require-component-is: off

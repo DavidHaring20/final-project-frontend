@@ -1,0 +1,7 @@
+
+:80{$BASE_PATH_EES}, :80{$BASE_PATH_IES}* {
+  uri strip_prefix {$BASE_PATH_EES}
+  root * /app
+  try_files {path} {path}/ /index.html
+  file_server
+}

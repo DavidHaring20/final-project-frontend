@@ -1,0 +1,51 @@
+$primary: #206DB3;
+
+@import '~@coreui/coreui/scss/_functions';
+@import '~@coreui/coreui/scss/_variables';
+// @import '~@coreui/coreui/scss/variables/colors';
+
+@import "~@coreui/coreui/scss/coreui";
+
+@each $color, $value in $theme-colors {
+  .fill-#{$color} { fill: $value; }
+  .stroke-#{$color} { stroke: $value; }
+}
+.fill-muted { fill: $gray-600; }
+.fill-white { fill: #FFFFFF; }
+.stroke-muted { stroke: $gray-600 }
+.stroke-white { stroke: #FFFFFF; }
+
+.c-sidebar {
+  .c-sidebar-brand {
+    //background: #1C1C1C;
+  }
+}
+
+.slide-fade-container {
+  position: relative;
+}
+
+.slide-fade-enter, .slide-fade-leave-active {
+  opacity: 0 !important;
+  transform: translateY(0.5em) !important;
+}
+
+.slide-fade-enter-active {
+  position: relative !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 0.2s ease-in, transform 0.2s ease-out;
+}
+
+.slide-fade-leave-active {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-in;
+}
