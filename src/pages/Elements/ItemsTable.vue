@@ -15,7 +15,12 @@
               </tr>
             </thead>
             <tbody  v-for="item in items" v-bind:key="item.id" class="bg-white divide-y divide-gray-200">
-              <Item :item="item" :selectedLanguage="selectedLanguage" @edit="emitEdit($event)" @delete="emitDelete($event.id, $event.title)"/>
+              <Item
+                :item="item"
+                :selectedLanguage="selectedLanguage"
+                @edit="emitEdit($event)"
+                @delete="emitDelete($event.id, $event.title)"
+              />
             </tbody>
           </table>
         </div>

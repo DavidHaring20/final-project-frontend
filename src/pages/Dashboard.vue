@@ -29,7 +29,15 @@
           <!-- Category iteration -->
           <div v-for="category in restaurant.categories" v-bind:key="category.id">
             <div class="px-10 py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
-              <Category :category="category" :selectedLanguage="selectedLanguage" @new="showNewModal($event.parent, $event.title)" @edit="showEditModal($event.editData, $event.translation, $event.title)" @delete="alert($event)" @itemEdit="editItem($event)"/>
+              <Category
+                :category="category"
+                :selectedLanguage="selectedLanguage"
+                @new="showNewModal($event.parent, $event.title)"
+                @edit="showEditModal($event.editData, $event.translation, $event.title)"
+                @delete="alert($event)"
+                @itemEdit="editItem($event)"
+                class="w-full"
+              />
             </div>
           </div>
         </div>

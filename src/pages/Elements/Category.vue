@@ -12,7 +12,15 @@
     </div>
       <div v-for="subcategory in category.subcategories" v-bind:key="subcategory.id">
         <div class="px-10 py-3 text-left text-xs font-medium text-gray-500 capitalize tracking-wider flex">
-          <Subcategory :subcategory="subcategory" :selectedLanguage="selectedLanguage" @add="emitShowAddModal($event.item, $event.title)" @edit="emitShowEditModal($event.subcategory, $event.translations, $event.title)" @delete="emitDelete($event.id, $event.title)" @itemEdit="emitItemEdit($event)"/>
+          <Subcategory
+            :subcategory="subcategory"
+            :selectedLanguage="selectedLanguage"
+            @add="emitShowAddModal($event.item, $event.title)"
+            @edit="emitShowEditModal($event.subcategory, $event.translations, $event.title)"
+            @delete="emitDelete($event.id, $event.title)"
+            @itemEdit="emitItemEdit($event)"
+            class="w-full"
+          />
         </div>
       </div>
   </div>

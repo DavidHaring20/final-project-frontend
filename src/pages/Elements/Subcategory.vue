@@ -8,7 +8,13 @@
       <!-- Delete subcategory -->
       <Button btnText="Delete" @clicked="emitDelete(subcategory.id, 'subcategory')" class="px-2" />
     </div>
-      <ItemsTable :items="subcategory.items" :selectedLanguage="selectedLanguage" @edit="emitItemEdit($event)" @delete="emitDelete($event.id, $event.title)"/>
+      <ItemsTable
+        :items="subcategory.items"
+        :selectedLanguage="selectedLanguage"
+        @edit="emitItemEdit($event)"
+        @delete="emitDelete($event.id, $event.title)"
+        class="w-full"
+      />
       <!-- New item -->
       <Button btnText="Add" @clicked="emitAddItem(subcategory, 'Item')" class="px-8"/>
   </div>
