@@ -138,14 +138,14 @@ export default {
 
   data() {
     return {
-      //For adding new categories and subcategories:
+      //For adding/editing new categories and subcategories:
       translations: this.toEdit ? Object.keys(this.toEdit).map(key => ({[this.toEdit[key].language_code] : this.toEdit[key].name})).reduce(function(result, item) {
         var key = Object.keys(item)[0];
         result[key] = item[key];
         return result;
       }, {}) : {},
 
-      //For adding a new item:
+      //For adding/editing a new item:
       title_translations: this.toEdit ? Object.keys(this.toEdit).map(key => ({[this.toEdit[key].language_code] : this.toEdit[key].title})).reduce(function(result, item) {
         var key = Object.keys(item)[0];
         result[key] = item[key];
@@ -182,6 +182,7 @@ export default {
   },
 
   methods: {
+    //CATEGORY
     createNewCategory() {
       this.$service.API.post('/restaurant/' + this.parent.id + '/category', {
         translations: JSON.stringify(this.translations),
@@ -204,6 +205,7 @@ export default {
       });
     },
 
+    //SUBCATEGORY
     createNewSubcategory() {
       this.$service.API.post('/category/' + this.parent.id + '/subcategory', {
         translations: JSON.stringify(this.translations),
@@ -228,6 +230,7 @@ export default {
       });
     },
 
+    //ITEM
     createNewItem() {
       this.$service.API.post('/subcategory/' + this.parent.id + '/item' ,{
         titles: JSON.stringify(this.title_translations),

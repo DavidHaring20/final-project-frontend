@@ -7,12 +7,12 @@
 
     <!-- Modal for editing subcategories and categories -->
     <Modal :scrollable="true" height="auto" name="edit">
-      <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" :toEdit="toEdit"/> <!-- @clicked close -->
+      <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" :toEdit="toEdit" @clicked="hideModal()"/>
     </Modal>
 
     <!--Modal for editing items -->
     <Modal :scrollable="true" height="auto" name="editItem">
-      <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" :toEdit="toEdit" :toEditAmounts="toEditAmounts"/>
+      <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" :toEdit="toEdit" :toEditAmounts="toEditAmounts" @clicked="hideModal()"/>
     </Modal>
 
     <div class="background">
@@ -122,6 +122,8 @@ export default {
 
     hideModal () {
       this.$modal.hide('new');
+      this.$modal.hide('edit');
+      this.$modal.hide('editItem');
 
       this.selected = null;
       this.parent = null;
