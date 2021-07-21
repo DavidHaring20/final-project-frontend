@@ -23,6 +23,7 @@
             name="input"
             v-model="translations[translation.language_code]"
             placeholder="Title" />
+          <!-- <div class="error" v-if="!$v.translations[translation.language_code].required">Field is required</div> -->
         </div>
 
           <div class="px-6 flex flex-wrap">
@@ -30,7 +31,7 @@
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? updateSubcategory() : updateCategory(), close()">Update</button>
           </div>
           <div v-else class="p-1.5">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? createNewSubcategory() : createNewCategory(), close()">Save</button>
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? createNewSubcategory() : createNewCategory()">Save</button>
           </div>
           <div class="p-1.5">
             <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="close()">Cancel</button>
@@ -115,6 +116,7 @@
 <script>
 import LanguageDropdown from './LanguageDropdown.vue'
 import AmountsDropdown from './AmountsDropdown.vue'
+import { required, minLength, between } from 'vuelidate/lib/validators'
 
 export default {
   props: {
@@ -178,10 +180,14 @@ export default {
       amount: this.toEditAmounts ? this.toEditAmounts.length : 1,
       selectedLanguage: 'hr',
       selectedAmountIndex: 1,
+      newSubcategory: {},
     }
   },
 
   methods: {
+     test: function() {
+      this.$emit('test-emit', true);
+    },
     //CATEGORY
     createNewCategory() {
       this.$service.API.post('/restaurant/' + this.parent.id + '/category', {
@@ -207,16 +213,23 @@ export default {
 
     //SUBCATEGORY
     createNewSubcategory() {
+      // var newSubcategory;
+
+      let self = this;
+
       this.$service.API.post('/category/' + this.parent.id + '/subcategory', {
         translations: JSON.stringify(this.translations),
       })
       .then(response => {
-        console.log(response.body);
+        self.newSubcategory = response.data.data.subcategory;
+        console.log('New subcategory: ', self.newSubcategory);
+        self.$nextTick(() => {
+          self.$emit('subcategory-create', self.newSubcategory);
+        });
+
       }, response => {
         console.log(response);
       });
-
-      this.$emit('subcategory', {translations: this.translations, parentId: this.parent.id});
     },
 
     updateSubcategory() {
@@ -271,5 +284,11 @@ export default {
       this.$emit('clicked');
     },
   },
+  // validations: {
+  //   translations: {
+  //     required,
+  //     minLength: minLength(4)
+  //   },
+  // }
 }
 </script>
