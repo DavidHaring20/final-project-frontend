@@ -243,6 +243,8 @@ export default {
 
     //ITEM
     createNewItem() {
+      let self = this;
+
       this.$service.API.post('/subcategory/' + this.parent.id + '/item' ,{
         titles: JSON.stringify(this.title_translations),
         descriptions: JSON.stringify(this.description_translations),
@@ -250,6 +252,9 @@ export default {
         amount_descriptions: this.amount_desc
       })
       .then(response => {
+        self.$nextTick(() => {
+          self.$emit('item-create', {item: response.data.data.item, categoryId: response.data.data.categoryId});
+        });
       });
     },
 
