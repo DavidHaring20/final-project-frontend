@@ -1,14 +1,27 @@
 <template>
   <div>
     <div v-if="restaurant">
+      <!-- {{test}} -->
       <!-- Modal for adding new items, categories and subcategories -->
-      <Modal :scrollable="true" height="auto" name="new">
-        <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" @category-create="addNewCategory" @subcategory-create="addNewSubcategory" @item-create="addNewItem($event.item, $event.categoryId)"/>
+      <Modal :width="500" :scrollable="true" height="auto" name="new">
+        <Form
+          :title="modalTitle"
+          :parent="parent"
+          :languages="restaurant.languages"
+          @category-create="addNewCategory"
+          @subcategory-create="addNewSubcategory"
+          @item-create="addNewItem($event.item, $event.categoryId)"
+        />
       </Modal>
 
       <!-- Modal for editing subcategories and categories -->
       <Modal :scrollable="true" height="auto" name="edit">
-        <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" :toEdit="toEdit" @clicked="hideModal()"/>
+        <Form
+          :title="modalTitle"
+          :parent="parent"
+          :languages="restaurant.languages"
+          :toEdit="toEdit"
+          @subcategory-update="updateSubcategory"/>
       </Modal>
 
       <!--Modal for editing items -->
@@ -73,6 +86,7 @@ export default {
       toEdit: null,
       toEditAmounts: null,
       modalTitle: String,
+      test: null
     }
   },
 
@@ -157,6 +171,11 @@ export default {
 
     addNewSubcategory(subcategory) {
       this.restaurant.categories[subcategory.category_id - 1].subcategories.push(subcategory);
+      this.hideModal();
+    },
+
+    updateSubcategory(subcategory) {
+      this.restaurant.categories[subcategory.category_id - 1].subcategories = this.restaurant.categories[subcategory.category_id - 1].subcategories.map(obj => (obj.id == subcategory.id ? subcategory : obj));
       this.hideModal();
     },
 

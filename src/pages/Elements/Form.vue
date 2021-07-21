@@ -15,7 +15,7 @@
     <div v-if="title == 'Subcategory' || title == 'Category'" class="flex-1">
       <div  class="px-6 py-4">
         <div v-for="translation in parent.translations" v-bind:key="translation.id" class="mb-4 flex-row">
-          <label class="block text-gray-700 text-xs font-bold mb-2 uppercase" for="input">
+          <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
             {{translation.language_code}}
           </label>
           <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -26,16 +26,16 @@
           <!-- <div class="error" v-if="!$v.translations[translation.language_code].required">Field is required</div> -->
         </div>
 
-          <div class="px-6 flex flex-wrap">
-          <div v-if="toEdit" class="p-1.5">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? updateSubcategory() : updateCategory(), close()">Update</button>
-          </div>
-          <div v-else class="p-1.5">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? createNewSubcategory() : createNewCategory()">Save</button>
-          </div>
-          <div class="p-1.5">
-            <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="close()">Cancel</button>
-          </div>
+          <div class="px-6 flex flex-wrap justify-end">
+            <div v-if="toEdit" class="p-1.5">
+              <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? updateSubcategory() : updateCategory()">Update</button>
+            </div>
+            <div v-else class="p-1.5">
+              <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="title == 'Subcategory' ? createNewSubcategory() : createNewCategory()">Save</button>
+            </div>
+            <div class="p-1.5">
+              <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="close()">Cancel</button>
+            </div>
         </div>
       </div>
     </div>
@@ -43,7 +43,9 @@
     <!-- ITEMS -->
 
     <div v-else-if="title == 'Item'">
-      <LanguageDropdown :languages="languages" @clicked="selectedLanguage = $event"/>
+      <div class="justify-start">
+        <LanguageDropdown :languages="languages" @clicked="selectedLanguage = $event" class="py-2"/>
+      </div>
       <label class="block py-1 text-gray-700 text-xs mb-2 uppercase" for="input">
         Title ({{ selectedLanguage }})
       </label>
@@ -64,20 +66,24 @@
 
       <br><br><hr>
       <div class="flex">
-        <div class="px-10 py-3 text-left text-m font-medium text-gray-500 uppercase tracking-wider">
+        <div class="px-10 py-3 text-left text-m font-medium text-gray-500 uppercase tracking-wider flex">
           Amount {{selectedAmountIndex}}
-          <button @click="addAmount()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-          </button>
-          <button @click="removeAmount()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
-            </svg>
-          </button>
+          <div class="pl-2">
+            <button @click="addAmount()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+          </div>
+          <div class="pl-1">
+            <button @click="removeAmount()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
+              </svg>
+            </button>
+          </div>
         </div>
-          <AmountsDropdown :amount="amount" @clicked="selectedAmountIndex = $event"/>
+          <AmountsDropdown :amount="amount" @clicked="selectedAmountIndex = $event" class="py-2"/>
       </div>
       <div>
         <label class="block py-1 text-gray-700 text-xs mb-2 uppercase" for="input">
@@ -98,7 +104,7 @@
           />
         </div>
       </div>
-      <div class="px-6 flex flex-wrap">
+      <div class="px-6 flex flex-wrap justify-end pt-5">
         <div v-if="toEdit" class="p-1.5">
           <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="updateItem(), close()">Update</button>
         </div>
@@ -231,11 +237,15 @@ export default {
     },
 
     updateSubcategory() {
+      let self = this;
+
       this.$service.API.post('/subcategory/update/' + this.parent.id, {
         translations: JSON.stringify(this.translations),
       })
       .then(response => {
-        console.log(response.body);
+        self.$nextTick(() => {
+          self.$emit('subcategory-update', response.data.data.subcategory);
+        });
       }, response => {
         console.log(response);
       });

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block text-right px-6">
+  <div class="relative inline-block text-right">
     <div>
       <button
         type="button"
