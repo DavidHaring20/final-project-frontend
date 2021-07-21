@@ -3,7 +3,7 @@
     <div v-if="restaurant">
       <!-- Modal for adding new items, categories and subcategories -->
       <Modal :scrollable="true" height="auto" name="new">
-        <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" @subcategory-create="addNewSubcategory"/>
+        <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" @category-create="addNewCategory" @subcategory-create="addNewSubcategory"/>
       </Modal>
 
       <!-- Modal for editing subcategories and categories -->
@@ -148,6 +148,11 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+
+    addNewCategory(category) {
+      this.restaurant.categories.push(category);
+      this.hideModal();
     },
 
     addNewSubcategory(subcategory) {

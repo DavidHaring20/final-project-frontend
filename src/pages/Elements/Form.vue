@@ -180,7 +180,6 @@ export default {
       amount: this.toEditAmounts ? this.toEditAmounts.length : 1,
       selectedLanguage: 'hr',
       selectedAmountIndex: 1,
-      newSubcategory: {},
     }
   },
 
@@ -190,11 +189,15 @@ export default {
     },
     //CATEGORY
     createNewCategory() {
+      let self = this;
+
       this.$service.API.post('/restaurant/' + this.parent.id + '/category', {
         translations: JSON.stringify(this.translations),
       })
       .then(response => {
-        console.log(response.body);
+        self.$nextTick(() => {
+          self.$emit('category-create', response.data.data.category);
+        });
       }, response => {
         console.log(response);
       });
@@ -213,20 +216,15 @@ export default {
 
     //SUBCATEGORY
     createNewSubcategory() {
-      // var newSubcategory;
-
       let self = this;
 
       this.$service.API.post('/category/' + this.parent.id + '/subcategory', {
         translations: JSON.stringify(this.translations),
       })
       .then(response => {
-        self.newSubcategory = response.data.data.subcategory;
-        console.log('New subcategory: ', self.newSubcategory);
         self.$nextTick(() => {
-          self.$emit('subcategory-create', self.newSubcategory);
+          self.$emit('subcategory-create', response.data.data.subcategory);
         });
-
       }, response => {
         console.log(response);
       });
