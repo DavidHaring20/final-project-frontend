@@ -210,12 +210,16 @@ export default {
     },
 
     updateCategory() {
+      let self = this;
+
       this.$service.API.post('/category/update/' + this.parent.id, {
         translations: JSON.stringify(this.translations),
       })
       .then(response => {
-        console.log(response.body);
-      }, response => {
+          self.$nextTick(() => {
+            self.$emit('category-update', response.data.data.category);
+          });
+        }, response => {
         console.log(response);
       });
     },

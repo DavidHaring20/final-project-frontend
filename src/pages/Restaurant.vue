@@ -21,7 +21,9 @@
           :parent="parent"
           :languages="restaurant.languages"
           :toEdit="toEdit"
-          @subcategory-update="updateSubcategory"/>
+          @category-update="updateCategory"
+          @subcategory-update="updateSubcategory"
+        />
       </Modal>
 
       <!--Modal for editing items -->
@@ -166,6 +168,11 @@ export default {
 
     addNewCategory(category) {
       this.restaurant.categories.push(category);
+      this.hideModal();
+    },
+
+    updateCategory(category) {
+      this.restaurant.categories = this.restaurant.categories.map(obj => (obj.id == category.id ? category : obj));
       this.hideModal();
     },
 
