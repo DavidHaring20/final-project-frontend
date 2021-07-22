@@ -1,7 +1,6 @@
 <template>
   <div>
     <div v-if="restaurant">
-      <!-- {{test}} -->
       <!-- Modal for adding new items, categories and subcategories -->
       <Modal :width="500" :scrollable="true" height="auto" name="new">
         <Form
@@ -26,9 +25,24 @@
         />
       </Modal>
 
+      <Modal :width="500" :scrollable="true" height="auto" name="newItem">
+        <ItemForm
+          :title="modalTitle"
+          :parent="parent"
+          :languages="restaurant.languages"
+        />
+      </Modal>
+
       <!--Modal for editing items -->
       <Modal :scrollable="true" height="auto" name="editItem">
-        <Form :title="modalTitle" :parent="parent" :languages="restaurant.languages" :toEdit="toEdit" :toEditAmounts="toEditAmounts" @clicked="hideModal()"/>
+        <ItemForm
+          :title="modalTitle"
+          :parent="parent"
+          :languages="restaurant.languages"
+          :toEdit="toEdit"
+          :toEditAmounts="toEditAmounts"
+          @clicked="hideModal()"
+        />
       </Modal>
 
       <div class="background">
@@ -69,6 +83,7 @@ import Category from './Elements/Category.vue'
 import LanguageDropdown from './Elements/LanguageDropdown.vue'
 import Button from './Elements/Button.vue'
 import Form from './Elements/Form.vue'
+import ItemForm from './Elements/ItemForm.vue'
 
 export default {
   path: '/restaurant',
@@ -77,7 +92,8 @@ export default {
     Category,
     LanguageDropdown,
     Button,
-    Form
+    Form,
+    ItemForm
   },
 
   data() {
@@ -88,7 +104,6 @@ export default {
       toEdit: null,
       toEditAmounts: null,
       modalTitle: String,
-      test: null
     }
   },
 
@@ -127,7 +142,12 @@ export default {
       this.parent = parent;
       this.modalTitle = title;
 
-      this.$modal.show('new');
+      if(title == 'Item') {
+        this.$modal.show('newItem');
+      }
+      else {
+        this.$modal.show('new');
+      }
     },
 
     //Edit Category, Subcategory
