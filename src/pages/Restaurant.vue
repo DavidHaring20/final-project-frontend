@@ -1,74 +1,59 @@
 <template>
   <div>
     <div v-if="restaurant">
-      <!-- Modal for adding new items, categories and subcategories -->
-      <Modal :width="500" :scrollable="true" height="auto" name="new">
-        <Form
-          :title="modalTitle"
-          :parent="parent"
-          :languages="restaurant.languages"
-          @category-create="addNewCategory"
-          @subcategory-create="addNewSubcategory"
-          @item-create="addNewItem($event.item, $event.categoryId)"
-        />
-      </Modal>
-
-      <!-- Modal for editing subcategories and categories -->
-      <Modal :scrollable="true" height="auto" name="edit">
-        <Form
-          :title="modalTitle"
-          :parent="parent"
-          :languages="restaurant.languages"
-          :toEdit="toEdit"
-          @category-update="updateCategory"
-          @subcategory-update="updateSubcategory"
-        />
-      </Modal>
-
-      <Modal :width="500" :scrollable="true" height="auto" name="newItem">
-        <ItemForm
-          :title="modalTitle"
-          :parent="parent"
-          :languages="restaurant.languages"
-        />
-      </Modal>
-
-      <!--Modal for editing items -->
-      <Modal :scrollable="true" height="auto" name="editItem">
-        <ItemForm
-          :title="modalTitle"
-          :parent="parent"
-          :languages="restaurant.languages"
-          :toEdit="toEdit"
-          :toEditAmounts="toEditAmounts"
-          @clicked="hideModal()"
-        />
-      </Modal>
-
-      <div class="background">
-        <!-- Restaurant name and add new category -->
-        <div class="px-6 py-3 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
-          {{ restaurant.translations[languageIndex(restaurant.translations)].name }}
-          <Button btnText="Add" @clicked="showNewModal(restaurant, 'Category')"/>
+      <!-- {{thing}} -->
+      <Modal :width="500" :scrollable="true" height="auto" name="modal">
+        <div v-if="modalTitle == 'Category'">
+          <CategoryForm
+            :title="modalTitle"
+            :parent="parentId"
+            :languages="restaurant.languages"
+            :translations="clean_thing_translations"
+            @category-create="addNewCategory"
+            @category-update="updateCategory"
+            @close="hideModal"
+          />
         </div>
 
-        <div class="px-20">
-          <div class="bg-white shadow-lg sm:rounded-3xl sm:p-10">
-            <!-- Language selectiond - Dropdown menu -->
-            <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
-            <!-- Category iteration -->
-            <div v-for="category in restaurant.categories" v-bind:key="category.id">
-              <div class="px-10 py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
-                <Category
-                  :category="category"
-                  :selectedLanguage="selectedLanguage"
-                  @new="showNewModal($event.parent, $event.title)"
-                  @edit="showEditModal($event.editData, $event.translation, $event.title)"
-                  @delete="alert($event)"
-                  @itemEdit="editItem($event)"
-                  class="w-full"
-                />
-              </div>
+        <div v-else-if="modalTitle == 'Subcategory'">
+          <SubcategoryForm
+             :title="modalTitle"
+            :parent="parentId"
+            :languages="restaurant.languages"
+            :translations="clean_thing_translations"
+            @subcategory-create="addNewSubcategory"
+            @subcategory-update="updateSubcategory"
+            @close="hideModal"
+          />
+        </div>
+
+        <div v-else-if="modalTitle == 'Item'">
+          <ItemForm />
+        </div>
+      </Modal>
+
+      <!-- Restaurant name and add new category -->
+      <div class="px-6 py-3 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
+        {{ restaurant.translations[0].name }}
+        <Button btnText="Add" @clicked="showNewModal(restaurant.id, 'Category', undefined)"/>
+      </div>
+
+      <div class="px-20">
+        <div class="bg-white sm:p-10">
+          <!-- Language selectiond - Dropdown menu -->
+          <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
+          <!-- Category iteration -->
+          <div v-for="category in restaurant.categories" v-bind:key="category.id">
+            <div class="px-10 py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
+              <Category
+                :category="category"
+                :selectedLanguage="selectedLanguage"
+                @new="showNewModal($event.parent, $event.title, undefined)"
+                @edit="showNewModal($event.parentId, $event.title, $event.thing)"
+                @delete="alert($event)"
+                @itemEdit="editItem($event)"
+                class="w-full"
+              />
             </div>
           </div>
         </div>
@@ -82,7 +67,8 @@ import '../assets/styles/app.css'
 import Category from './Elements/Category.vue'
 import LanguageDropdown from './Elements/LanguageDropdown.vue'
 import Button from './Elements/Button.vue'
-import Form from './Elements/Form.vue'
+import CategoryForm from './Elements/CategoryForm.vue'
+import SubcategoryForm from './Elements/SubcategoryForm.vue'
 import ItemForm from './Elements/ItemForm.vue'
 
 export default {
@@ -92,7 +78,8 @@ export default {
     Category,
     LanguageDropdown,
     Button,
-    Form,
+    CategoryForm,
+    SubcategoryForm,
     ItemForm
   },
 
@@ -100,15 +87,27 @@ export default {
     return  {
       restaurant: null,
       selectedLanguage: "hr",
-      parent: null,
-      toEdit: null,
-      toEditAmounts: null,
+      parentId: null,
+      thing: null,
       modalTitle: String,
     }
   },
 
   mounted() {
     this.getData();
+  },
+
+  computed: {
+    clean_thing_translations: function() {
+      let return_val = {};
+      let thing = this.thing;
+      this.restaurant.languages.forEach((language) =>
+        {
+          return_val[language.language_code] = thing ? thing.translations[this.languageIndex(thing.translations, language.language_code)].name : '';
+        }
+      );
+      return return_val;
+    }
   },
 
   methods: {
@@ -122,52 +121,34 @@ export default {
         });
     },
 
-    languageIndex(translations) {
-      const index = translations.findIndex(item => item.language_code === this.selectedLanguage);
+    languageIndex(translations, language) {
+      const index = translations.findIndex(item => item.language_code === language);
       return index;
     },
 
     //Edit Item
     editItem(item) {
       this.toEdit = item.translations;
-      this.toEditAmounts = item.amounts;
       this.parent = item;
       this.modalTitle = "Item";
 
       this.$modal.show('editItem');
     },
 
-    //New Category, Subcategory, Item
-    showNewModal (parent, title) {
-      this.parent = parent;
+    showNewModal (parentId, title, thing) {
+      this.parentId = parentId;
       this.modalTitle = title;
+      this.thing = thing;
 
-      if(title == 'Item') {
-        this.$modal.show('newItem');
-      }
-      else {
-        this.$modal.show('new');
-      }
-    },
-
-    //Edit Category, Subcategory
-    showEditModal (editData, translation, title) {
-      this.parent = editData;
-      this.toEdit = translation;
-      this.modalTitle = title;
-
-      this.$modal.show('edit');
+      this.$modal.show('modal');
     },
 
     hideModal () {
-      this.$modal.hide('new');
-      this.$modal.hide('edit');
-      this.$modal.hide('editItem');
+      this.$modal.hide('modal');
 
-      this.selected = null;
-      this.parent = null;
+      this.thing = null;
+      this.parentId = null;
       this.modalTitle = null;
-      this.toEdit = null;
     },
 
     //Delete Category, Subcategory, Item
@@ -214,9 +195,3 @@ export default {
 }
 </script>
 
-<style scoped>
-.background {
-  /* background-color: #ffffff;
-  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e3e3e3' fill-opacity='0.4'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); */
-}
-</style>

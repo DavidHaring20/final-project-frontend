@@ -4,7 +4,7 @@
       {{ subcategory.translations[languageIndex(subcategory.translations)].name }}
 
       <!-- Edit subcategory -->
-      <Button btnText="Edit" @clicked="emitShowEditModal(subcategory, subcategory.translations, 'Subcategory')" class="text-center pl-2"/>
+      <Button btnText="Edit" @clicked="emitShowEditModal(subcategory.id, 'Subcategory', subcategory)" class="text-center pl-2"/>
       <!-- Delete subcategory -->
       <Button btnText="Delete" @clicked="emitDelete(subcategory.id, 'subcategory')" class="px-2" />
     </div>
@@ -16,7 +16,7 @@
         class="w-full"
       />
       <!-- New item -->
-      <Button btnText="Add" @clicked="emitAddItem(subcategory, 'Item')" class="px-8"/>
+      <Button btnText="New Item" @clicked="emitAddItem(subcategory, 'Item')" class="px-8"/>
   </div>
 </template>
 
@@ -43,16 +43,16 @@ export default {
       return index;
     },
 
-    emitAddItem(item, title) {
-      this.$emit('add', {item, title});
+    emitAddItem(subcategory, title) {
+      this.$emit('add', {subcategory, title});
     },
 
     emitItemEdit(item) {
       this.$emit('itemEdit', item);
     },
 
-    emitShowEditModal(subcategory, translations, title) {
-      this.$emit('edit', {subcategory, translations, title});
+    emitShowEditModal(parentId, title, thing) {
+      this.$emit('edit', {parentId, title, thing});
     },
 
     emitDelete(id, title) {

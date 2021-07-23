@@ -4,9 +4,9 @@
       {{ category.translations[languageIndex(category.translations)].name }}
 
       <!-- New subcategory -->
-      <Button btnText="Add" @clicked="emitShowAddModal(category, 'Subcategory')" class="px-2"/>
+      <Button btnText="Add" @clicked="emitShowAddModal(category.id, 'Subcategory')" class="px-2"/>
       <!-- Edit category -->
-      <Button btnText="Edit" @clicked="emitShowEditModal(category, category.translations, 'Category')" class="pr-2"/>
+      <Button btnText="Edit" @clicked="emitShowEditModal(category.id, 'Category', category)" class="pr-2"/>
       <!-- Delete category -->
       <Button btnText="Delete" @clicked="emitDelete(category.id, 'category')"/>
     </div>
@@ -16,7 +16,7 @@
             :subcategory="subcategory"
             :selectedLanguage="selectedLanguage"
             @add="emitShowAddModal($event.item, $event.title)"
-            @edit="emitShowEditModal($event.subcategory, $event.translations, $event.title)"
+            @edit="emitShowEditModal($event.parentId, $event.title, $event.thing)"
             @delete="emitDelete($event.id, $event.title)"
             @itemEdit="emitItemEdit($event)"
             class="w-full"
@@ -53,8 +53,8 @@ export default {
       this.$emit('new', {parent, title});
     },
 
-    emitShowEditModal(editData, translation, title) {
-      this.$emit('edit', {editData, translation, title})
+    emitShowEditModal(parentId, title, thing) {
+      this.$emit('edit', {parentId, title, thing})
     },
 
     emitDelete(id, title) {
