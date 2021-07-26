@@ -34,6 +34,7 @@
               :titles="itemTitles"
               :descriptions="itemDescriptions"
               :amounts="itemAmounts"
+              :type="type"
               @item-create="addNewItem($event.item, $event.categoryId)"
             />
           </div>
@@ -58,7 +59,7 @@
                 @new="showNewModal($event.parent, $event.title, undefined)"
                 @edit="showNewModal($event.parentId, $event.title, $event.thing)"
                 @delete="alert($event)"
-                @itemEdit="shotItemModal($event.parentId, $event.title, $event.thing)"
+                @itemEdit="showItemModal($event.parentId, $event.title, $event.thing)"
                 class="w-full"
               />
             </div>
@@ -98,6 +99,7 @@ export default {
       thing: null,
       item: null,
       modalTitle: String,
+      type: String,
     }
   },
 
@@ -152,7 +154,7 @@ export default {
             }
 
             this.restaurant.languages.forEach((language) => {
-              returnVal[amount.id].translations[language.language_code] = this.amountDescriptionExists(amount.translations, language.language_code) ? amount.translations[this.languageIndex(amount.translations, language.language_code)].description : '';
+              returnVal[amount.id].translations[language.language_code] = this.amountDescriptionExists(amount.translations, language.language_code);
             });
           }
         );
@@ -190,17 +192,29 @@ export default {
     },
 
     amountDescriptionExists(translations, languageCode) {
-      let index = null;
-      index = translations.findIndex(item => item.language_code === languageCode);
+      let description = '';
 
-      return index ? false : true;
+      translations.forEach(translation => {
+        if(translation.language_code == languageCode) {
+          description = translation.description;
+        }
+      });
+
+      return description;
     },
 
     //Item
-    shotItemModal(parentId, title, thing) {
+    showItemModal(parentId, title, thing) {
       this.parentId = parentId;
       this.modalTitle = title;
       this.item = thing;
+
+      if(this.item) {
+        this.type = "Edit";
+      }
+      else {
+        this.type = "New"
+      }
 
       this.$modal.show('modal');
     },
