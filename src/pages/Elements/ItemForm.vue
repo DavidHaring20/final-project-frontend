@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import AmountsDropdown from './AmountsDropdown.vue'
 import TranslationInput from '../../components/TranslationInput.vue'
 
 export default {
@@ -89,7 +88,6 @@ props: {
   },
 
   components: {
-    // AmountsDropdown,
     TranslationInput
   },
 
@@ -115,7 +113,7 @@ props: {
       })
       .then(response => {
         self.$nextTick(() => {
-          // self.$emit('item-create', {item: response.data.data.item, categoryId: response.data.data.categoryId});
+          self.$emit('item-create', {item: response.data.data.item, categoryId: response.data.data.categoryId});
         });
       });
     },

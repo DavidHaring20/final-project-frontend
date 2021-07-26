@@ -1,47 +1,44 @@
 <template>
   <div>
     <div v-if="restaurant">
-      <!-- {{item}}
-      {{itemDescriptions}}
-      {{itemTitles}} -->
-      <!-- {{item}} -->
-      <!-- Amount descriptions: {{itemAmounts}} -->
-    <Modal :width="500" :scrollable="true" height="auto" name="modal">
-        <div v-if="modalTitle == 'Category'">
-          <CategoryForm
-            :title="modalTitle"
-            :parent="parentId"
-            :languages="restaurant.languages"
-            :translations="thingTranslations"
-            @category-create="addNewCategory"
-            @category-update="updateCategory"
-            @close="hideModal"
-          />
-        </div>
+      <Modal :width="500" :scrollable="true" height="auto" name="modal">
+          <div v-if="modalTitle == 'Category'">
+            <CategoryForm
+              :title="modalTitle"
+              :parent="parentId"
+              :languages="restaurant.languages"
+              :translations="thingTranslations"
+              @category-create="addNewCategory"
+              @category-update="updateCategory"
+              @close="hideModal"
+            />
+          </div>
 
-        <div v-else-if="modalTitle == 'Subcategory'">
-          <SubcategoryForm
-            :title="modalTitle"
-            :parent="parentId"
-            :languages="restaurant.languages"
-            :translations="thingTranslations"
-            @subcategory-create="addNewSubcategory"
-            @subcategory-update="updateSubcategory"
-            @close="hideModal"
-          />
-        </div>
+          <div v-else-if="modalTitle == 'Subcategory'">
+            <SubcategoryForm
+              :title="modalTitle"
+              :parent="parentId"
+              :languages="restaurant.languages"
+              :translations="thingTranslations"
+              @subcategory-create="addNewSubcategory"
+              @subcategory-update="updateSubcategory"
+              @close="hideModal"
+            />
+          </div>
 
-        <div v-else-if="modalTitle == 'Item'">
-          <ItemForm
-            :title="modalTitle"
-            :parent="parentId"
-            :languages="restaurant.languages"
-            :titles="itemTitles"
-            :descriptions="itemDescriptions"
-            :amounts="itemAmounts"
-          />
-        </div>
-      </Modal>
+          <div v-else-if="modalTitle == 'Item'">
+            <ItemForm
+              :title="modalTitle"
+              :parent="parentId"
+              :languages="restaurant.languages"
+              :titles="itemTitles"
+              :descriptions="itemDescriptions"
+              :amounts="itemAmounts"
+              @item-create="addNewItem($event.item, $event.categoryId)"
+            />
+          </div>
+        </Modal>
+
       <!-- Restaurant name and add new category -->
       <div class="px-6 py-3 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
         {{ restaurant.translations[0].name }}
