@@ -29,7 +29,7 @@
       </div>
     </td>
     <td>
-      <Button btnText="Edit" @clicked="emitEdit(item)" class="text-center"/>
+      <Button btnText="Edit" @clicked="emitEdit(item.id, 'Item', item)" class="text-center"/>
     </td>
     <td>
       <Button btnText="Delete" @clicked="emitDelete(item.id, 'item')" class="text-center"/>
@@ -55,8 +55,8 @@ export default {
       return index;
     },
 
-    emitEdit(item) {
-      this.$emit('edit', item);
+    emitEdit(parent, title, thing) {
+      this.$emit('edit', {parent, title, thing});
     },
 
     emitDelete(id, title) {

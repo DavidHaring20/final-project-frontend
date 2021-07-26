@@ -11,12 +11,12 @@
       <ItemsTable
         :items="subcategory.items"
         :selectedLanguage="selectedLanguage"
-        @edit="emitItemEdit($event)"
+        @edit="emitItemEdit($event.parent, $event.title, $event.thing)"
         @delete="emitDelete($event.id, $event.title)"
         class="w-full"
       />
       <!-- New item -->
-      <Button btnText="New Item" @clicked="emitAddItem(subcategory, 'Item')" class="px-8"/>
+      <Button btnText="New Item" @clicked="emitItemEdit(subcategory.id, 'Item', '')" class="px-8"/>
   </div>
 </template>
 
@@ -47,8 +47,8 @@ export default {
       this.$emit('add', {subcategory, title});
     },
 
-    emitItemEdit(item) {
-      this.$emit('itemEdit', item);
+    emitItemEdit(parentId, title, thing) {
+      this.$emit('itemEdit', {parentId, title, thing});
     },
 
     emitShowEditModal(parentId, title, thing) {

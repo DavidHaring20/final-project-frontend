@@ -18,7 +18,7 @@
             @add="emitShowAddModal($event.item, $event.title)"
             @edit="emitShowEditModal($event.parentId, $event.title, $event.thing)"
             @delete="emitDelete($event.id, $event.title)"
-            @itemEdit="emitItemEdit($event)"
+            @itemEdit="emitItemEdit($event.parentId, $event.title, $event.thing)"
             class="w-full"
           />
         </div>
@@ -61,9 +61,9 @@ export default {
       this.$emit('delete', {id, title})
     },
 
-    emitItemEdit(item) {
-      this.$emit('itemEdit', item);
-    }
+    emitItemEdit(parentId, title, thing) {
+      this.$emit('itemEdit', {parentId, title, thing});
+    },
   }
 }
 </script>

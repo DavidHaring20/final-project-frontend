@@ -1,14 +1,18 @@
 <template>
   <div>
     <div v-if="restaurant">
-      <!-- {{thing}} -->
-      <Modal :width="500" :scrollable="true" height="auto" name="modal">
+      <!-- {{item}}
+      {{itemDescriptions}}
+      {{itemTitles}} -->
+      <!-- {{item}} -->
+      <!-- Amount descriptions: {{itemAmounts}} -->
+    <Modal :width="500" :scrollable="true" height="auto" name="modal">
         <div v-if="modalTitle == 'Category'">
           <CategoryForm
             :title="modalTitle"
             :parent="parentId"
             :languages="restaurant.languages"
-            :translations="clean_thing_translations"
+            :translations="thingTranslations"
             @category-create="addNewCategory"
             @category-update="updateCategory"
             @close="hideModal"
@@ -17,10 +21,10 @@
 
         <div v-else-if="modalTitle == 'Subcategory'">
           <SubcategoryForm
-             :title="modalTitle"
+            :title="modalTitle"
             :parent="parentId"
             :languages="restaurant.languages"
-            :translations="clean_thing_translations"
+            :translations="thingTranslations"
             @subcategory-create="addNewSubcategory"
             @subcategory-update="updateSubcategory"
             @close="hideModal"
@@ -28,10 +32,16 @@
         </div>
 
         <div v-else-if="modalTitle == 'Item'">
-          <ItemForm />
+          <ItemForm
+            :title="modalTitle"
+            :parent="parentId"
+            :languages="restaurant.languages"
+            :titles="itemTitles"
+            :descriptions="itemDescriptions"
+            :amounts="itemAmounts"
+          />
         </div>
       </Modal>
-
       <!-- Restaurant name and add new category -->
       <div class="px-6 py-3 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
         {{ restaurant.translations[0].name }}
@@ -51,7 +61,7 @@
                 @new="showNewModal($event.parent, $event.title, undefined)"
                 @edit="showNewModal($event.parentId, $event.title, $event.thing)"
                 @delete="alert($event)"
-                @itemEdit="editItem($event)"
+                @itemEdit="shotItemModal($event.parentId, $event.title, $event.thing)"
                 class="w-full"
               />
             </div>
@@ -89,6 +99,7 @@ export default {
       selectedLanguage: "hr",
       parentId: null,
       thing: null,
+      item: null,
       modalTitle: String,
     }
   },
@@ -98,15 +109,70 @@ export default {
   },
 
   computed: {
-    clean_thing_translations: function() {
-      let return_val = {};
+    thingTranslations: function() {
+      let returnVal = {};
       let thing = this.thing;
       this.restaurant.languages.forEach((language) =>
         {
-          return_val[language.language_code] = thing ? thing.translations[this.languageIndex(thing.translations, language.language_code)].name : '';
+          returnVal[language.language_code] = thing ? thing.translations[this.languageIndex(thing.translations, language.language_code)].name : '';
         }
       );
-      return return_val;
+      return returnVal;
+    },
+
+    itemTitles: function() {
+      let returnVal = {};
+      let item = this.item;
+      this.restaurant.languages.forEach((language) =>
+        {
+          returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].title : '';
+        }
+      );
+      return returnVal;
+    },
+
+    itemDescriptions: function() {
+      let returnVal = {};
+      let item = this.item;
+      this.restaurant.languages.forEach((language) =>
+        {
+          returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].description : '';
+        }
+      );
+      return returnVal;
+    },
+
+    itemAmounts: function() {
+      let returnVal = {};
+      let item = this.item;
+
+      if(item) {
+        item.amounts.forEach((amount) =>
+          {
+            returnVal[amount.id] = {
+              'price' : amount.price,
+              'translations' : {}
+            }
+
+            this.restaurant.languages.forEach((language) => {
+              returnVal[amount.id].translations[language.language_code] = this.amountDescriptionExists(amount.translations, language.language_code) ? amount.translations[this.languageIndex(amount.translations, language.language_code)].description : '';
+            });
+          }
+        );
+      }
+
+      else {
+        returnVal[1] = {
+              'price' : '',
+              'translations' : {}
+            }
+
+        this.restaurant.languages.forEach((language) => {
+          returnVal[1].translations[language.language_code] = '';
+        });
+      }
+
+      return returnVal;
     }
   },
 
@@ -126,13 +192,20 @@ export default {
       return index;
     },
 
-    //Edit Item
-    editItem(item) {
-      this.toEdit = item.translations;
-      this.parent = item;
-      this.modalTitle = "Item";
+    amountDescriptionExists(translations, languageCode) {
+      let index = null;
+      index = translations.findIndex(item => item.language_code === languageCode);
 
-      this.$modal.show('editItem');
+      return index ? false : true;
+    },
+
+    //Item
+    shotItemModal(parentId, title, thing) {
+      this.parentId = parentId;
+      this.modalTitle = title;
+      this.item = thing;
+
+      this.$modal.show('modal');
     },
 
     showNewModal (parentId, title, thing) {

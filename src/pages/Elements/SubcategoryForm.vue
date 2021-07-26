@@ -8,7 +8,7 @@
     </div>
 
     <div  class="px-6 py-4 flex-1">
-      <TranslationInput v-for="language in languages" :language="language" :key="language.language_code" :translations="translations" class="mb-4 flex-row" />
+      <TranslationInput v-for="language in languages" :languageCode="language.language_code" :key="language.language_code" :translations="translations" class="mb-4 flex-row" />
         <div class="px-6 flex flex-wrap justify-end">
           <div v-if="translations['hr']" class="p-1.5">
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="updateSubcategory()">Update</button>
@@ -38,16 +38,6 @@ export default {
 
   components: {
     TranslationInput
-  },
-
-  data() {
-    return {
-      translationsMutable: {},
-    }
-  },
-
-  mounted() {
-    this.translationsMutable = this.translations;
   },
 
   methods: {
