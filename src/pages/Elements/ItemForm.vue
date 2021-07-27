@@ -1,5 +1,11 @@
 <template>
   <div class="px-10 py-10">
+    <div v-if="type == 'Edit'" class="px-6 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider">
+      Edit Item: {{ titles["hr"] }}
+    </div>
+    <div v-else class="px-6 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider">
+      New Item
+    </div>
 
     <!-- Titles and descriptions  -->
     <div  class="px-6 py-1 flex-1">
@@ -21,28 +27,26 @@
       <div class="px-6 py-3 text-left text-m font-medium text-gray-500 uppercase tracking-wider flex">
         Amounts
         <div class="pl-2">
-          <button class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+          <button @click="addNewAmount()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div v-for="(amount, index) in itemAmounts" :key="amount.id">
+      <div class="py-2 flex">
+        Amount
         <div class="pl-1">
-          <button class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+          <button @click="removeNewAmount(index)" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
             </svg>
           </button>
         </div>
-      </div>
-    </div>
-    <div v-for="amount in amounts" :key="amount.id">
-    </div>
-
-    <!-- Amount -->
-    <div v-for="amount in amounts" :key="amount.id">
-      <div class="py-2">
-        Amount
       </div>
       <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
         Price
@@ -60,12 +64,12 @@
     </div>
 
     <!-- Buttons -->
-    <div  class="px-6 py-4 flex-1">
-      <div class="p-1.5">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="updateItem()">Update</button>
+    <div  class="px-6 py-2 flex-1">
+      <div v-if="type == 'Edit'" class="p-1.5">
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="updateItem(), close()">Update</button>
       </div>
-      <div class="p-1.5">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="createNewItem()">Save</button>
+      <div v-else class="p-1.5">
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="createNewItem(), close()">Save</button>
       </div>
       <div class="p-1.5">
         <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="$emit('close')">Cancel</button>
@@ -84,7 +88,8 @@ props: {
     languages: undefined,
     titles: undefined,
     descriptions: undefined,
-    amounts: undefined
+    amounts: undefined,
+    type: String
   },
 
   components: {
@@ -94,11 +99,17 @@ props: {
   data() {
     return {
       prices: undefined,
+      itemAmounts: undefined,
 
       item: {},
 
-      amountNumber: 1,
       createdAmount: {}
+    }
+  },
+
+  mounted() {
+    if(this.amounts) {
+      this.itemAmounts = this.amounts;
     }
   },
 
@@ -143,19 +154,22 @@ props: {
       });
     },
 
-    addNewAmount() {
-      // this.amount_desc.push(this.languages.reduce((acc, curr) => ({ ...acc, [curr.language_code]: '' }), []));
-      this.amountNumber++;
-      //this.selectedAmountIndex = this.amount;
-    },
-
-    removeNewAmount() {
-
+    removeNewAmount(index) {
+      delete this.amounts[index];
     },
 
     close() {
       this.$emit('close');
     },
+
+    addNewAmount() {
+      this.itemAmounts.push(
+        {
+          'price' : '',
+          'translations':  this.languages.reduce((acc, curr) => ({ ...acc, [curr.language_code]: '' }), {})
+        }
+      );
+    }
   }
 }
 </script>

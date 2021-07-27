@@ -1,6 +1,9 @@
 <template>
   <div>
+    <!-- -->
     <div v-if="restaurant">
+      <pre>
+      </pre>
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
           <div v-if="modalTitle == 'Category'">
             <CategoryForm
@@ -36,6 +39,7 @@
               :amounts="itemAmounts"
               :type="type"
               @item-create="addNewItem($event.item, $event.categoryId)"
+              @close="hideModal"
             />
           </div>
         </Modal>
@@ -142,7 +146,7 @@ export default {
     },
 
     itemAmounts: function() {
-      let returnVal = {};
+      let returnVal = [];
       let item = this.item;
 
       if(item) {
@@ -161,13 +165,13 @@ export default {
       }
 
       else {
-        returnVal[1] = {
+        returnVal[0] = {
               'price' : '',
               'translations' : {}
             }
 
         this.restaurant.languages.forEach((language) => {
-          returnVal[1].translations[language.language_code] = '';
+          returnVal[0].translations[language.language_code] = '';
         });
       }
 
@@ -274,7 +278,7 @@ export default {
     addNewItem(item, categoryId) {
       this.restaurant.categories[categoryId - 1].subcategories[item.subcategory_id - 1].items.push(item);
       this.hideModal();
-    }
+    },
   },
 }
 </script>
