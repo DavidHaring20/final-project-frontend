@@ -36,6 +36,7 @@
               :amounts="itemAmounts"
               :type="type"
               @item-create="addNewItem($event.item, $event.categoryId)"
+              @item-update="updateItem($event.item, $event.categoryId)"
               @close="hideModal"
             />
           </div>
@@ -191,6 +192,12 @@ export default {
       return index;
     },
 
+    getIndexById(id, parent) {
+      const index = parent.findIndex(item => item.id === id);
+      console.log('Tu sam, ovo je indeks: ', index);
+      return index;
+    },
+
     amountDescriptionExists(translations, languageCode) {
       let description = '';
 
@@ -252,29 +259,43 @@ export default {
     },
 
     addNewCategory(category) {
+      console.log(category);
       this.restaurant.categories.push(category);
       this.hideModal();
     },
 
     updateCategory(category) {
+      console.log(category);
       this.restaurant.categories = this.restaurant.categories.map(obj => (obj.id == category.id ? category : obj));
       this.hideModal();
     },
 
     addNewSubcategory(subcategory) {
-      this.restaurant.categories[subcategory.category_id - 1].subcategories.push(subcategory);
+      this.restaurant.categories[this.getIndexById(subcategory.category_id, this.restaurant.categories)].subcategories.push(subcategory);
       this.hideModal();
     },
 
     updateSubcategory(subcategory) {
-      this.restaurant.categories[subcategory.category_id - 1].subcategories = this.restaurant.categories[subcategory.category_id - 1].subcategories.map(obj => (obj.id == subcategory.id ? subcategory : obj));
+      this.restaurant.categories[this.getIndexById(subcategory.category_id, this.restaurant.categories)].subcategories = this.restaurant.categories[this.getIndexById(subcategory.category_id, this.restaurant.categories)].subcategories.map(obj => (obj.id == subcategory.id ? subcategory : obj));
       this.hideModal();
     },
 
     addNewItem(item, categoryId) {
-      this.restaurant.categories[categoryId - 1].subcategories[item.subcategory_id - 1].items.push(item);
+      let catId = this.getIndexById(categoryId, this.restaurant.categories);
+      let subId = this.getIndexById(item.subcategory_id, this.restaurant.categories[catId].subcategories);
+
+      this.restaurant.categories[catId].subcategories[subId].items.push(item);
       this.hideModal();
     },
+
+    updateItem(item, categoryId) {
+      let catId = this.getIndexById(categoryId, this.restaurant.categories);
+      let subId = this.getIndexById(item.subcategory_id, this.restaurant.categories[catId].subcategories);
+
+      this.restaurant.categories[catId].subcategories[subId].items = this.restaurant.categories[catId].subcategories[subId].items.map(obj => (obj.id == item.id ? item : obj));
+
+      this.hideModal();
+    }
   },
 }
 </script>
