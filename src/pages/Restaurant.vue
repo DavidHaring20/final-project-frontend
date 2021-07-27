@@ -252,6 +252,15 @@ export default {
     delete(id, type) {
       this.$service.API.get("/" + type + "/" + id)
         .then(response => {
+          if(type == "category") {
+            this.deleteCategory(id);
+          }
+          else if(type == "subcategory") {
+            this.deleteSubcategory(id);
+          }
+          else if(type == 'item') {
+            this.deleteItem(id);
+          }
         })
         .catch(err => {
           console.log(err);
@@ -270,6 +279,11 @@ export default {
       this.hideModal();
     },
 
+    deleteCategory(id) {
+      let index = this.getIndexById(id, this.restaurant.categories);
+      this.restaurant.categories.splice(index, 1);
+    },
+
     addNewSubcategory(subcategory) {
       this.restaurant.categories[this.getIndexById(subcategory.category_id, this.restaurant.categories)].subcategories.push(subcategory);
       this.hideModal();
@@ -278,6 +292,15 @@ export default {
     updateSubcategory(subcategory) {
       this.restaurant.categories[this.getIndexById(subcategory.category_id, this.restaurant.categories)].subcategories = this.restaurant.categories[this.getIndexById(subcategory.category_id, this.restaurant.categories)].subcategories.map(obj => (obj.id == subcategory.id ? subcategory : obj));
       this.hideModal();
+    },
+
+    deleteSubcategory(id) {
+      this.restaurant.categories.forEach((category) => {
+        if(this.getIndexById(id, category.subcategories) >= 0) {
+          let index = this.getIndexById(id, category.subcategories);
+          category.subcategories.splice(index, 1);
+        }
+      });
     },
 
     addNewItem(item, categoryId) {
@@ -295,7 +318,18 @@ export default {
       this.restaurant.categories[catId].subcategories[subId].items = this.restaurant.categories[catId].subcategories[subId].items.map(obj => (obj.id == item.id ? item : obj));
 
       this.hideModal();
-    }
+    },
+
+    deleteItem(id) {
+      this.restaurant.categories.forEach((category) => {
+        category.subcategories.forEach((subcategory) => {
+          if(this.getIndexById(id, subcategory.items) >= 0) {
+          let index = this.getIndexById(id, subcategory.items);
+          subcategory.items.splice(index, 1);
+          }
+        });
+      });
+    },
   },
 }
 </script>
