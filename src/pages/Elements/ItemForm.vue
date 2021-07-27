@@ -182,10 +182,6 @@ props: {
       }
     },
 
-    close() {
-      this.$emit('close');
-    },
-
     addNewAmount() {
       this.itemAmounts.push(
         {

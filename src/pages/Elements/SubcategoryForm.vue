@@ -17,7 +17,7 @@
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="createNewSubcategory()">Save</button>
           </div>
           <div class="p-1.5">
-            <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="close()">Cancel</button>
+            <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="$emit('close')">Cancel</button>
           </div>
       </div>
     </div>
