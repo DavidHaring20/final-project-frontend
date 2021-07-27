@@ -43,9 +43,9 @@
         </Modal>
 
       <!-- Restaurant name and add new category -->
-      <div class="px-6 py-3 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
+      <div class="px-6 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
         {{ restaurant.translations[0].name }}
-        <Button btnText="Add" @clicked="showNewModal(restaurant.id, 'Category', undefined)"/>
+        <Button btnText="New Category" @clicked="showNewModal(restaurant.id, 'Category', undefined)"/>
       </div>
 
       <div class="px-20">
@@ -54,7 +54,7 @@
           <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
           <!-- Category iteration -->
           <div v-for="category in restaurant.categories" v-bind:key="category.id">
-            <div class="px-10 py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
+            <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
               <Category
                 :category="category"
                 :selectedLanguage="selectedLanguage"

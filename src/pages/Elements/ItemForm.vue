@@ -27,7 +27,7 @@
       <div class="px-6 py-3 text-left text-m font-medium text-gray-500 uppercase tracking-wider flex">
         Amounts
         <div class="pl-2">
-          <button @click="type == 'New' ? addNewAmount() : addNewAmountForUpdate()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+          <button @click="type == 'New' ? addNewAmount() : addNewAmountForUpdate()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center transition-colors duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -37,11 +37,11 @@
     </div>
 
     <!-- Amount -->
-    <div v-for="(amount, index) in itemAmounts" :key="index">
+    <div v-for="(amount, index) in itemAmounts" :key="index" class="px-6">
       <div class="py-2 flex">
         Amount
         <div class="pl-1">
-          <button @click="type == 'New' ? removeNewAmount(index) : removeAmountForUpdate(amount.id)" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+          <button @click="type == 'New' ? removeNewAmount(index) : removeAmountForUpdate(amount.id)" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center transition-colors duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
             </svg>
@@ -64,15 +64,15 @@
     </div>
 
     <!-- Buttons -->
-    <div  class="px-6 py-2 flex-1">
+    <div  class="px-6 flex flex-wrap justify-end">
       <div v-if="type == 'Edit'" class="p-1.5">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="updateItem()">Update</button>
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="updateItem()">Update</button>
       </div>
       <div v-else class="p-1.5">
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="createNewItem()">Save</button>
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="createNewItem()">Save</button>
       </div>
       <div class="p-1.5">
-        <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="$emit('close')">Cancel</button>
+        <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded transition-colors duration-300" @click="$emit('close')">Cancel</button>
       </div>
     </div>
   </div>

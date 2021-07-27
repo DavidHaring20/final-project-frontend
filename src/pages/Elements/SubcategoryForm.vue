@@ -11,13 +11,13 @@
       <TranslationInput v-for="language in languages" :languageCode="language.language_code" :key="language.language_code" :translations="translations" class="mb-4 flex-row" />
         <div class="px-6 flex flex-wrap justify-end">
           <div v-if="translations['hr']" class="p-1.5">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="updateSubcategory()">Update</button>
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="updateSubcategory()">Update</button>
           </div>
           <div v-else class="p-1.5">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded" @click="createNewSubcategory()">Save</button>
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="createNewSubcategory()">Save</button>
           </div>
           <div class="p-1.5">
-            <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded" @click="$emit('close')">Cancel</button>
+            <button class="bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 text-xs px-4 rounded transition-colors duration-300" @click="$emit('close')">Cancel</button>
           </div>
       </div>
     </div>

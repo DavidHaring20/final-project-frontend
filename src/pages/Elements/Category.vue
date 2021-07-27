@@ -11,7 +11,7 @@
       <Button btnText="Delete" @clicked="emitDelete(category.id, 'category')"/>
     </div>
       <div v-for="subcategory in category.subcategories" v-bind:key="subcategory.id">
-        <div class="px-10 py-3 text-left text-xs font-medium text-gray-500 capitalize tracking-wider flex">
+        <div class="py-3 text-left text-xs font-medium text-gray-500 capitalize tracking-wider flex">
           <Subcategory
             :subcategory="subcategory"
             :selectedLanguage="selectedLanguage"
