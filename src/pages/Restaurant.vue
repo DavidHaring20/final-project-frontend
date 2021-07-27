@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!-- -->
     <div v-if="restaurant">
-      <pre>
-        {{itemAmounts}}
-      </pre>
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
           <div v-if="modalTitle == 'Category'">
             <CategoryForm
@@ -155,6 +151,7 @@ export default {
           {
             returnVal.push(
               {
+                'id' : amount.id,
                 'price' : amount.price,
                 'translations' : Object.assign({}, ...this.restaurant.languages.map(x => ({ [x.language_code]: this.amountDescriptionExists(amount.translations, x.language_code) })))
               }

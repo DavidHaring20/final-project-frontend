@@ -27,7 +27,7 @@
       <div class="px-6 py-3 text-left text-m font-medium text-gray-500 uppercase tracking-wider flex">
         Amounts
         <div class="pl-2">
-          <button @click="addNewAmount()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+          <button @click="type == 'New' ? addNewAmount() : addNewAmountForUpdate()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -100,9 +100,6 @@ props: {
     return {
       prices: undefined,
       itemAmounts: undefined,
-
-      item: {},
-
       createdAmount: {}
     }
   },
@@ -120,7 +117,7 @@ props: {
       this.$service.API.post('/subcategory/' + this.parent + '/item' ,{
         titles: JSON.stringify(this.titles),
         descriptions: JSON.stringify(this.descriptions),
-        amounts: JSON.stringify(this.amounts)
+        amounts: JSON.stringify(this.itemAmounts)
       })
       .then(response => {
         self.$nextTick(() => {
@@ -130,10 +127,10 @@ props: {
     },
 
     updateItem() {
-      this.$service.API.post('/item/update/' + this.parent.id ,{
-        titles: JSON.stringify(this.title_translations),
-        descriptions: JSON.stringify(this.description_translations),
-        amounts: JSON.stringify(this.amounts)
+      this.$service.API.post('/item/update/' + this.parent ,{
+        titles: JSON.stringify(this.titles),
+        descriptions: JSON.stringify(this.descriptions),
+        amounts: this.itemAmounts
       })
       .then(response => {
       });
@@ -142,12 +139,12 @@ props: {
     addNewAmountForUpdate() {
       let self = this;
 
-      this.$service.API.post('/item/' + this.parent.id + '/amount', {
+      this.$service.API.post('/item/' + this.parent + '/amount', {
         languages: this.languages,
       })
       .then(response => {
         self.$nextTick(() => {
-          self.parent.amounts.push(response.data.data.amount);
+          self.amounts.push(response.data.data.amount);
         });
       }, response => {
         console.log(response);
