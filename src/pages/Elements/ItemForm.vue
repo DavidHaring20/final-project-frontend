@@ -41,7 +41,7 @@
       <div class="py-2 flex">
         Amount
         <div class="pl-1">
-          <button @click="removeNewAmount(index)" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
+          <button @click="type == 'New' ? removeNewAmount(index) : removeAmountForUpdate(amount.id)" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
             </svg>
@@ -111,6 +111,11 @@ props: {
   },
 
   methods: {
+    getIndexById(id, parent) {
+      const index = parent.findIndex(item => item.id === id);
+      return index;
+    },
+
     createNewItem() {
       let self = this;
 
@@ -121,7 +126,6 @@ props: {
       })
       .then(response => {
         self.$nextTick(() => {
-          // console.log('item ', response.data.data.updatedItem)
           self.$emit('item-create', {item: response.data.data.newItem, categoryId: response.data.data.categoryId});
         });
       });
@@ -155,8 +159,27 @@ props: {
       });
     },
 
+    removeAmountForUpdate(id) {
+      let self = this;
+
+      console.log('dobiveni id ', id);
+      if(this.itemAmounts.length > 1) {
+        this.$service.API.get('/delete/amount/' + id)
+         .then(response => {
+            self.$nextTick(() => {
+              let index = this.getIndexById(id, this.amounts);
+              self.amounts.splice(index, 1);
+            });
+          }, response => {
+            console.log(response);
+          });
+      }
+    },
+
     removeNewAmount(index) {
-      delete this.amounts[index];
+      if(this.itemAmounts.length > 1) {
+        this.itemAmounts.splice(index, 1);
+      }
     },
 
     close() {

@@ -250,7 +250,7 @@ export default {
     },
 
     delete(id, type) {
-      this.$service.API.get("/" + type + "/" + id)
+      this.$service.API.get("/delete/" + type + "/" + id)
         .then(response => {
           if(type == "category") {
             this.deleteCategory(id);
