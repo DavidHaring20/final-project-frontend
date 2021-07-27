@@ -3,6 +3,7 @@
     <!-- -->
     <div v-if="restaurant">
       <pre>
+        {{itemAmounts}}
       </pre>
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
           <div v-if="modalTitle == 'Category'">
@@ -152,14 +153,12 @@ export default {
       if(item) {
         item.amounts.forEach((amount) =>
           {
-            returnVal[amount.id] = {
-              'price' : amount.price,
-              'translations' : {}
-            }
-
-            this.restaurant.languages.forEach((language) => {
-              returnVal[amount.id].translations[language.language_code] = this.amountDescriptionExists(amount.translations, language.language_code);
-            });
+            returnVal.push(
+              {
+                'price' : amount.price,
+                'translations' : Object.assign({}, ...this.restaurant.languages.map(x => ({ [x.language_code]: this.amountDescriptionExists(amount.translations, x.language_code) })))
+              }
+            );
           }
         );
       }

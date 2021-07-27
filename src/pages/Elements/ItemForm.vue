@@ -37,7 +37,7 @@
     </div>
 
     <!-- Amount -->
-    <div v-for="(amount, index) in itemAmounts" :key="amount.id">
+    <div v-for="(amount, index) in itemAmounts" :key="index">
       <div class="py-2 flex">
         Amount
         <div class="pl-1">
