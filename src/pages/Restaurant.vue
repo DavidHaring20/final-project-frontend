@@ -46,6 +46,7 @@
               :parent="parentId"
               :languages="restaurant.languages"
               :translations="restaurantFooter"
+              @footer-update="updateFooter"
               @close="hideModal"
             />
           </div>
@@ -274,10 +275,6 @@ export default {
 
     hideModal () {
       this.$modal.hide('modal');
-
-      this.thing = null;
-      this.parentId = null;
-      this.modalTitle = null;
     },
 
     //Delete Category, Subcategory, Item
@@ -368,6 +365,12 @@ export default {
         });
       });
     },
+
+    updateFooter(translations) {
+      this.restaurant.translations = translations;
+
+      this.hideModal();
+    }
   },
 }
 </script>

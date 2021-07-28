@@ -42,7 +42,7 @@ export default {
       })
       .then(response => {
           self.$nextTick(() => {
-            //self.$emit('footer-update', response.data.data.category);
+            self.$emit('footer-update', response.data.data.translations);
           });
         }, response => {
         console.log(response);
