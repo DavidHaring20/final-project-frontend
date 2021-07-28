@@ -40,6 +40,15 @@
               @close="hideModal"
             />
           </div>
+
+          <div v-else-if="modalTitle == 'Footer'">
+            <FooterForm
+              :parent="parentId"
+              :languages="restaurant.languages"
+              :translations="restaurantFooter"
+              @close="hideModal"
+            />
+          </div>
         </Modal>
 
       <!-- Restaurant name and add new category -->
@@ -52,6 +61,7 @@
         <div class="bg-white sm:p-10">
           <!-- Language selectiond - Dropdown menu -->
           <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
+
           <!-- Category iteration -->
           <div v-for="category in restaurant.categories" v-bind:key="category.id">
             <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
@@ -65,6 +75,17 @@
                 class="w-full"
               />
             </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex">
+            <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase">
+              Footer
+            </div>
+            <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
+          </div>
+          <div>
+            {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
           </div>
         </div>
       </div>
@@ -80,6 +101,7 @@ import Button from './Elements/Button.vue'
 import CategoryForm from './Elements/CategoryForm.vue'
 import SubcategoryForm from './Elements/SubcategoryForm.vue'
 import ItemForm from './Elements/ItemForm.vue'
+import FooterForm from './Elements/FooterForm.vue'
 
 export default {
   path: '/restaurant',
@@ -90,7 +112,8 @@ export default {
     Button,
     CategoryForm,
     SubcategoryForm,
-    ItemForm
+    ItemForm,
+    FooterForm
   },
 
   data() {
@@ -170,6 +193,21 @@ export default {
         this.restaurant.languages.forEach((language) => {
           returnVal[0].translations[language.language_code] = '';
         });
+      }
+
+      return returnVal;
+    },
+
+    restaurantFooter: function() {
+      let returnVal = {};
+      let restaurant = this.restaurant;
+
+      if(restaurant) {
+         restaurant.translations.forEach((translation) =>
+          {
+            returnVal[translation.language_code] = translation.footer;
+          }
+        );
       }
 
       return returnVal;
