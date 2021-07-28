@@ -275,6 +275,11 @@ export default {
 
     hideModal () {
       this.$modal.hide('modal');
+
+      this.parentId = null;
+      this.thing = null;
+      this.modalTitle = null;
+      this.type = null;
     },
 
     //Delete Category, Subcategory, Item
