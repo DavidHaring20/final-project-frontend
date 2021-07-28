@@ -248,7 +248,7 @@ export default {
       name = name.replace(/\s+/g, '');
       this.$service.API.get("/export-json/restaurant/" + id)
         .then(response => {
-          const data = JSON.stringify(response.data.data.json);
+          const data = JSON.stringify(response.data.data.json, null, 4);
           const blob = new Blob([data], { type: 'application/json' });
           FileSaver.saveAs(blob, name + `.json`);
         })
