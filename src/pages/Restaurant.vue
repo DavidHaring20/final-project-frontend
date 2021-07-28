@@ -55,7 +55,13 @@
       <!-- Restaurant name and add new category -->
       <div class="px-6 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
         {{ restaurant.translations[0].name }}
-        <Button btnText="New Category" @clicked="showNewModal(restaurant.id, 'Category', undefined)"/>
+        <br>
+        <div class="flex-initial justify-end">
+          <button class="bg-gray-300 hover:bg-gray-200 text-white font-bold py-2 px-3 border-b-4 border-gray-400 hover:border-gray-300 rounded text-xs transition-colors duration-300" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
+          <div class="pl-1">
+            <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-3 border-b-4 border-red-700 hover:border-red-500 rounded text-xs transition-colors duration-300" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
+          </div>
+        </div>
       </div>
 
       <div class="px-20">
@@ -103,6 +109,7 @@ import CategoryForm from './Elements/CategoryForm.vue'
 import SubcategoryForm from './Elements/SubcategoryForm.vue'
 import ItemForm from './Elements/ItemForm.vue'
 import FooterForm from './Elements/FooterForm.vue'
+import FileSaver from 'file-saver'
 
 export default {
   path: '/restaurant',
@@ -235,6 +242,19 @@ export default {
       const index = parent.findIndex(item => item.id === id);
       console.log('Tu sam, ovo je indeks: ', index);
       return index;
+    },
+
+    exportJSON(id, name) {
+      name = name.replace(/\s+/g, '');
+      this.$service.API.get("/export-json/restaurant/" + id)
+        .then(response => {
+          const data = JSON.stringify(response.data.data.json);
+          const blob = new Blob([data], { type: 'application/json' });
+          FileSaver.saveAs(blob, name + `.json`);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
 
     amountDescriptionExists(translations, languageCode) {
