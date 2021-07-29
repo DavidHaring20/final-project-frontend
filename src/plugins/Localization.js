@@ -5,6 +5,7 @@ export default {
     install: (app, options) => {
         app.use(VueI18n);
         if (!Object.prototype.hasOwnProperty.call(app, '$i18n')) {
+            /*
             const _locales = {}
             const _files = require.context('@/locales', true, /\.json$/i)
             _files.keys().map(file => Object.assign(_locales, {
@@ -24,6 +25,7 @@ export default {
                 silentTranslationWarn: true,
                 formatFallbackMessages: true
             });
+            /**/
         }
     },
 };

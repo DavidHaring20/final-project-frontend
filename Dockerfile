@@ -9,5 +9,5 @@ RUN chmod +x /setup && /setup
 
 EXPOSE 80
 
-ENV PS1 '\[\e[1;36m\]\u\[\e[1;37m\]@\[\e[1;33m\]nimote-admin-\h\[\e[1;37m\]:\[\e[1;34m\]\w\[\e[1;37m\]\$\[\e[0m\] '
+ENV PS1 '\[\e[1;36m\]\u\[\e[1;37m\]@\[\e[1;33m\]pocket-front-\h\[\e[1;37m\]:\[\e[1;34m\]\w\[\e[1;37m\]\$\[\e[0m\] '
 ENTRYPOINT /start
