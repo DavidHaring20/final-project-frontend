@@ -13,8 +13,6 @@
             {{ restaurant.translations[0].name }}
           </button>
           <Button btnText="Delete" @clicked="alert(restaurant.id, 'restaurant')" class="pl-2"/>
-          <Button btnText="Edit" class="pl-2" />
-          <!-- {{ restaurant.translations[languageIndex(restaurant.translations)].name }} -->
         </div>
       </div>
     </div>
@@ -22,7 +20,6 @@
 </template>
 
 <script>
-import LanguageDropdown from './Elements/LanguageDropdown.vue'
 import Button from './Elements/Button.vue'
 
 export default {
@@ -77,7 +74,7 @@ export default {
     },
 
     openRestaurant(id) {
-      this.$router.push({ path: 'restaurant', params: { restaurantId: id }})
+      this.$router.push({ name: 'Restaurant', params: { restaurantId: id }})
     }
   }
 }

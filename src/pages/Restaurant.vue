@@ -110,7 +110,8 @@ import FooterForm from './Elements/FooterForm.vue'
 import FileSaver from 'file-saver'
 
 export default {
-  path: '/restaurant',
+  name: 'Restaurant',
+  path: '/restaurant/:restaurantId',
   layout: require('@/layouts/Base.vue').default,
   components: {
     Category,
@@ -222,7 +223,7 @@ export default {
 
   methods: {
     getData() {
-      this.$service.API.get("/restaurant/show/" + 1)
+      this.$service.API.get("/restaurant/show/" + this.$route.params.restaurantId)
         .then(response => {
           this.restaurant = response.data.data.restaurant;
         })
