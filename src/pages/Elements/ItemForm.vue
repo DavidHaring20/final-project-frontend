@@ -152,7 +152,16 @@ props: {
       })
       .then(response => {
         self.$nextTick(() => {
-          self.amounts.push(response.data.data.amount);
+          const newAmount = response.data.data.amount;
+          self.amounts.push(
+              {
+                'id' : newAmount.id,
+                'price' : newAmount.price,
+                'translations' : Object.assign({}, ...self.languages.map(x => ({ [x.language_code]: self.amountDescriptionExists(newAmount.translations, x.language_code) })))
+              }
+            );
+
+          console.log(self.amounts);
         });
       }, response => {
         console.log(response);
@@ -189,7 +198,19 @@ props: {
           'translations':  this.languages.reduce((acc, curr) => ({ ...acc, [curr.language_code]: '' }), {})
         }
       );
-    }
+    },
+
+    amountDescriptionExists(translations, languageCode) {
+      let description = '';
+
+      translations.forEach(translation => {
+        if(translation.language_code == languageCode) {
+          description = translation.description;
+        }
+      });
+
+      return description;
+    },
   }
 }
 </script>
