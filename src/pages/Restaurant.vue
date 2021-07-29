@@ -81,17 +81,18 @@
               />
             </div>
           </div>
-
-          <!-- Footer -->
-          <div class="flex">
-            <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase">
-              Footer
-            </div>
-            <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
-          </div>
-          <div style="white-space:pre-wrap;;">
-            {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
-          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div class="flex">
+        <div class="pl-10 py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase">
+          Footer
+        </div>
+        <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
+      </div>
+      <div class="bg-indigo-500 rounded-t-lg shadow w-full h-28">
+        <div style="white-space:pre-wrap;" class="text-center text-white">
+          {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
         </div>
       </div>
     </div>
