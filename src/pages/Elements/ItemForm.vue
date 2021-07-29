@@ -27,7 +27,7 @@
       <div class="px-6 py-3 text-left text-m font-medium text-gray-500 uppercase tracking-wider flex">
         Amounts
         <div class="pl-2">
-          <button @click="type == 'New' ? addNewAmount() : addNewAmountForUpdate()" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center transition-colors duration-300">
+          <button @click="type == 'New' ? addNewAmount() : addNewAmountForUpdate()" class="bg-gray-500 hover:bg-gray-700 text-s px-1 py-1 rounded-full text-white items-center justify-center transition-colors duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>

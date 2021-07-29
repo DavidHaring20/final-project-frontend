@@ -56,15 +56,13 @@
       <div class="px-6 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
         {{ restaurant.translations[0].name }}
         <br>
-        <div class="flex-initial justify-end">
-          <button class="bg-gray-300 hover:bg-gray-200 text-white font-bold py-2 px-3 border-b-4 border-gray-400 hover:border-gray-300 rounded text-xs transition-colors duration-300" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
-          <div class="pl-1">
-            <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-3 border-b-4 border-red-700 hover:border-red-500 rounded text-xs transition-colors duration-300" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
-          </div>
+        <div class="flex-inital justify-end space-x-2">
+          <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
+          <button class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
         </div>
       </div>
 
-      <div class="px-20">
+      <div class="px-72">
         <div class="bg-white sm:p-10">
           <!-- Language selectiond - Dropdown menu -->
           <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
@@ -91,7 +89,7 @@
             </div>
             <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
           </div>
-          <div>
+          <div style="white-space:pre-wrap;;">
             {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
           </div>
         </div>
@@ -328,13 +326,11 @@ export default {
     },
 
     addNewCategory(category) {
-      console.log(category);
       this.restaurant.categories.push(category);
       this.hideModal();
     },
 
     updateCategory(category) {
-      console.log(category);
       this.restaurant.categories = this.restaurant.categories.map(obj => (obj.id == category.id ? category : obj));
       this.hideModal();
     },
