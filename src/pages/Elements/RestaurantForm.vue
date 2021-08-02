@@ -131,7 +131,7 @@ export default {
       let self = this;
 
       this.$service.API.post('/restaurant/new', {
-        currency: JSON.stringify(this.currency),
+        currency: this.currency,
         names: JSON.stringify(this.restaurantNames),
         footers: JSON.stringify(this.restaurantFooters),
         languages: JSON.stringify(this.languages),
