@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="h-screen w-screen">
     <div v-if="restaurant">
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
+          <!-- Modal for adding a new category or updating an existing category -->
           <div v-if="modalTitle == 'Category'">
             <CategoryForm
               :title="modalTitle"
@@ -14,6 +15,7 @@
             />
           </div>
 
+          <!-- Modal for adding a new subcategory or updating an existing subcategory -->
           <div v-else-if="modalTitle == 'Subcategory'">
             <SubcategoryForm
               :title="modalTitle"
@@ -26,6 +28,7 @@
             />
           </div>
 
+          <!-- Modal for adding a new item or updating an existing item -->
           <div v-else-if="modalTitle == 'Item'">
             <ItemForm
               :title="modalTitle"
@@ -41,6 +44,7 @@
             />
           </div>
 
+          <!-- Modal for updating footer -->
           <div v-else-if="modalTitle == 'Footer'">
             <FooterForm
               :parent="parentId"
@@ -52,47 +56,54 @@
           </div>
         </Modal>
 
-      <!-- Restaurant name and add new category -->
-      <div class="px-6 text-5xl font-medium text-right font-sans font-semibold tracking-tighter capitalize tracking-wider subpixel-antialiased text-gray-600">
-        {{ restaurant.translations[0].name }}
-        <br>
-        <div class="flex-inital justify-end space-x-2">
-          <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
-          <button class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
+      <div class="mb-auto">
+        <!-- Restaurant name, add new category and export to JSON -->
+        <div class="px-6 text-5xl font-medium md:text-right font-sans tracking-tighter capitalize subpixel-antialiased text-gray-600 sm:text-center">
+          {{ restaurant.translations[0].name }}
+          <br>
+          <div class="flex-inital justify-end space-x-2">
+            <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
+            <button class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
+          </div>
         </div>
-      </div>
 
-      <div class="px-72">
-        <div class="bg-white sm:p-10">
-          <!-- Language selectiond - Dropdown menu -->
-          <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
+        <div class="2xl:px-96 xl:px-72 lg:px-50 md:px-1 sm:px-2">
+          <div class="bg-white sm:p-10">
+            <!-- Language selection - Dropdown menu -->
+            <div class="grid justify-items-end pr-6">
+              <LanguageDropdown @clicked="selectedLanguage = $event" :languages="restaurant.languages"/>
+            </div>
 
-          <!-- Category iteration -->
-          <div v-for="category in restaurant.categories" v-bind:key="category.id">
-            <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
-              <Category
-                :category="category"
-                :selectedLanguage="selectedLanguage"
-                @new="showNewModal($event.parent, $event.title, undefined)"
-                @edit="showNewModal($event.parentId, $event.title, $event.thing)"
-                @delete="alert($event)"
-                @itemEdit="showItemModal($event.parentId, $event.title, $event.thing)"
-                class="w-full"
-              />
+            <!-- Category iteration -->
+            <div v-for="category in restaurant.categories" v-bind:key="category.id">
+              <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
+                <Category
+                  :category="category"
+                  :selectedLanguage="selectedLanguage"
+                  @new="showNewModal($event.parent, $event.title, undefined)"
+                  @edit="showNewModal($event.parentId, $event.title, $event.thing)"
+                  @delete="alert($event)"
+                  @itemEdit="showItemModal($event.parentId, $event.title, $event.thing)"
+                  class="w-full"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <!-- Footer -->
-      <div class="flex">
-        <div class="pl-10 py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase">
-          Footer
+      <div class="align-baseline h-full">
+        <div class="flex align-baseline">
+          <div class="pl-10 py-3 text-left text-2xl font-medium text-gray-500">
+            Footer
+          </div>
+          <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
         </div>
-        <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
-      </div>
-      <div class="bg-indigo-500 rounded-t-lg shadow w-full h-28">
-        <div style="white-space:pre-wrap;" class="text-center text-white">
-          {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
+        <div class="bg-indigo-500 rounded-t-lg shadow w-screen h-28">
+          <div class="text-center text-white">
+            {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
+          </div>
         </div>
       </div>
     </div>
@@ -233,28 +244,16 @@ export default {
         });
     },
 
+    //Find the index of the translation that has the language code == selected language
     languageIndex(translations, language) {
       const index = translations.findIndex(item => item.language_code === language);
       return index;
     },
 
+    //Find the index in the array with the given ID
     getIndexById(id, parent) {
       const index = parent.findIndex(item => item.id === id);
-      console.log('Tu sam, ovo je indeks: ', index);
       return index;
-    },
-
-    exportJSON(id, name) {
-      name = name.replace(/\s+/g, '');
-      this.$service.API.get("/export-json/restaurant/" + id)
-        .then(response => {
-          const data = JSON.stringify(response.data.data.json, null, 4);
-          const blob = new Blob([data], { type: 'application/json' });
-          FileSaver.saveAs(blob, name + `.json`);
-        })
-        .catch(err => {
-          console.log(err);
-        });
     },
 
     amountDescriptionExists(translations, languageCode) {
@@ -269,7 +268,30 @@ export default {
       return description;
     },
 
-    //Item
+
+    exportJSON(id, name) {
+      name = name.replace(/\s+/g, '');
+      this.$service.API.get("/export-json/restaurant/" + id)
+        .then(response => {
+          const data = JSON.stringify(response.data, null, 4);
+          const blob = new Blob([data], { type: 'application/json' });
+          FileSaver.saveAs(blob, name + `.json`);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    //Modals: Category/Subcategory, Item, Hide Modal
+
+    showNewModal (parentId, title, thing) {
+      this.parentId = parentId;
+      this.modalTitle = title;
+      this.thing = thing;
+
+      this.$modal.show('modal');
+    },
+
     showItemModal(parentId, title, thing) {
       this.parentId = parentId;
       this.modalTitle = title;
@@ -281,14 +303,6 @@ export default {
       else {
         this.type = "New"
       }
-
-      this.$modal.show('modal');
-    },
-
-    showNewModal (parentId, title, thing) {
-      this.parentId = parentId;
-      this.modalTitle = title;
-      this.thing = thing;
 
       this.$modal.show('modal');
     },
@@ -326,6 +340,8 @@ export default {
           console.log(err);
         });
     },
+
+    //Add/update/delete category, subcategory, item and update footer on front
 
     addNewCategory(category) {
       this.restaurant.categories.push(category);
@@ -397,4 +413,3 @@ export default {
   },
 }
 </script>
-
