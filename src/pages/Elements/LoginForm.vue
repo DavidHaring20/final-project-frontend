@@ -83,7 +83,8 @@
                 .then(data => {
                     console.log(data);
                     this.message = data.message;
-                    this.statusCode = data.statusCode;         
+                    this.statusCode = data.statusCode; 
+                    this.setMessageStyle(this.statusCode);
                 })
                 .catch((error) => {
                     console.log(error);
