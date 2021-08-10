@@ -1,7 +1,7 @@
 <template>   
     <div>
         <div class="h-screen flex flex-col justify-center items-center">
-            <p v-if="message" class="border-solid border-2 rounded border-green-600 text-green-400 p-3.5 mb-4"> {{ message }}</p>
+            <p v-if="message" v-bind:class="messageStyle"> {{ message }}</p>
             <div class="mb-8">
                 <div class="flex flex-row mb-5">
                     <div>
@@ -59,6 +59,14 @@
         },
 
         methods: {
+            setMessageStyle(code) {
+                if (code == 200) {
+                    this.messageStyle = "border-solid border-2 rounded border-green-600 text-green-400 p-3.5 mb-4";
+                } else {
+                    this.messageStyle = "border-solid border-2 rounded border-red-600 text-red-400 p-3.5 mb-4";
+                }
+            },
+
             requestVerificationCode() {
 
                 const data = { "e-mail": this.email } 
@@ -75,7 +83,7 @@
                 .then(data => {
                     console.log(data);
                     this.message = data.message;
-                    this.statusCode = data.statusCode;           
+                    this.statusCode = data.statusCode;         
                 })
                 .catch((error) => {
                     console.log(error);
