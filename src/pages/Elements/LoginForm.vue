@@ -36,7 +36,7 @@
                 </div> 
 
                 <button 
-                    type="submit"
+                    @click="authenticate()"
                     class="bg-gray-200 ml-3 w-11/12 px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
                 >Log In</button>
             </div>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+    const axios = require('axios');
+
     export default {
         name: 'LoginForm',
 
@@ -54,7 +56,7 @@
                 passcode: "",
                 message: "",
                 statusCode: 0,
-                messageStyle: ""
+                messageStyle: "",
             }
         },
 
@@ -67,8 +69,33 @@
                 }
             },
 
-            requestVerificationCode() {
+            authenticate() {
+                axios({
+                    method:     'post',
+                    baseURL:    'http://localhost:8000/api/login/e-mailAndPassword', 
+                    headers: {
+                        'Accept':       'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        'e-mail':   this.email,
+                        'passcode': this.passcode
+                    },
+                    responseType: 'json',
+                    responseEncoding: 'utf8'
+                })
+                .then(response => response.data)
+                .then(data => {
+                    this.message = data.message;
+                    this.statusCode = data.statusCode; 
+                    this.setMessageStyle(this.statusCode);
+                }) 
+                .catch(function (error) {
+                    console.log(error);
+                });       
+            },
 
+            requestVerificationCode() {
                 const data = { "e-mail": this.email } 
 
                 fetch('http://localhost:8000/api/login/e-mail', {
