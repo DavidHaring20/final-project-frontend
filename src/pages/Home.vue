@@ -30,6 +30,7 @@ import RestaurantForm from './Elements/RestaurantForm.vue'
 
 export default {
   path: '/home',
+  name: 'Home',
   layout: require('@/layouts/Base.vue').default,
 
   data() {

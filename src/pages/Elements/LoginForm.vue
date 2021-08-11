@@ -67,6 +67,14 @@
                 }
             },
 
+            logIn(authenticated) {
+                if (authenticated === true) {
+                    this.$router.push({ name: 'Home'})
+                } else {
+                    console.log('Failed to go to Login Page.');
+                }
+            },
+
             authenticate() {
                 this.$service.API.post('/login/e-mailAndPassword', {
                     email: this.email,
@@ -74,9 +82,12 @@
                 })
                 .then(response => response.data)
                 .then(data => {
+                    console.log(data);
+                    console.log(data.authenticated);
                     this.message = data.message;
                     this.statusCode = data.statusCode;
                     this.setMessageStyle(this.statusCode);
+                    this.logIn(data.authenticated)
                 })
                 .catch(error => {
                     console.log(error);

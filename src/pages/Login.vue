@@ -9,6 +9,7 @@
 
     export default {
         path: '/',
+        name: 'Login',
         
         components: {
             LoginForm
