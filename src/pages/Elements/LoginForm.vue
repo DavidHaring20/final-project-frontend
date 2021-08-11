@@ -45,8 +45,6 @@
 </template>
 
 <script>
-    const axios = require('axios');
-
     export default {
         name: 'LoginForm',
 
@@ -70,52 +68,35 @@
             },
 
             authenticate() {
-                axios({
-                    method:     'post',
-                    baseURL:    'http://localhost:8000/api/login/e-mailAndPassword', 
-                    headers: {
-                        'Accept':       'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        'e-mail':   this.email,
-                        'passcode': this.passcode
-                    },
-                    responseType: 'json',
-                    responseEncoding: 'utf8'
+                this.$service.API.post('/login/e-mailAndPassword', {
+                    email: this.email,
+                    passcode: this.passcode
+                })
+                .then(response => response.data)
+                .then(data => {
+                    this.message = data.message;
+                    this.statusCode = data.statusCode;
+                    this.setMessageStyle(this.statusCode);
+                })
+                .catch(error => {
+                    console.log(error);
+                });       
+            },
+
+            requestVerificationCode() {
+                this.$service.API.post('/login/e-mail', {
+                    email: this.email
                 })
                 .then(response => response.data)
                 .then(data => {
                     this.message = data.message;
                     this.statusCode = data.statusCode; 
                     this.setMessageStyle(this.statusCode);
-                }) 
-                .catch(function (error) {
-                    console.log(error);
-                });       
-            },
-
-            requestVerificationCode() {
-                const data = { "e-mail": this.email } 
-
-                fetch('http://localhost:8000/api/login/e-mail', {
-                    method: 'POST', 
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    this.message = data.message;
-                    this.statusCode = data.statusCode; 
-                    this.setMessageStyle(this.statusCode);
-                })
-                .catch((error) => {
+                .catch(error => {
                     console.log(error);
-                });
+                    }
+                );
             }
         }
     }
