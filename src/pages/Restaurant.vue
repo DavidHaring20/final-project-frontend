@@ -35,6 +35,7 @@
               :parent="parentId"
               :languages="restaurant.languages"
               :titles="itemTitles"
+              :subtitles="itemSubtitles"
               :descriptions="itemDescriptions"
               :amounts="itemAmounts"
               :type="type"
@@ -180,6 +181,17 @@ export default {
       this.restaurant.languages.forEach((language) =>
         {
           returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].description : '';
+        }
+      );
+      return returnVal;
+    },
+
+    itemSubtitles: function() {
+      let returnVal = {};
+      let item = this.item;
+      this.restaurant.languages.forEach((language) =>
+        {
+          returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].subtitle : '';
         }
       );
       return returnVal;

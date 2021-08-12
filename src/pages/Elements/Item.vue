@@ -10,6 +10,15 @@
     <td class="px-3 py-4 whitespace-nowrap">
       <div class="ml-4">
         <div class="text-xs font-medium text-gray-500">
+          <div v-if="item.translations[languageIndex(item.translations)].subtitle">
+           {{ item.translations[languageIndex(item.translations)].subtitle }}
+          </div>
+        </div>
+      </div>
+    </td>
+    <td class="px-3 py-4 whitespace-nowrap">
+      <div class="ml-4">
+        <div class="text-xs font-medium text-gray-500">
           <div v-if="item.translations[languageIndex(item.translations)].description">
            {{ item.translations[languageIndex(item.translations)].description }}
           </div>
@@ -39,7 +48,6 @@
 
 <script>
 import Button from './Button.vue'
-
 export default {
   name: 'Item',
   components: {
@@ -54,11 +62,9 @@ export default {
       const index = translations.findIndex(item => item.language_code === this.selectedLanguage);
       return index;
     },
-
     emitEdit(parent, title, thing) {
       this.$emit('edit', {parent, title, thing});
     },
-
     emitDelete(id, title) {
       this.$emit('delete', {id, title})
     },

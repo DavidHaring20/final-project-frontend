@@ -16,6 +16,12 @@
     </div>
     <div  class="px-6 py-1 flex-1">
       <div class="text-left text-m font-medium text-gray-500 uppercase tracking-wider flex" for="input">
+        Subtitles
+      </div>
+      <TranslationInput v-for="language in languages" :languageCode="language.language_code" :key="language.language_code" :translations="subtitles" class="mb-4 flex-row" />
+    </div>
+    <div  class="px-6 py-1 flex-1">
+      <div class="text-left text-m font-medium text-gray-500 uppercase tracking-wider flex" for="input">
         Descriptions
       </div>
       <TranslationInput  v-for="language in languages" :languageCode="language.language_code" :key="language.language_code" :translations="descriptions" class="mb-4 flex-row" />
@@ -87,6 +93,7 @@ props: {
     parent: undefined,
     languages: undefined,
     titles: undefined,
+    subtitles: undefined,
     descriptions: undefined,
     amounts: undefined,
     type: String
@@ -121,6 +128,7 @@ props: {
 
       this.$service.API.post('/subcategory/' + this.parent + '/item' ,{
         titles: JSON.stringify(this.titles),
+        subtitles: JSON.stringify(this.subtitles),
         descriptions: JSON.stringify(this.descriptions),
         amounts: JSON.stringify(this.itemAmounts)
       })
