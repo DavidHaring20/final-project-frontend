@@ -144,6 +144,7 @@ props: {
 
       this.$service.API.post('/item/update/' + this.parent ,{
         titles: JSON.stringify(this.titles),
+        subtitles: JSON.stringify(this.subtitles),
         descriptions: JSON.stringify(this.descriptions),
         amounts: this.itemAmounts
       })
