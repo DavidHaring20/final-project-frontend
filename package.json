@@ -59,6 +59,7 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@types/postcss-load-config": "^3.0.1",
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "~4.4.0",
     "@vue/cli-service": "~4.4.0",
