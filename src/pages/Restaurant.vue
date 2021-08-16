@@ -59,23 +59,8 @@
           <!-- Modal for adding a Creating new Style, Deleting Style or Updating Style -->
           <div v-else-if="modalTitle == 'Style'">
             <StyleForm
-              :headerImageMaxHeight="headerImageMaxHeight"
-              :itemTitleFontFamily="itemTitleFontFamily"
-              :itemTitleDisplay="itemTitleDisplay"
-              :itemSubtitleColor="itemSubtitleColor"
-              :itemDescriptionColor="itemDescriptionColor"
-              :itemTitleFontWeight="itemTitleFontWeight"
-              :itemSubtitleFontWeight="itemSubtitleFontWeight" 
-              :itemDescriptionFontWeight="itemDescriptionFontWeight" 
-              :itemPriceFontWeight="itemPriceFontWeight" 
-              :itemTitleFontSize="itemTitleFontSize"
-              :itemSubtitleFontSize="itemSubtitleFontSize" 
-              :itemDescriptionFontSize="itemDescriptionFontSize" 
-              :itemPriceFontSize="itemPriceFontSize"
-              :itemPriceWidth="itemPriceWidth"
-              :restaurantID="restaurantID"
-
-              @style-crete="addStyle()"
+              @style-select="selectStyle($event.style)"
+              @style-create="addStyle()"
               @style-edit="updateStyle()"
               @style-delete="deleteStyle()"
               @close="hideModal"
@@ -108,6 +93,7 @@
                 <Category
                   :category="category"
                   :selectedLanguage="selectedLanguage"
+                  :styleObject="styleObject"
                   @new="showNewModal($event.parent, $event.title, undefined)"
                   @edit="showNewModal($event.parentId, $event.title, $event.thing)"
                   @delete="alert($event)"
@@ -179,6 +165,10 @@ export default {
 
   mounted() {
     this.getData();
+  },
+
+  props: {
+    styleObject: Object
   },
 
   computed: {
@@ -380,6 +370,12 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+
+    // Set style
+    selectStyle(style) {
+      this.styleObject = style;
+      console.log(this.styleObject);
     },
 
     //Add/update/delete category, subcategory, item and update footer on front
