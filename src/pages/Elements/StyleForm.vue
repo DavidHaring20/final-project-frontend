@@ -4,10 +4,10 @@
       
         <div v-for="style in styles" v-bind:key="style.id">
             <div class="px-6 flex flew-row rounded-lg border-2 border-gray-300 my-8 p-4" @click="selectStyle(style.id)">
-                <div v-bind:class="[style.item_title_font_family, style.item_title_display, style.item_title_font_weight, style.item_title_font_size, space]"><span>Item Title</span></div>
-                <div v-bind:class="[style.item_subtitle_color, style.item_subtitle_font_weight, style.item_subtitle_font_size, space]"><span>Item Subtitle</span></div>
-                <div v-bind:class="[style.item_description_color, style.item_description_font_weight, style.item_description_font_size, space]"><span>Item Description</span></div>
-                <div v-bind:class="[style.item_price_font_weight, style.item_price_font_size, style.item_price_width, space]">Price</div>
+                <div v-bind:class="[style.item_title_font_family, style.item_title_display, style.item_title_font_weight, style.item_title_font_size, space, 'w-full']"><span>Item Title</span></div>
+                <div v-bind:class="[style.item_subtitle_color, style.item_subtitle_font_weight, style.item_subtitle_font_size, space, 'mt-1']"><span>Item Subtitle</span></div>
+                <div v-bind:class="[style.item_description_color, style.item_description_font_weight, style.item_description_font_size, space, 'mr-3', 'mt-1']"><span>Item Description</span></div>
+                <div v-bind:class="[style.item_price_font_weight, style.item_price_font_size, style.item_price_width, 'w-1/4']">Price</div>
             </div>
         </div>
 
