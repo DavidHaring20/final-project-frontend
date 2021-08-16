@@ -55,6 +55,32 @@
               @close="hideModal"
             />
           </div>
+
+          <!-- Modal for adding a Creating new Style, Deleting Style or Updating Style -->
+          <div v-else-if="modalTitle == 'Style'">
+            <StyleForm
+              :headerImageMaxHeight="headerImageMaxHeight"
+              :itemTitleFontFamily="itemTitleFontFamily"
+              :itemTitleDisplay="itemTitleDisplay"
+              :itemSubtitleColor="itemSubtitleColor"
+              :itemDescriptionColor="itemDescriptionColor"
+              :itemTitleFontWeight="itemTitleFontWeight"
+              :itemSubtitleFontWeight="itemSubtitleFontWeight" 
+              :itemDescriptionFontWeight="itemDescriptionFontWeight" 
+              :itemPriceFontWeight="itemPriceFontWeight" 
+              :itemTitleFontSize="itemTitleFontSize"
+              :itemSubtitleFontSize="itemSubtitleFontSize" 
+              :itemDescriptionFontSize="itemDescriptionFontSize" 
+              :itemPriceFontSize="itemPriceFontSize"
+              :itemPriceWidth="itemPriceWidth"
+              :restaurantID="restaurantID"
+
+              @style-crete="addStyle()"
+              @style-edit="updateStyle()"
+              @style-delete="deleteStyle()"
+              @close="hideModal"
+            />
+          </div>
         </Modal>
 
       <div class="mb-auto">
@@ -63,6 +89,7 @@
           {{ restaurant.translations[0].name }}
           <br>
           <div class="flex-inital justify-end space-x-2">
+            <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Style', undefined)">Styles</button>
             <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
             <button class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
           </div>
@@ -121,6 +148,7 @@ import SubcategoryForm from './Elements/SubcategoryForm.vue'
 import ItemForm from './Elements/ItemForm.vue'
 import FooterForm from './Elements/FooterForm.vue'
 import FileSaver from 'file-saver'
+import StyleForm from './Elements/StyleForm.vue'
 
 export default {
   name: 'Restaurant',
@@ -133,7 +161,8 @@ export default {
     CategoryForm,
     SubcategoryForm,
     ItemForm,
-    FooterForm
+    FooterForm,
+    StyleForm
   },
 
   data() {
