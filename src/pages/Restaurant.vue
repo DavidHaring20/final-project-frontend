@@ -168,7 +168,25 @@ export default {
   },
 
   props: {
-    styleObject: Object
+    styleObject: {
+      type: Object,
+      default: {
+        'header_image_max_height': 'h-16',
+        'item_title_font_family': 'font-sans',
+        'item_title_display': '',
+        'item_title_font_weight': 'font-bold',
+        'item_title_font_size': 'text-lg',
+        'item_subtitle_color': 'text-pink-700',
+        'item_subtitle_font_weight': 'font-semibold',
+        'item_subtitle_font_size': 'text-sm',
+        'item_description_color': 'text-pink-700',
+        'item_description_font_weight': 'font-semibold',
+        'item_description_font_size': 'text-sm',
+        'item_price_font_weight': 'font-normal',
+        'item_price_font_size': 'text-lg',
+        'item_price_width': 'w-8'
+      }
+    }
   },
 
   computed: {
