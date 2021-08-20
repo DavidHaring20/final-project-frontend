@@ -5,7 +5,11 @@
         <div v-for="style in styles" v-bind:key="style.id">
             
             <div class="flex flew-row">
-                <div class="px-6 rounded-lg border-2 border-gray-300 my-8 p-4 grid grid-flow-col grid-cols-2 grid-rows-2 gap-5 w-4/5" @click="selectStyle(style.id)">
+                <div 
+                    class="cursor-pointer hover:bg-gray-300 px-6 rounded-lg border-2 border-gray-300 my-8 p-4 grid grid-flow-col grid-cols-2 grid-rows-2 gap-5 w-4/5" 
+                    @click="selectStyle(style.id)"
+                    :style="style.id == styleID ? 'border-color: blue; border-width: 3px': ''"
+                >
                     <div :style="{fontFamily: style.item_title_font_family, display: style.item_title_display, fontWeight: style.item_title_font_weight, fontSize: style.item_title_font_size}"><span>Item Title</span></div>
                     <div :style="{textColor: style.item_subtitle_color, fontWeight: style.item_subtitle_font_weight, fontSite: style.item_subtitle_font_size}"><span>Item Subtitle</span></div>
                     <div :style="{textColor: style.item_description_color, fontWeight: style.item_description_font_weight, fontSize: style.item_description_font_size}"><span>Item Description</span></div>
@@ -199,6 +203,7 @@ export default {
             .then(data => {
                 self.$nextTick(() => {
                     self.$emit('style-select', {styleId: data.data.style.id});
+                    this.hideModal();
                 });
             })
         },
@@ -223,6 +228,5 @@ export default {
             });
         }
     }
-    
 }
 </script>
