@@ -182,13 +182,13 @@ export default {
         selectStyle(id) {
             let self = this;
 
-            this.$service.API.get('/styles/show/' + id)
+            this.$service.API.get('/styles/' + id)
             .then(response => response.data)
             .then(data => {
                 self.$nextTick(() => {
-                    self.$emit('style-select', {style: data.data.style});
+                    self.$emit('style-select', {styleId: data.data.style.id});
                 });
-                console.log(data.data.style);
+                console.log(data.data.style.id);
             })
         },
 

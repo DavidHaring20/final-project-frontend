@@ -59,7 +59,7 @@
           <!-- Modal for adding a Creating new Style, Deleting Style or Updating Style -->
           <div v-else-if="modalTitle == 'Style'">
             <StyleForm
-              @style-select="selectStyle($event.style)"
+              @style-select="selectStyle($event.styleId)"
               @style-create="addStyle()"
               @style-edit="updateStyle()"
               @style-delete="deleteStyle()"
@@ -393,9 +393,17 @@ export default {
     },
 
     // Set style
-    selectStyle(style) {
-      this.styleObject = style;
-      console.log(this.styleObject);
+    selectStyle(styleId) {
+      // this.styleObject = style;
+      //console.log(this.styleObject);
+      console.log(this.restaurant.id);
+      this.$service.API.patch('/styles/select/' +  this.restaurant.id, {
+        styleId: JSON.stringify(styleId)
+      })
+      .then(response => response.data)
+      .then(data => {
+        console.log(data);
+      })
     },
 
     //Add/update/delete category, subcategory, item and update footer on front
