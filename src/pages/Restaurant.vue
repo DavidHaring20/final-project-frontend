@@ -93,7 +93,6 @@
                 <Category
                   :category="category"
                   :selectedLanguage="selectedLanguage"
-                  :styleObject="styleObject"
                   @new="showNewModal($event.parent, $event.title, undefined)"
                   @edit="showNewModal($event.parentId, $event.title, $event.thing)"
                   @delete="alert($event)"
@@ -165,30 +164,6 @@ export default {
 
   mounted() {
     this.getData();
-  },
-
-  props: {
-    styleObject: {
-      type: Object,
-      default() {
-        return {
-          'header_image_max_height': 'h-16',
-          'item_title_font_family': 'font-sans',
-          'item_title_display': '',
-          'item_title_font_weight': 'font-bold',
-          'item_title_font_size': 'text-lg',
-          'item_subtitle_color': 'text-pink-700',
-          'item_subtitle_font_weight': 'font-semibold',
-          'item_subtitle_font_size': 'text-sm',
-          'item_description_color': 'text-pink-700',
-          'item_description_font_weight': 'font-semibold',
-          'item_description_font_size': 'text-sm',
-          'item_price_font_weight': 'font-normal',
-          'item_price_font_size': 'text-lg',
-          'item_price_width': 'w-8'
-        }
-      }
-    }
   },
 
   computed: {
@@ -394,9 +369,6 @@ export default {
 
     // Set style
     selectStyle(styleId) {
-      // this.styleObject = style;
-      //console.log(this.styleObject);
-      console.log(this.restaurant.id);
       this.$service.API.patch('/styles/select/' +  this.restaurant.id, {
         styleId: JSON.stringify(styleId)
       })

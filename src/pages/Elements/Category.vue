@@ -15,7 +15,6 @@
           <Subcategory
             :subcategory="subcategory"
             :selectedLanguage="selectedLanguage"
-            :styleObject="styleObject"
             @add="emitShowAddModal($event.item, $event.title)"
             @edit="emitShowEditModal($event.parentId, $event.title, $event.thing)"
             @delete="emitDelete($event.id, $event.title)"

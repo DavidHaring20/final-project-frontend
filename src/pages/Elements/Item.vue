@@ -2,14 +2,14 @@
   <tr>
     <td class="px-2 py-4 whitespace-nowrap">
       <div class="ml-4">
-        <div v-bind:class="[styleObject.item_title_font_family, styleObject.item_title_display, styleObject.item_title_font_weight, styleObject.item_title_font_size]">
+        <div class="text-xs font-medium text-gray-500">
           {{ item.translations[languageIndex(item.translations)].title }}
         </div>
       </div>
     </td>
     <td class="px-3 py-4 whitespace-nowrap">
       <div class="ml-4">
-        <div v-bind:class="[styleObject.item_subtitle_color, styleObject.item_subtitle_font_weight, styleObject.item_subtitle_font_size]">
+        <div class="text-xs font-medium text-gray-500">
           <div v-if="item.translations[languageIndex(item.translations)].subtitle">
            {{ item.translations[languageIndex(item.translations)].subtitle }}
           </div>
@@ -18,7 +18,7 @@
     </td>
     <td class="px-3 py-4 whitespace-nowrap">
       <div class="ml-4">
-        <div v-bind:class="[styleObject.item_description_color, styleObject.item_description_font_weight, styleObject.item_description_font_size]">
+        <div class="text-xs font-medium text-gray-500">
           <div v-if="item.translations[languageIndex(item.translations)].description">
            {{ item.translations[languageIndex(item.translations)].description }}
           </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
     </td>
-    <td v-bind:class="[styleObject.item_price_font_weight, styleObject.item_price_font_size, styleObject.item_price_width]">
+    <td class="px-6 py-4 whitespace-nowrap text-xs leading-snug">
       <div v-for="amount in item.amounts" v-bind:key="amount.id">
         {{ amount.price }} kn
       </div>
@@ -54,7 +54,6 @@ export default {
     Button
   },
   props: {
-    styleObject: Object,
     item: undefined,
     selectedLanguage: String
   },

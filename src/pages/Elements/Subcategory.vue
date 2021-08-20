@@ -11,7 +11,6 @@
       <ItemsTable
         :items="subcategory.items"
         :selectedLanguage="selectedLanguage"
-        :styleObject="styleObject"
         @edit="emitItemEdit($event.parent, $event.title, $event.thing)"
         @delete="emitDelete($event.id, $event.title)"
         class="w-full"

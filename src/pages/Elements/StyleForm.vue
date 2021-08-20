@@ -1,17 +1,23 @@
 <template>
     <div class="px-10 py-10">
         <div class="px-6 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider">Styles</div>
-      
+    
         <div v-for="style in styles" v-bind:key="style.id">
-            <div class="px-6 flex flew-row rounded-lg border-2 border-gray-300 my-8 p-4" @click="selectStyle(style.id)">
-                <div v-bind:class="[style.item_title_font_family, style.item_title_display, style.item_title_font_weight, style.item_title_font_size, space, 'w-full']"><span>Item Title</span></div>
-                <div v-bind:class="[style.item_subtitle_color, style.item_subtitle_font_weight, style.item_subtitle_font_size, space, 'mt-1']"><span>Item Subtitle</span></div>
-                <div v-bind:class="[style.item_description_color, style.item_description_font_weight, style.item_description_font_size, space, 'mr-3', 'mt-1']"><span>Item Description</span></div>
-                <div v-bind:class="[style.item_price_font_weight, style.item_price_font_size, style.item_price_width, 'w-1/4']">Price</div>
-            </div>
+            
+            <div class="flex flew-row">
+                <div class="px-6 rounded-lg border-2 border-gray-300 my-8 p-4 grid grid-flow-col grid-cols-2 grid-rows-2 gap-5 w-4/5" @click="selectStyle(style.id)">
+                    <div :style="{fontFamily: style.item_title_font_family, display: style.item_title_display, fontWeight: style.item_title_font_weight, fontSize: style.item_title_font_size}"><span>Item Title</span></div>
+                    <div :style="{textColor: style.item_subtitle_color, fontWeight: style.item_subtitle_font_weight, fontSite: style.item_subtitle_font_size}"><span>Item Subtitle</span></div>
+                    <div :style="{textColor: style.item_description_color, fontWeight: style.item_description_font_weight, fontSize: style.item_description_font_size}"><span>Item Description</span></div>
+                    <div :style="{fontWeight: style.item_price_font_weight, fontSize: style.item_price_font_size, width: style.item_price_width}">Price</div>
+                </div>
+                <div class="flex justify-center items-center w-1/6">
+                    <Button btnText="Edit"/>
+                </div>
+            </div> 
         </div>
 
-        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="hideModal()">Choose Style</button>
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="confirmSelectedStyle()">Choose Style</button>
 
         <div class="border-b-2 mt-6"></div>
 
@@ -164,13 +170,19 @@
 </template>
 
 <script>
+import Button from './Button.vue';
+
 export default {
     name: 'StyleForm',
+
+    components: {
+        Button
+    },
 
     data() { 
         return{
             styles: undefined,
-            space: 'w-full'
+            styleID: undefined
         }
     },
     
@@ -179,17 +191,20 @@ export default {
     },
 
     methods: {
-        selectStyle(id) {
+        confirmSelectedStyle() {
             let self = this;
 
-            this.$service.API.get('/styles/' + id)
+            this.$service.API.get('/styles/' + this.styleID)
             .then(response => response.data)
             .then(data => {
                 self.$nextTick(() => {
                     self.$emit('style-select', {styleId: data.data.style.id});
                 });
-                console.log(data.data.style.id);
             })
+        },
+
+        selectStyle(id) {
+            this.styleID = id;
         },
 
         hideModal() {

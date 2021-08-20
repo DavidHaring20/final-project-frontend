@@ -6,11 +6,11 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider" v-bind:class="[styleObject.item_title_font_family, styleObject.item_title_display, styleObject.item_title_font_weight, styleObject.item_title_font_size]">Item</th>
-                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider" v-bind:class="[styleObject.item_subtitle_color, styleObject.item_subtitle_font_weight, styleObject.item_subtitle_font_size]">Subtitle</th>
-                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider" v-bind:class="[styleObject.item_description_color, styleObject.item_description_font_weight, styleObject.item_description_font_size]">Description</th>
+                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider text-xs font-medium text-gray-700">Item</th>
+                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider text-xs font-medium text-gray-700">Subtitle</th>
+                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider text-xs font-medium text-gray-700">Description</th>
                 <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider text-xs font-medium text-gray-700">Amount</th>
-                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider" v-bind:class="[styleObject.item_price_font_weight, styleObject.item_price_font_size, styleObject.item_price_width]">Price</th>
+                <th scope="col" class="px-6 py-3 text-left uppercase tracking-wider text-xs font-medium text-gray-700">Price</th>
                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Edit</th>
                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Delete</th>
               </tr>
@@ -18,7 +18,6 @@
             <tbody  v-for="item in items" v-bind:key="item.id" class="bg-white divide-y divide-gray-200">
               <Item
                 :item="item"
-                :styleObject="styleObject"
                 :selectedLanguage="selectedLanguage"
                 @edit="emitEdit($event.parent, $event.title, $event.thing)"
                 @delete="emitDelete($event.id, $event.title)"
