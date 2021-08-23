@@ -11,8 +11,8 @@
                     :style="style.id == styleID ? 'border-color: blue; border-width: 3px': ''"
                 >
                     <div :style="{fontFamily: style.item_title_font_family, display: style.item_title_display, fontWeight: style.item_title_font_weight, fontSize: style.item_title_font_size}"><span>Item Title</span></div>
-                    <div :style="{textColor: style.item_subtitle_color, fontWeight: style.item_subtitle_font_weight, fontSite: style.item_subtitle_font_size}"><span>Item Subtitle</span></div>
-                    <div :style="{textColor: style.item_description_color, fontWeight: style.item_description_font_weight, fontSize: style.item_description_font_size}"><span>Item Description</span></div>
+                    <div :style="{color: style.item_subtitle_color, fontWeight: style.item_subtitle_font_weight, fontSize: style.item_subtitle_font_size}"><span>Item Subtitle</span></div>
+                    <div :style="{color: style.item_description_color, fontWeight: style.item_description_font_weight, fontSize: style.item_description_font_size}"><span>Item Description</span></div>
                     <div :style="{fontWeight: style.item_price_font_weight, fontSize: style.item_price_font_size, width: style.item_price_width}">Price</div>
                 </div>
                 <div class="flex justify-center items-center w-1/6">
