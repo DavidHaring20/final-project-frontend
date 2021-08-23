@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-screen">
+  <div class="h-screen">
     <div v-if="restaurant">
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
           <!-- Modal for adding a new category or updating an existing category -->
@@ -113,7 +113,7 @@
           </div>
           <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'Footer', undefined)" class="px-2 pt-5"/>
         </div>
-        <div class="bg-indigo-500 rounded-t-lg shadow w-screen h-28">
+        <div class="bg-indigo-500 rounded-t-lg shadow h-28">
           <div class="text-center text-white">
             {{ restaurant.translations[languageIndex(restaurant.translations, selectedLanguage)].footer }}
           </div>

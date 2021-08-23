@@ -17,8 +17,7 @@
           </div>
 
           <div class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse">
-            <a href="#" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Login</a>
-            <a href="#" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1">Sign up</a>
+            <button @click="goToStyle()" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Style Administration</button>
           </div>
         </div>
       </nav>
@@ -28,6 +27,11 @@
 <script>
 export default {
   name: 'Navbar',
+
+  methods: {
+    goToStyle() {
+      this.$router.push({ name: 'Style'})
+    }
+  }
 }
 </script>
-
