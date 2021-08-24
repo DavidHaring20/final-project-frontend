@@ -29,8 +29,8 @@
             <div class="px-6 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider mt-4">Edit Style</div>
 
             <div class="mt-8 mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Image Height
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    headerImageMaxHeight
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -40,8 +40,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Title Font Family
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemTitleFontFamily
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -51,8 +51,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Title Display
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemTitleDisplay
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -62,8 +62,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Title Font Weight
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemTitleFontWeight
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -73,8 +73,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Title Font Size
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemTitleFontSize
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -84,8 +84,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Subtitle Font Color
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemSubtitleColor
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -95,8 +95,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Subtitle Font Weight
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemSubtitleFontWeight
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -106,8 +106,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Subtitle Font Size
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemSubtitleFontSize
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -117,8 +117,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Description Font Color
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemDescriptionColor
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -128,8 +128,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Description Font Weight
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemDescriptionFontWeight
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -139,8 +139,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Description Font Size
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemDescriptionFontSize
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -161,8 +161,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Price Font Size
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemPriceFontSize
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
@@ -172,8 +172,8 @@
                 />
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
-                    Price Width
+                <label class="block text-gray-700 text-xs mb-2 " for="input">
+                    itemPriceWidth
                 </label>
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"

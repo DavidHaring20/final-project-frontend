@@ -15,7 +15,7 @@
         <td class="text-center p-2">{{ styleObject.item_description_font_size }}</td>
         <td class="text-center p-2">{{ styleObject.item_price_font_size }}</td>
         <td class="text-center p-2">{{ styleObject.item_price_width }}</td>
-        <td class="text-center p-2"><Button btnText="Delete" class="text-center"/></td>
+        <td class="text-center p-2" @click="emitDelete(styleObject.id)"><Button btnText="Delete" class="text-center"/></td>
     </tr>
 </template>
 
@@ -34,8 +34,9 @@ export default {
     },
 
     methods: {
-        emidDelete(id) {
-            this.$emit('delete', {deletedStyleId: id});
+        emitDelete(id) {
+            console.log(id);
+            this.$emit('delete-style', { deletedStyleId: id});
         }
     }
 }
