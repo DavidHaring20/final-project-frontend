@@ -30,7 +30,7 @@ export default {
 
   methods: {
     goToStyle() {
-      this.$router.push({ name: 'Style'})
+      this.$router.push({ name: 'style-administration'})
     }
   }
 }
