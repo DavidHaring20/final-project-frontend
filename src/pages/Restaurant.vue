@@ -55,6 +55,11 @@
               @close="hideModal"
             />
           </div>
+          
+          <!-- Modal for Editing social -->
+          <div v-else-if="modalTitle == 'Social'">
+            <SocialForm></SocialForm>
+          </div>
 
           <!-- Modal for adding a Creating new Style, Deleting Style or Updating Style -->
           <div v-else-if="modalTitle == 'Style'">
@@ -74,6 +79,7 @@
           {{ restaurant.translations[0].name }}
           <br>
           <div class="flex-inital justify-end space-x-2">
+            <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Social', undefined)">Socials</button>
             <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Style', undefined)">Styles</button>
             <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Category', undefined)">New Category</button>
             <button class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="exportJSON(restaurant.id, restaurant.translations[0].name)">Export To JSON</button>
@@ -134,6 +140,7 @@ import ItemForm from './Elements/ItemForm.vue'
 import FooterForm from './Elements/FooterForm.vue'
 import FileSaver from 'file-saver'
 import StyleForm from './Elements/StyleForm.vue'
+import SocialForm from './Elements/SocialForm.vue'
 
 export default {
   name: 'Restaurant',
@@ -147,7 +154,8 @@ export default {
     SubcategoryForm,
     ItemForm,
     FooterForm,
-    StyleForm
+    StyleForm,
+    SocialForm
   },
 
   data() {
