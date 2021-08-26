@@ -97,7 +97,7 @@ export default {
     addNewRestaurant(restaurant) {
       this.restaurants.push(restaurant);
       this.createRestaurantSocial(restaurant.id);
-      this.hideModal();
+      this.hideModal(); 
     },
 
     createRestaurantSocial(id) {
