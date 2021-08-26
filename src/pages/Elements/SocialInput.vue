@@ -94,6 +94,8 @@
                 <Button btnText="Delete" @clicked="alert('Instagram')" class="ml-4"/>
             </div>
         </div>
+
+        <button class="ml-6 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="updateSocial()">Save Changes</button>
     </div>
 </template>
 
@@ -122,7 +124,13 @@ export default {
             googleUrl: this.social.google_url,
             instagramUrl: this.social.instagram_url,
             tripadvisorUrl: this.social.tripadvisor_url ,
-            twitterUrl: this.social.twitter_url
+            twitterUrl: this.social.twitter_url,
+            facebookUrlOriginal: this.social.facebook_url,
+            foursquareUrlOriginal: this.social.foursquare_url,
+            googleUrlOriginal: this.social.google_url,
+            instagramUrlOriginal: this.social.instagram_url,
+            tripadvisorUrlOriginal: this.social.tripadvisor_url ,
+            twitterUrlOriginal: this.social.twitter_url
         }
     },
 
@@ -133,6 +141,11 @@ export default {
     },
 
     methods: {
+        updateSocial() {
+            this.$emit('update-social', { fbUrl: this.facebookUrl, fsUrl: this.foursquareUrl, ggUrl: this.googleUrl,
+                                          igUrl: this.instagramUrl, taUrl: this.tripadvisorUrl, twUrl: this.twitterUrl});
+        },
+
         removeFromSocialsArray(socialName) {
             for (let i = 0; i < this.socialsArray.length; i++) {
                 if (socialName == this.socialsArray[i]) {
@@ -141,14 +154,28 @@ export default {
 
                     let option = document.getElementById(socialName);
                 
+                    if (socialName.toLowerCase() === 'facebook') {
+                        this.facebookUrl = this.facebookUrlOriginal;
+                    } else if (socialName.toLowerCase() === 'foursquare') {
+                        this.foursquareUrl = this.foursquareUrlOriginal;
+                    } else if (socialName.toLowerCase() ===  'google') {
+                        this.googleUrl = this.googleUrlOriginal;
+                    } else if (socialName.toLowerCase() === 'instagram') {
+                        this.instagramUrl = this.instagramUrlOriginal;
+                    } else if (socialName.toLowerCase() === 'tripadvisor') {
+                        this.tripadvisorUrl = this.tripadvisorUrlOriginal;
+                    } else {
+                        this.twitterUrl = this.twitterUrlOriginal;
+                    }
+
                     option.setAttribute('class', '#FFFFFF');
-                    option.setAttribute('disabled', false);
+                    option.removeAttribute('disabled');
                 }
             }
         },
 
         alert(socialName) {
-            this.$confirm("Are you sure?").then(() => {
+            this.$confirm("Are you sure? Changes won't be saved.").then(() => {
             this.removeFromSocialsArray(socialName);
         });
     }

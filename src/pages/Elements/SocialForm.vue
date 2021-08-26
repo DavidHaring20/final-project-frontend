@@ -31,7 +31,10 @@
                 <SocialInput
                 :typeOf="selectedSocial"
                 :socialsArray="socials"
-                :social="social"></SocialInput>
+                :social="social"
+                @update-social="updateSocial(restaurantId, $event.fbUrl, $event.fsUrl, $event.ggUrl,
+                                             $event.igUrl, $event.taUrl, $event.twUrl)"
+                ></SocialInput>
             </div>
         </div>
     </div>
@@ -67,6 +70,21 @@ export default {
     },
 
     methods: {
+        updateSocial(id, fbUrl, fsUrl, ggUrl, igUrl, taUrl, twUrl) {
+            this.$service.API.patch('/social/' + id, {
+                'facebookUrl': fbUrl,
+                'foursquareUrl': fsUrl,
+                'googleUrl': ggUrl,
+                'instagramUrl': igUrl,
+                'tripadvisorUrl': taUrl,
+                'twitterUrl': twUrl
+            })
+            .then(response => response.data)
+            .then(() => {
+                this.$modal.hide('modal')
+            });
+        },
+
         getSocial(id) {
             this.$service.API.get('/social/' + id)
             .then(response => response.data)
