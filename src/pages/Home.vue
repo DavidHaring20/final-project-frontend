@@ -96,7 +96,16 @@ export default {
 
     addNewRestaurant(restaurant) {
       this.restaurants.push(restaurant);
+      this.createRestaurantSocial(restaurant.id);
       this.hideModal();
+    },
+
+    createRestaurantSocial(id) {
+      this.$service.API.post('/social/' + id)
+      .then(response => response.data)
+      .then(data => {
+        console.log(data);
+      })
     },
 
     getIndexById(id, parent) {
