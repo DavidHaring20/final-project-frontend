@@ -34,7 +34,7 @@
                 :social="social"
                 @update-social="updateSocial(restaurantId, $event.fbUrl, $event.fsUrl, $event.ggUrl,
                                              $event.igUrl, $event.taUrl, $event.twUrl)"
-                ></SocialInput>
+                :buttonText="buttonText"></SocialInput>
             </div>
         </div>
     </div>
@@ -65,7 +65,8 @@ export default {
             emitMessage: '',
             selectedSocial: '',
             socials: [],
-            social: undefined
+            social: undefined,
+            buttonText: "Exit"
         }
     },
 
@@ -99,6 +100,8 @@ export default {
         },
 
         callLog() {
+            this.buttonText = "Save Changes";
+
             if (!this.socials.includes(this.selectedSocial)) {
                 console.log(this.selectedSocial);
                 this.socials.push(this.selectedSocial);

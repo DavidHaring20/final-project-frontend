@@ -95,7 +95,7 @@
             </div>
         </div>
 
-        <button class="ml-6 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="updateSocial()">Save Changes</button>
+        <button class="ml-6 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="updateSocial()">{{ buttonText }}</button>
     </div>
 </template>
 
@@ -137,7 +137,8 @@ export default {
     props: {
         typeOf: String,
         socialsArray: Array,
-        social: Object
+        social: Object,
+        buttonText: String
     },
 
     methods: {

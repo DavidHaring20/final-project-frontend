@@ -74,7 +74,7 @@
           </div>
         </Modal>
 
-      <div class="mb-auto">
+      <div class="mb-auto min-h-screen">
         <!-- Restaurant name, add new category and export to JSON -->
         <div class="px-6 text-5xl font-medium md:text-right font-sans tracking-tighter capitalize subpixel-antialiased text-gray-600 sm:text-center">
           {{ restaurant.translations[0].name }}
