@@ -33,7 +33,7 @@ export default {
         styleObject: Object
     },
 
-    methods: {
+    methods:  {
         emitDelete(id) {
             console.log(id);
             this.$emit('delete-style', { deletedStyleId: id});
