@@ -30,7 +30,8 @@
             <div>
                 <SocialInput
                 :typeOf="selectedSocial"
-                :socialsArray="socials"></SocialInput>
+                :socialsArray="socials"
+                :social="social"></SocialInput>
             </div>
         </div>
     </div>
@@ -43,6 +44,14 @@ import SocialInput from './SocialInput.vue';
 export default {
     name: 'SocialForm',
 
+    mounted() {
+        this.getSocial(this.restaurantId)
+    },
+
+    props: {
+        restaurantId: undefined
+    },
+
     components: {
         Button,
         SocialInput
@@ -52,11 +61,21 @@ export default {
         return {
             emitMessage: '',
             selectedSocial: '',
-            socials: []
+            socials: [],
+            social: undefined
         }
     },
 
     methods: {
+        getSocial(id) {
+            this.$service.API.get('/social/' + id)
+            .then(response => response.data)
+            .then(data => {
+                console.log(data.social);
+                this.social = data.social;
+            })
+        },
+
         turnOnSelection() {
             this.emitMessage = 'On';
         },

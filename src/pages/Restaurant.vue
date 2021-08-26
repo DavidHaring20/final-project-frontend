@@ -58,7 +58,8 @@
           
           <!-- Modal for Editing social -->
           <div v-else-if="modalTitle == 'Social'">
-            <SocialForm></SocialForm>
+            <SocialForm 
+            :restaurantId="parentId"></SocialForm>
           </div>
 
           <!-- Modal for adding a Creating new Style, Deleting Style or Updating Style -->

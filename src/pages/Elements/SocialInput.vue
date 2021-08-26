@@ -15,6 +15,7 @@
                 <input class="ml-3 shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     name="input"
+                    v-model="facebookUrl"
                 />
 
                 <!-- Button -->
@@ -31,6 +32,7 @@
                 <input class="ml-3 shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     name="input"
+                    v-model="twitterUrl"
                 />
 
                 <Button btnText="Delete" @clicked="alert('Twitter')" class="ml-4"/>
@@ -44,6 +46,7 @@
                 <input class="ml-3 shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     name="input"
+                    v-model="tripadvisorUrl"
                 />
 
                 <Button btnText="Delete" @clicked="alert('Tripadvisor')" class="ml-4"/>
@@ -57,6 +60,7 @@
                 <input class="ml-3 shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     name="input"
+                    v-model="foursquareUrl"
                 />
 
                 <Button btnText="Delete" @clicked="alert('Foursquare')" class="ml-4"/>
@@ -70,6 +74,7 @@
                 <input class="ml-3 shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     name="input"
+                    v-model="googleUrl"
                 />
 
                 <Button btnText="Delete" @clicked="alert('Google')" class="ml-4"/>
@@ -83,6 +88,7 @@
                 <input class="ml-3 shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     name="input"
+                    v-model="instagramUrl"
                 />
 
                 <Button btnText="Delete" @clicked="alert('Instagram')" class="ml-4"/>
@@ -110,13 +116,20 @@ export default {
             tripadvisorImage: tripadvisor,
             foursquareImage: foursquare,
             googleImage: google,
-            instagramImage: instagram
+            instagramImage: instagram,
+            facebookUrl: this.social.facebook_url,
+            foursquareUrl: this.social.foursquare_url,
+            googleUrl: this.social.google_url,
+            instagramUrl: this.social.instagram_url,
+            tripadvisorUrl: this.social.tripadvisor_url ,
+            twitterUrl: this.social.twitter_url
         }
     },
 
     props: {
         typeOf: String,
-        socialsArray: Array
+        socialsArray: Array,
+        social: Object
     },
 
     methods: {
@@ -125,6 +138,11 @@ export default {
                 if (socialName == this.socialsArray[i]) {
                     this.socialsArray.splice(i, 1);
                     console.log("Removed from an array: " + socialName);
+
+                    let option = document.getElementById(socialName);
+                
+                    option.setAttribute('class', '#FFFFFF');
+                    option.setAttribute('disabled', false);
                 }
             }
         },
