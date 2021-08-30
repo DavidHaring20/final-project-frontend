@@ -55,6 +55,7 @@
     "vue2-leaflet": "^2.6.0",
     "vue2-leaflet-geosearch": "^1.0.6",
     "vuedraggable": "^2.24.3",
+    "vuejs-loading-plugin": "^1.0.51",
     "vuelidate": "^0.7.6",
     "vuex": "^3.6.2"
   },

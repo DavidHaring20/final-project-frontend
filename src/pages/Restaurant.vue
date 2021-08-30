@@ -65,6 +65,7 @@
           <!-- Modal for adding a Creating new Style, Deleting Style or Updating Style -->
           <div v-else-if="modalTitle == 'Style'">
             <StyleForm
+              :restaurantId="parentId"
               @style-select="selectStyle($event.styleId)"
               @style-create="addStyle()"
               @style-edit="updateStyle()"
