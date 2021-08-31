@@ -136,9 +136,14 @@ props: {
       })
       .then(response => {
         this.priceRequiredMessage = response.data.message;
-        self.$nextTick(() => {
-          self.$emit('item-create', {item: response.data.data.newItem, categoryId: response.data.data.categoryId});
-        });
+        if (response.data.data.newItem) {
+          self.$nextTick(() => {
+            self.$emit('item-create', {item: response.data.data.newItem, categoryId: response.data.data.categoryId});
+          });
+        }
+      })
+      .catch(error => {
+        console.log(this.priceRequiredMessage);
       });
     },
 
@@ -154,6 +159,9 @@ props: {
       .then(response => {
         this.priceRequiredMessage = response.data.message;
         self.$emit('item-update', {item: response.data.data.updatedItem, categoryId: response.data.data.categoryId});
+      })
+      .catch(error => {
+        console.log(this.priceRequiredMessage);
       });
     },
 
