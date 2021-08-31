@@ -107,8 +107,6 @@
 </template>
 
 <script>
-import google from '../../assets/images/google-icon.svg';
-import instagram from '../../assets/images/instagram.svg';
 import Button from './Button.vue';
 
 export default {
