@@ -88,7 +88,7 @@
           </div>
         </div>
 
-        <div class="2xl:px-96 xl:px-72 lg:px-50 md:px-1 sm:px-2">
+        <div class="">
           <div class="bg-white sm:p-10">
             <!-- Language selection - Dropdown menu -->
             <div class="grid justify-items-end pr-6">

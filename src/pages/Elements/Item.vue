@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr class="h-12">
     <td class="px-2 py-4 whitespace-nowrap">
       <div class="ml-4">
         <div class="text-xs font-medium text-gray-500">
@@ -7,20 +7,20 @@
         </div>
       </div>
     </td>
-    <td class="px-3 py-4 whitespace-nowrap">
+    <td class="px-3 py-4 break-words">
       <div class="ml-4">
-        <div class="text-xs font-medium text-gray-500">
+        <div class="text-xs font-medium text-gray-500 max-w-prose">
           <div v-if="item.translations[languageIndex(item.translations)].subtitle">
            {{ item.translations[languageIndex(item.translations)].subtitle }}
           </div>
         </div>
       </div>
     </td>
-    <td class="px-3 py-4 whitespace-nowrap">
+    <td class="px-3 py-4 break-words">
       <div class="ml-4">
-        <div class="text-xs font-medium text-gray-500">
+        <div class="text-xs font-medium text-gray-500 max-w-prose">
           <div v-if="item.translations[languageIndex(item.translations)].description">
-           {{ item.translations[languageIndex(item.translations)].description }}
+            {{ item.translations[languageIndex(item.translations)].description }}   
           </div>
         </div>
       </div>
