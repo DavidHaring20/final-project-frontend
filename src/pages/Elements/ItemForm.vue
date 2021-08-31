@@ -44,7 +44,7 @@
 
     <!-- Amount -->
     <div v-for="(amount, index) in itemAmounts" :key="index" class="px-6">
-      <div class="py-2 flex">
+      <div class="py-2 flex mb-6">
         Amount
         <div class="pl-1">
           <button @click="type == 'New' ? removeNewAmount(index) : removeAmountForUpdate(amount.id)" class="bg-gray-500 hover:bg-gray-700 text-s px-1  py-1 rounded-full text-white items-center justify-center transition-colors duration-300">
@@ -54,7 +54,8 @@
           </button>
         </div>
       </div>
-      <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
+      <span v-if="priceRequiredMessage" class="border-solid border-2 rounded border-red-600 text-red-400 p-3.5"> {{ priceRequiredMessage }} </span>
+      <label class="block text-gray-700 text-xs mb-2 uppercase mt-6" for="input">
         Price
       </label>
       <input
@@ -107,7 +108,8 @@ props: {
     return {
       prices: undefined,
       itemAmounts: undefined,
-      createdAmount: {}
+      createdAmount: {},
+      priceRequiredMessage: ""
     }
   },
 
@@ -133,6 +135,7 @@ props: {
         amounts: JSON.stringify(this.itemAmounts)
       })
       .then(response => {
+        this.priceRequiredMessage = response.data.message;
         self.$nextTick(() => {
           self.$emit('item-create', {item: response.data.data.newItem, categoryId: response.data.data.categoryId});
         });
@@ -149,7 +152,8 @@ props: {
         amounts: this.itemAmounts
       })
       .then(response => {
-          self.$emit('item-update', {item: response.data.data.updatedItem, categoryId: response.data.data.categoryId});
+        this.priceRequiredMessage = response.data.message;
+        self.$emit('item-update', {item: response.data.data.updatedItem, categoryId: response.data.data.categoryId});
       });
     },
 

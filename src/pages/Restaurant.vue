@@ -377,17 +377,6 @@ export default {
         });
     },
 
-    // Set style
-    selectStyle(styleId) {
-      this.$service.API.patch('/styles/select/' +  this.restaurant.id, {
-        styleId: JSON.stringify(styleId)
-      })
-      .then(response => response.data)
-      .then(data => {
-        console.log(data);
-      })
-    },
-
     //Add/update/delete category, subcategory, item and update footer on front
 
     addNewCategory(category) {
