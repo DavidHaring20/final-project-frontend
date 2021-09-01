@@ -55,6 +55,8 @@
                 message: "",
                 statusCode: 0,
                 messageStyle: "",
+                user_id: 0,
+                auth_token: 0
             }
         },
 
@@ -69,7 +71,13 @@
 
             logIn(authenticated) {
                 if (authenticated === true) {
-                    this.$router.push({ name: 'Home'})
+
+                    
+                    this.$service.session.isActive = true;
+                    this.$service.session.user_id =  this.user_id;
+                    this.$service.session.auth_token = this.auth_token;
+                    console.log(this.$service.session);
+                    this.$router.push({ name: 'Home'});
                 } else {
                     console.log('Failed to go to Login Page.');
                 }
@@ -82,10 +90,16 @@
                 })
                 .then(response => response.data)
                 .then(data => {
-                    console.log(data);
-                    console.log(data.authenticated);
+                    // SESSION 
+                    this.$service.session.isEmailSubmitted =  true,
+                    this.$service.session.requestedEmail = this.email,
+                    
                     this.message = data.message;
                     this.statusCode = data.statusCode;
+
+                    this.user_id = data.user.id;
+                    this.auth_token = data.authToken;
+                    
                     this.setMessageStyle(this.statusCode);
                     this.logIn(data.authenticated)
                 })

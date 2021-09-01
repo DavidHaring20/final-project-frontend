@@ -6,7 +6,7 @@ export default {
   data: () => ({
     isEmailSubmitted: false,
     requestedEmail: '',
-    isActive: true,
+    isActive: false,
     auth_token: '',
     user_id: 0,
   }),
@@ -36,16 +36,14 @@ export default {
   /**/
 
   created: function () {
+    if (localStorage.auth_token) {
+      this.auth_token = localStorage.auth_token;
+      this.$service.nimoteAPI.defaults.headers.common['Authorization'] = `Bearer ${this.auth_token}`;
+    }
+    this.isActive = !!this.auth_token;
 
-    // if (localStorage.auth_token) {
-    //   this.auth_token = localStorage.auth_token;
-    //   this.$service.nimoteAPI.defaults.headers.common['Authorization'] = `Bearer ${this.auth_token}`;
-    // }
-    // this.isActive = !!this.auth_token;
-
-    // if (process.env.NODE_ENV != 'production')
-    //   console.log(`Session created with auth_token '${this.auth_token}'`);
-
+    if (process.env.NODE_ENV != 'production')
+      console.log(`Session created with auth_token '${this.auth_token}'`);
   },
 
   beforeEachRoute: async function (to, from, next) {
