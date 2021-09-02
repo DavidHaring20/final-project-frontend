@@ -51,7 +51,7 @@ export default {
 
   methods: {
     getRestaurantList() {
-      this.$service.API.get("/restaurants")
+      this.$service.API.get("/restaurants/" + this.$service.session.user_id)
         .then(response => {
           this.restaurants = response.data.data.restaurants;
         })
