@@ -135,8 +135,10 @@ export default {
         names: JSON.stringify(this.restaurantNames),
         footers: JSON.stringify(this.restaurantFooters),
         languages: JSON.stringify(this.languages),
+        userId: JSON.stringify(this.$service.session.user_id)
       })
       .then(response => {
+        console.log(response);
         self.$nextTick(() => {
           self.$emit('restaurant-create', response.data.data.restaurant);
         });
