@@ -18,6 +18,7 @@
                         </div>
                         <div>
                             <input
+                                @keyup.enter="requestVerificationCode()"
                                 v-model="email"
                                 type="text" 
                                 name="e-mail"
@@ -37,6 +38,7 @@
                     <div class="flex flex-row mb-5">
                             <p class="pr-5 font-bold">Passcode: </p>
                             <input 
+                                @keyup.enter="authenticate()"
                                 v-model="passcode"
                                 type="text"
                                 name="passcode" 
