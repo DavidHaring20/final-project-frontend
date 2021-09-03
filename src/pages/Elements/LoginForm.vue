@@ -7,9 +7,9 @@
 
         <div class="z-10 h-screen relative flex flex-col justify-center items-center">
 
-            <div class="border-solid rounded bg-white p-20 text-center border-gray-600" style="border-width: 4px">
-            <div class="h-20 mb-8">
-                <p v-if="message" v-bind:class="messageStyle" > {{ message }}</p>
+            <div class="border-solid bg-white p-20 text-center border-gray-600 shadow-xl" style="border-width: 4px; border-radius: 10%">
+            <div class="h-32 mb-8 justify-center flex">
+                <p v-if="message" v-bind:class="messageStyle" style="max-width: 35ch; max-height: 5rem; justify-items:center; align-self-center"> {{ message }}</p>
             </div>
                 <div class="mb-8">
                     <div class="flex flex-row mb-5">
@@ -67,6 +67,7 @@
                 messageStyle: "",
                 user_id: 0,
                 auth_token: 0,
+                user_role: "",
                 renderPasscodeSection: false
             }
         },
@@ -86,6 +87,7 @@
                     this.$service.session.isActive = true;
                     this.$service.session.user_id =  this.user_id;
                     this.$service.session.auth_token = this.auth_token;
+                    this.$service.session.user_role = this.user_role;
                     console.log(this.$service.session);
                     this.$router.push({ name: 'Home'});
                 } else {
@@ -108,6 +110,7 @@
                     this.statusCode = data.statusCode;
 
                     this.user_id = data.user.id;
+                    this.user_role = data.user.role;
                     this.auth_token = data.authToken;
                     
                     this.setMessageStyle(this.statusCode);

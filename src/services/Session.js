@@ -9,6 +9,7 @@ export default {
     isActive: false,
     auth_token: '',
     user_id: 0,
+    user_role: ''
   }),
 
   mixins: [
