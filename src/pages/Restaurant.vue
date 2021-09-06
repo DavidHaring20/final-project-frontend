@@ -196,30 +196,30 @@ export default {
       let item = this.item;
       this.restaurant.languages.forEach((language) =>
         {
-          itemTitlesData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].title : '';
+          this.itemTitlesData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].title : '';
         }
       );
-      return;
+      return null;
     },
 
     itemDescriptions: function() {
       let item = this.item;
       this.restaurant.languages.forEach((language) =>
         {
-          itemDescriptionsData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].description : '';
+          this.itemDescriptionsData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].description : '';
         }
       );
-      return;
+      return null;
     },
 
     itemSubtitles: function() {
       let item = this.item;
       this.restaurant.languages.forEach((language) =>
         {
-          itemSubtitlesData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].subtitle : '';
+          this.itemSubtitlesData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].subtitle : '';
         }
       );
-      return;
+      return null;
     },
 
     itemAmounts: function() {
@@ -240,16 +240,16 @@ export default {
       }
 
       else {
-        itemAmountsData[0] = {
+        this.itemAmountsData[0] = {
               'price' : '',
               'translations' : {}
             }
 
         this.restaurant.languages.forEach((language) => {
-          itemAmountsData[0].translations[language.language_code] = '';
+          this.itemAmountsData[0].translations[language.language_code] = '';
         });
       }
-      return;
+      return null;
     },
 
     restaurantFooter: function() {
