@@ -34,10 +34,10 @@
               :title="modalTitle"
               :parent="parentId"
               :languages="restaurant.languages"
-              :titles="itemTitlesData"
-              :subtitles="itemSubtitlesData"
-              :descriptions="itemDescriptionsData"
-              :amounts="itemAmountsData"
+              :titles="itemTitles"
+              :subtitles="itemSubtitles"
+              :descriptions="itemDescriptions"
+              :amounts="itemAmounts"
               :type="type"
               @item-create="addNewItem($event.item, $event.categoryId)"
               @item-update="updateItem($event.item, $event.categoryId)"
@@ -169,11 +169,7 @@ export default {
       item: null,
       modalTitle: String,
       type: String,
-      itemTitlesData: {},             // As we use computed properties in our props to itemForm
-      itemSubtitlesData: {},          // we need this data so it can be set to null/empty after
-      itemDescriptionsData: {},       // adding new item. Otherwiser, after creating new item,
-      itemAmountsData: []             // if we want one more new item, it will have pre-populated
-    }                                 // input fields with values from previous new item.
+    }     
   },
 
   mounted() {
@@ -193,42 +189,46 @@ export default {
     },
 
     itemTitles: function() {
+      let returnVal = {};
       let item = this.item;
       this.restaurant.languages.forEach((language) =>
         {
-          this.itemTitlesData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].title : '';
+          returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].title : '';
         }
       );
-      return null;
+      return returnVal;
     },
 
     itemDescriptions: function() {
       let item = this.item;
+      let returnVal = {};
       this.restaurant.languages.forEach((language) =>
         {
-          this.itemDescriptionsData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].description : '';
+          returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].description : '';
         }
       );
-      return null;
+      return returnVal;
     },
 
     itemSubtitles: function() {
       let item = this.item;
+      let returnVal = {};
       this.restaurant.languages.forEach((language) =>
         {
-          this.itemSubtitlesData[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].subtitle : '';
+          returnVal[language.language_code] = item ? item.translations[this.languageIndex(item.translations, language.language_code)].subtitle : '';
         }
       );
-      return null;
+      return returnVal;
     },
 
     itemAmounts: function() {
+      let returnVal = [];
       let item = this.item;
 
       if(item) {
         item.amounts.forEach((amount) =>
           {
-            this.itemAmountsData.push(
+            returnVal.push(
               {
                 'id' : amount.id,
                 'price' : amount.price,
@@ -240,16 +240,16 @@ export default {
       }
 
       else {
-        this.itemAmountsData[0] = {
+        returnVal[0] = {
               'price' : '',
               'translations' : {}
             }
 
         this.restaurant.languages.forEach((language) => {
-          this.itemAmountsData[0].translations[language.language_code] = '';
+          returnVal[0].translations[language.language_code] = '';
         });
       }
-      return null;
+      return returnVal;
     },
 
     restaurantFooter: function() {
@@ -349,6 +349,9 @@ export default {
       this.thing = null;
       this.modalTitle = null;
       this.type = null;
+
+      console.log('Set Everything to null');
+      this.item = null;
     },
 
     //Delete Category, Subcategory, Item
@@ -419,13 +422,6 @@ export default {
 
       this.restaurant.categories[catId].subcategories[subId].items.push(item);
       this.hideModal();
-
-      // Try to set values to null
-      this.itemTitlesData = {};
-      this.itemSubtitlesData = {};
-      this.itemDescriptionsData = {};
-      this.itemAmountsData = [];
-      console.log('Set Everything to null');
     },
 
     updateItem(item, categoryId) {
