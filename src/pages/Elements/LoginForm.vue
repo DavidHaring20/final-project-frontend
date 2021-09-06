@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div v-if="renderPasscodeSection == ''">
+                <div v-if="renderPasscodeSection">
                     <div class="flex flex-row mb-5">
                             <p class="pr-5 font-bold">Passcode: </p>
                             <input 

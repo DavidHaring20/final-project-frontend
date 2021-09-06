@@ -16,8 +16,13 @@
             </button>
           </div>
 
-          <div v-if="userRole == 'admin'" class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse">
-            <button @click="goToStyle()" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Style Administration</button>
+
+          <div class="flex flex-row-reverse w-screen">
+            <a href="/" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Log Out</a>
+            
+            <div v-if="userRole == 'admin'">
+              <button @click="goToStyle()" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Style Administration</button>
+            </div>
           </div>
         </div>
       </nav>

@@ -66,6 +66,7 @@ import Style from './Elements/Style.vue';
 export default {
     name: 'style-administration',
     path: '/style-administration',
+    layout: require('@/layouts/Base.vue').default,
 
     components: {
         Style
