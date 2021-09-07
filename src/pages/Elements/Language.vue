@@ -10,10 +10,10 @@
             {{ language.language_name }}
         </td>
         <td class="text-center p-2">
-            
+            <Button btnText="Edit" @clicked="emitUpdate(language)"/>
         </td>
         <td class="text-center p-2">
-             <Button btnText="Delete" @clicked="deleteAlert(language.language_code)"/>
+            <Button btnText="Delete" @clicked="deleteAlert(language.language_code)"/>
         </td>
     </tr>
 </template>
@@ -41,8 +41,6 @@ export default {
         },
 
         deleteLanguage(code) {
-            console.log('ovaj tu cu obrisat: ', code);
-
              this.$service.API.delete("/languages/" + code)
             .then(response => {
                 this.$emit('deletedLanguage', {'deleted' : response.data.deletedLanguage});
@@ -50,7 +48,11 @@ export default {
             .catch(err => {
                 console.log(err);
             });
-        }
+        },
+
+        emitUpdate(language) {
+            this.$emit('update-language', { 'updateLanguage': language });
+        }   
     }
 }
 </script>
