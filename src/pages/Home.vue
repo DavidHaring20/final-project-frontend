@@ -1,30 +1,5 @@
 <template>
   <div>
-    <Modal :width="500" :scrollable="true" height="auto" name="langModal">
-      <div v-for="language in availableLanguages" :key="language.id">
-        <div class="py-3">
-          <input 
-            type="text" 
-            v-model="language.language_code"
-            class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-          <input 
-            type="text" 
-            v-model="language.language_name"
-            class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-        </div>
-      </div>
-      <button class="bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="createNewRestaurant()">Save</button>
-    </Modal>
-
-    <button 
-      class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" 
-      @click="showLanguagesModal()"
-    >
-      Languages
-    </button>
-
     <div v-if="restaurants">
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
         <RestaurantForm

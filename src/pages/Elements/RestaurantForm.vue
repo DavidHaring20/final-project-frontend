@@ -3,16 +3,14 @@
     <div class="pb-6 pt-5 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider">
       New Restaurant
     </div>
-
-    {{ selectedLanguages }}
     <div class="pb-6">
-      <div class="flex space-x-2 pb-4 content-center">
-        <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
+      <div class="flex space-x-2 pb-2 content-center">
+        <label class="block text-gray-700 text-xs uppercase" for="input">
           Languages
         </label>
       </div>
 
-      <select @change="addNew()" v-model="selectedLanguage" class="m-2 p-2 text-left text-1xl capitalize font-medium text-gray-500 uppercase tracking-wider border border-gray-600 rounded">
+      <select @change="addNew()" v-model="selectedLanguage" class="p-2 text-left text-1xl capitalize font-medium text-gray-500 uppercase tracking-wider border border-gray-600 rounded">
         <option disabled value="">Please select one</option>
         <option
           v-for="language in availableLanguages" 
@@ -36,16 +34,19 @@
       />
     </div>
 
+    <hr>
+
     <div class="py-4">
       <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
         Name
       </label>
-      <!-- <TranslationInput v-for="language in languages" :key="language.language_code" :languageCode="language.language_code" :translations="restaurantNames" class="pt-2"/> -->
       <div v-for="language in selectedLanguages" :key="language.id">
         <label for="languageName" class="block text-gray-700 text-xs mb-2 uppercase"> {{ language }}</label>
         <input v-model="restaurantNames[language]" name="languageName" type="text" class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
       </div>
     </div>
+    
+    <hr>
 
     <div class="py-4">
       <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
@@ -71,8 +72,6 @@
 </template>
 
 <script>
-import TranslationInput from '../../components/TranslationInput.vue'
-
 export default {
   name: 'RestaurantForm',
   data() {
@@ -91,10 +90,6 @@ export default {
 
   mounted() {
     this.getLanguages();
-  },
-
-  components: {
-    TranslationInput
   },
 
   methods: {
