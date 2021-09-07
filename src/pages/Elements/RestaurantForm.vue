@@ -3,6 +3,8 @@
     <div class="pb-6 pt-5 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider">
       New Restaurant
     </div>
+
+    {{ selectedLanguages }}
     <div class="pb-6">
       <div class="flex space-x-2 pb-4 content-center">
         <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
@@ -11,9 +13,11 @@
       </div>
 
       <select @change="addNew()" v-model="selectedLanguage" class="m-2 p-2 text-left text-1xl capitalize font-medium text-gray-500 uppercase tracking-wider border border-gray-600 rounded">
+        <option disabled value="">Please select one</option>
         <option
           v-for="language in availableLanguages" 
           :key="language.id"
+          v-bind:id="language.language_name"
         > 
           {{ language.language_name }} 
         </option>
@@ -116,14 +120,31 @@ export default {
 
     addNew() {
       console.log(this.selectedLanguage);
-      this.selectedLanguages.push(this.selectedLanguage);
-      this.restaurantNames[this.selectedLanguage] = "";
-      this.restaurantFooters[this.selectedLanguage] = "";
-    },
+      let option = document.getElementById(this.selectedLanguage);
 
-    addNewLanguage() {
-      this.languageNumber++;
-      console.log('ej');
+      if (!this.selectedLanguages.includes(this.selectedLanguage)) {
+        
+        // Add to array and to all objects
+        this.selectedLanguages.push(this.selectedLanguage);
+        this.restaurantNames[this.selectedLanguage] = "";
+        this.restaurantFooters[this.selectedLanguage] = "";
+
+        // Make button selected
+        option.setAttribute('class', 'bg-gray-300');
+      } else {
+
+        // Remove from an array and from objects
+        let selectedLang = this.selectedLanguages.filter(language => language !== this.selectedLanguage);
+        this.selectedLanguages = selectedLang;
+
+        delete this.restaurantNames.this.selectedLanguage;
+        delete this.restaurantFooters.this.selectedLanguage;
+
+        //  Make button not selected and remove it from all objects
+        option.setAttribute('class', 'bg-white');
+      }
+      
+      console.log(this.restaurantNames);
     },
 
     getLanguages() {
@@ -131,9 +152,7 @@ export default {
         .then(response => {
           this.unfilteredLanguages = response.data.data.languages;
           this.filteredLanguages = this.unfilteredLanguages.filter( language => language.language_name.toLowerCase() !== 'hrvatski'); 
-          console.log(this.filteredLanguages);
           this.availableLanguages = this.filteredLanguages;
-          // this.populateLanguages();
         })
         .catch(err => {
           console.log(err);
