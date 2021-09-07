@@ -155,6 +155,10 @@ export default {
             console.log(deletedLanguage);
             let languagesTemp = this.languages.filter( language => language.language_code != deletedLanguage.language_code);
             this.languages = languagesTemp;
+
+            this.languageCode = '';
+            this.languageName = '';
+            this.emitMessage = '';
         },
 
         create() {
@@ -170,7 +174,6 @@ export default {
             .catch(error => {
                 console.log(error);
             });
-
 
             this.languageCode = '';
             this.languageName = '';
