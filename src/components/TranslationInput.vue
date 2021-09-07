@@ -7,7 +7,6 @@
       type="text"
       name="input"
       v-model="translation"
-      placeholder="Title"
     />
   </div>
 </template>
