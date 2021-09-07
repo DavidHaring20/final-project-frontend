@@ -21,7 +21,8 @@
             <a href="/" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Log Out</a>
             
             <div v-if="userRole == 'admin'">
-              <button @click="goToStyle()" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Style Administration</button>
+              <button @click="goToLanguageAdministration()" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Language Administration</button>
+              <button @click="goToStyleAdministration()" class="p-1 text-xs lg:px-2 md:mx-2 text-gray-600 text-center border border-transparent rounded hover:bg-gray-300 hover:text-white transition-colors duration-300">Style Administration</button>
             </div>
           </div>
         </div>
@@ -45,8 +46,12 @@ export default {
     },
 
   methods: {
-    goToStyle() {
-      this.$router.push({ name: 'style-administration'})
+    goToLanguageAdministration() {
+      this.$router.push({ name: 'language-administration'});
+    },
+
+    goToStyleAdministration() {
+      this.$router.push({ name: 'style-administration'});
     },
 
     goToHome() {
