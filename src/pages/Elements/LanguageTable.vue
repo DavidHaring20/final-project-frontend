@@ -115,7 +115,8 @@ export default {
             emitMessage: '',
             languageCode: '',
             languageName: '',
-            languageCodeUpdate: ''
+            languageCodeUpdate: '',
+            errorMessages: []
         }
     },
 
@@ -162,6 +163,8 @@ export default {
         },
 
         create() {
+            let self = this;
+
             this.$service.API.post('/languages/new', {
                 languageCode: this.languageCode,
                 languageName: this.languageName
@@ -169,7 +172,17 @@ export default {
             .then(response => response.data)
             .then(data => {
                 console.log(data);
-                this.languages.push(data.newLanguage);
+                
+                if (data.newLanguage) {
+                    this.languages.push(data.newLanguage);
+                    self.$toastr.success('Language created.', 'Success');
+                } else {    
+                    for (let key in data.errorMessage) {
+                        console.log(data.errorMessage[key][0]);
+                        self.$toastr.error(data.errorMessage[key][0], 'Warning');
+                        // console.log(this.$toastr);
+                    }
+                }
             })      
             .catch(error => {
                 console.log(error);

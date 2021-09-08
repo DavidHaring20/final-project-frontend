@@ -7,7 +7,12 @@ import CountryFlag from 'vue-country-flag'
 import VModal from 'vue-js-modal'
 import Vuelidate from 'vuelidate'
 import VueSimpleAlert from "vue-simple-alert";
+import VueToastr2 from 'vue-toastr-2'
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 
+window.toastr = require('toastr')
+
+Vue.use(VueToastr2)
 import './assets/styles/app.css'
 
 Vue.use(VueMask);
