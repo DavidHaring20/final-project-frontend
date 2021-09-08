@@ -171,16 +171,12 @@ export default {
             })
             .then(response => response.data)
             .then(data => {
-                console.log(data);
-                
                 if (data.newLanguage) {
                     this.languages.push(data.newLanguage);
                     self.$toastr.success('Language created.', 'Success');
                 } else {    
                     for (let key in data.errorMessage) {
-                        console.log(data.errorMessage[key][0]);
                         self.$toastr.error(data.errorMessage[key][0], 'Warning');
-                        // console.log(this.$toastr);
                     }
                 }
             })      
@@ -194,7 +190,6 @@ export default {
         },
 
         saveChanges() {
-            console.log(this.languageCodeUpdate);
             this.$service.API.patch('/languages/' + this.languageCodeUpdate, 
             {
                 languageCode: this.languageCode,
@@ -203,10 +198,17 @@ export default {
             .then(response => response.data)
             .then(data => {
                 console.log(data);
-                console.log(this.languages);
-                let languagesTemp = this.languages.filter( language => language.id != data.updatedLanguage.id);
-                this.languages = languagesTemp;
-                this.languages.push(data.updatedLanguage);
+
+                if (data.updatedLanguage) {
+                    let languagesTemp = this.languages.filter( language => language.id != data.updatedLanguage.id);
+                    this.languages = languagesTemp;
+                    this.languages.push(data.updatedLanguage);
+                    this.$toastr.success('Changes saved.', 'Success');
+                } else {
+                    for (let key in data.errorMessage) {
+                        this.$toastr.error(data.errorMessage[key][0], 'Warning');
+                    }
+                }
             })
             .catch(); 
 
