@@ -46,9 +46,14 @@ export default {
             .then(data => {
                 if (data.updatedSlug) {
                     this.newSlug = data.updatedSlug;
+                    this.$emit('addUpdatedSlug', {'updatedSlug': this.newSlug });
+                    this.$emit('close');
+                    this.$toastr.success('Updated Slug', 'Success');
+                } else {
+                    for (let key in data.errorMessage) {
+                        this.$toastr.error(data.errorMessage[key][0], 'Warning');
+                    }
                 }
-                this.$emit('addUpdatedSlug', {'updatedSlug': this.newSlug });
-                this.$emit('close');
             })
             .catch(error => {
                 console.log('Error: ' + error);
