@@ -37,6 +37,12 @@ export default {
         }
     }, 
 
+    watch: {
+        slugToDom() {
+            this.getDataForEditingSlugs();
+        }
+    },
+
     components: {
         IdOrSlug
     },
