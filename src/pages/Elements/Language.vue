@@ -1,5 +1,5 @@
 <template>
-    <tr class="h-12">
+    <tr class="h-12 border-b-2">
         <td class="text-center p-2">
             {{ index + 1 }}
         </td>

@@ -1,5 +1,5 @@
 <template>
-    <tr class="border-b-2">
+    <tr class="border-b-2 h-12">
         <td class="text-center p-2">{{ index + 1 }}</td>
 
         <td class="text-center p-2">{{ styleObject.key }}</td>
