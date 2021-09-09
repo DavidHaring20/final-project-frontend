@@ -16,7 +16,7 @@
                     <Style 
                     :styleObject="styleObject"
                     :index="index"
-                    @delete-style="deleteStyle($event.deletedStyleId)"></Style>
+                    @delete-style="alert($event.deletedStyleId)"></Style>
             </tbody>
         </table>
 
@@ -54,7 +54,7 @@
             </div>
 
             <div class="h-72">
-                <button class="ml-16 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="saveNewStyle()">Save Changes</button>
+                <button class="ml-16 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="saveNewStyle()">Add Style</button>
             </div>
         </div>
     </div>
@@ -91,6 +91,11 @@ export default {
     },
 
     methods: {
+        setToNull() {
+            this.key = "";
+            this.value =  "";
+        },
+
         deleteStyle(id) {
             this.$service.API.delete('/styleMaster/' + id)
             .then(response => response.data)
@@ -100,6 +105,7 @@ export default {
                 for (let i = 0; i < this.styles.length; i++) {
                     if (this.styles[i].id == id) {
                         this.styles.splice(i, 1);
+                        this.$toastr.success('Style Deleted', 'Success');
                     }
                 }
             })
@@ -110,18 +116,26 @@ export default {
 
         saveNewStyle() {
             this.$service.API.post('/styleMaster', {
-                'key': this.key,
-                'value': this.value
+                key: this.key,
+                value: this.value
             })
             .then(response => response.data)
             .then(data => {
                 console.log(data);
 
                 // ADD TO STYLES ARRAY SO IT APPEARS IN DOM
-                this.styles.push(data.newStyleMasterProperty);
+                if (data.newStyleMasterProperty) {
+                    this.styles.push(data.newStyleMasterProperty);
+                    this.$toastr.success('Style Added', 'Success');
+                } else if (data.errorMessage) {
+                    for (let key in data.errorMessage) {
+                        this.$toastr.error(data.errorMessage[key][0], 'Warning');
+                    }
+                }
             });
 
             this.closeCreateNewStyleDialog();
+            this.setToNull();
         },
 
         closeCreateNewStyleDialog() {
@@ -141,6 +155,12 @@ export default {
             })
             .catch(error => {
                 console.log(error);
+            });
+        },
+
+        alert(id) {
+            this.$confirm("Are you sure?").then(() => {
+                this.deleteStyle(id);
             });
         }
     }

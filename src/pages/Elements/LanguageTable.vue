@@ -21,7 +21,13 @@
             </tbody>
         </table>
 
-        <button class="ml-16 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" @click="newLanguageModeOn()">Create New Language</button>
+        <button 
+            v-if="emitMessage == ''"
+            class="ml-16 mt-6 bg-green-500 hover:bg-green-700 text-white font-bold text-xs py-2 px-6 rounded transition-colors duration-300" 
+            @click="newLanguageModeOn()"
+        >
+            Create New Language
+        </button>
 
         <div v-if="emitMessage == 'Create New Language'" class="ml-16 mt-16">
             <hr class="w-2/5 mt-4 mb-2 ml-6">
@@ -163,8 +169,6 @@ export default {
         },
 
         create() {
-            let self = this;
-
             this.$service.API.post('/languages/new', {
                 languageCode: this.languageCode,
                 languageName: this.languageName
@@ -176,7 +180,7 @@ export default {
                     self.$toastr.success('Language created.', 'Success');
                 } else {    
                     for (let key in data.errorMessage) {
-                        self.$toastr.error(data.errorMessage[key][0], 'Warning');
+                        this.$toastr.error(data.errorMessage[key][0], 'Warning');
                     }
                 }
             })      
@@ -210,7 +214,9 @@ export default {
                     }
                 }
             })
-            .catch(); 
+            .catch(error => {
+                console.log(error);
+            }); 
 
             this.languageCode = '';
             this.languageName = '';
