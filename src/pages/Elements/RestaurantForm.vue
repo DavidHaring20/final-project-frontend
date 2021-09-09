@@ -10,16 +10,8 @@
         </label>
       </div>
 
-      <select @change="addNew()" v-model="selectedLanguage" class="p-2 text-left text-1xl capitalize font-medium text-gray-500 uppercase tracking-wider border border-gray-600 rounded">
-        <option disabled value="">Please select one</option>
-        <option
-          v-for="language in availableLanguages" 
-          :key="language.id"
-          v-bind:id="language.language_name"
-        > 
-          {{ language.language_name }} 
-        </option>
-      </select>
+
+    <LanguageDropdownRestaurantForm @clicked="selectLanguage($event.selectedLanguage)" :languages="availableLanguages"/>
     </div>
 
     <div class="pb-4">
@@ -72,6 +64,7 @@
 </template>
 
 <script>
+import LanguageDropdownRestaurantForm from './LanguageDropdownRestaurantForm.vue';
 export default {
   name: 'RestaurantForm',
   data() {
@@ -88,11 +81,20 @@ export default {
     }
   },
 
+  components: {
+    LanguageDropdownRestaurantForm
+  },
+
   mounted() {
     this.getLanguages();
   },
 
   methods: {
+    selectLanguage(language) {
+      // console.log(language);
+      this.addNew(language);
+    }, 
+    
     createNewRestaurant() {
       let self = this;
 
@@ -113,39 +115,32 @@ export default {
       });
     },
 
-    addNew() {
-      console.log(this.selectedLanguage);
-      let option = document.getElementById(this.selectedLanguage);
+    addNew(selectedLanguage) {
+      // console.log(selectedLanguage);
+      let languageName = selectedLanguage.language_name;
 
-      if (!this.selectedLanguages.includes(this.selectedLanguage)) {
+      if (!this.selectedLanguages.includes(languageName)) {
         
         // Add to array and to all objects
-        this.selectedLanguages.push(this.selectedLanguage);
-        this.restaurantNames[this.selectedLanguage] = "";
-        this.restaurantFooters[this.selectedLanguage] = "";
-
-        // Make button selected
-        option.setAttribute('class', 'bg-gray-300');
+        this.selectedLanguages.push(languageName);
+        this.restaurantNames[languageName] = "";
+        this.restaurantFooters[languageName] = "";
       } else {
 
         // Remove from an array and from objects
-        let selectedLang = this.selectedLanguages.filter(language => language !== this.selectedLanguage);
+        let selectedLang = this.selectedLanguages.filter(language => language !== languageName);
         this.selectedLanguages = selectedLang;
 
-        delete this.restaurantNames.this.selectedLanguage;
-        delete this.restaurantFooters.this.selectedLanguage;
-
-        //  Make button not selected and remove it from all objects
-        option.setAttribute('class', 'bg-white');
+        delete this.restaurantNames.languageName;
+        delete this.restaurantFooters.languageName;
       }
-      
-      console.log(this.restaurantNames);
     },
 
     getLanguages() {
       this.$service.API.get("/languages")
         .then(response => {
           this.unfilteredLanguages = response.data.data.languages;
+          console.log(response.data.data.languages);
           this.filteredLanguages = this.unfilteredLanguages.filter( language => language.language_name.toLowerCase() !== 'hrvatski'); 
           this.availableLanguages = this.filteredLanguages;
         })
