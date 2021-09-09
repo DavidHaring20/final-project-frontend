@@ -93,7 +93,8 @@
                     console.log(this.$service.session);
                     this.$router.push({ name: 'Home'});
                 } else {
-                    console.log('Failed to go to Login Page.');
+                    
+                    this.messageStyle = "border-solid border-2 rounded font-semibold border-red-600 text-red-400 p-3.5 mb-4";
                 }
             },
 
@@ -104,17 +105,22 @@
                 })
                 .then(response => response.data)
                 .then(data => {
-                    // SESSION 
-                    this.$service.session.isEmailSubmitted =  true,
-                    this.$service.session.requestedEmail = this.email,
-                    
-                    this.message = data.message;
-                    this.statusCode = data.statusCode;
+                    console.log(data);
 
-                    this.user_id = data.user.id;
-                    this.user_role = data.user.role;
-                    this.auth_token = data.authToken;
-                    
+                    if (data.user) {
+                        // SESSION 
+                    // SESSION 
+                        // SESSION 
+                        this.$service.session.isEmailSubmitted =  true,
+                        this.$service.session.requestedEmail = this.email,
+                        
+                        this.statusCode = data.statusCode;
+
+                        this.user_id = data.user.id;
+                        this.user_role = data.user.role;
+                        this.auth_token = data.authToken;
+                    }
+                    this.message = data.message;
                     this.setMessageStyle(this.statusCode);
                     this.logIn(data.authenticated)
                 })
