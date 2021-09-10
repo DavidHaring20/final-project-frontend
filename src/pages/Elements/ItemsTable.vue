@@ -15,14 +15,12 @@
                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider">Delete</th>
               </tr>
             </thead>
-            <tbody  v-for="item in items" v-bind:key="item.id" class="bg-white divide-y divide-gray-200">
-              <Item
-                :item="item"
-                :selectedLanguage="selectedLanguage"
-                @edit="emitEdit($event.parent, $event.title, $event.thing)"
-                @delete="emitDelete($event.id, $event.title)"
-              />
-            </tbody>
+                <Item
+                  :items="items"
+                  :selectedLanguage="selectedLanguage"
+                  @edit="emitEdit($event.parent, $event.title, $event.thing)"
+                  @delete="emitDelete($event.id, $event.title)"
+                />
           </table>
         </div>
       </div>
@@ -41,7 +39,7 @@ export default {
     selectedLanguage: String
   },
   components: {
-    Item
+    Item,
   },
 
   // mounted() {
