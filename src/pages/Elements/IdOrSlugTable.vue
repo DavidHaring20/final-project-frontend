@@ -37,12 +37,6 @@ export default {
         }
     }, 
 
-    watch: {
-        slugToDom() {
-            this.getDataForEditingSlugs();
-        }
-    },
-
     components: {
         IdOrSlug
     },
@@ -53,13 +47,13 @@ export default {
 
     watch: {
         slugToDom(newValue) {
-            console.log(this.oldSlugValue);
             for (let i = 0; i < this.dataObjects.length; i++) {
                 console.log(this.dataObjects[i].slug);
                 if (this.dataObjects[i].slug === this.oldSlugValue) {
                     this.dataObjects[i].slug = newValue;
                 }
             }
+            this.getDataForEditingSlugs();
         }
     },
 
