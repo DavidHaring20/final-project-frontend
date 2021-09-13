@@ -1,5 +1,5 @@
 <template>
-  <draggable tag="tbody" v-model="itemsArray" class="bg-white divide-y divide-gray-200">
+  <draggable tag="tbody" v-model="itemsArray" @end="checkEnd" class="bg-white divide-y divide-gray-200">
     <tr v-for="item in itemsArray" :key="item.id" class="h-12">
       <td class="px-2 py-4 whitespace-nowrap">
         <div class="ml-4">
@@ -66,15 +66,25 @@ export default {
 
   data() {
     return {
-      itemsArray: []
+      itemsArray: [],
+      tempItemsArray: [],
+      positionsArray: [],
+      idsArray: []
     }
   },
   
-  mounted() {
+  mounted() { 
     this.itemsArray = this.items;
   },
 
   methods: {
+    checkEnd(evt) {
+      this.positionsArray = this.itemsArray.map(item => item.position);
+      this.idsArray = this.itemsArray.map(item => item.id);
+      
+      this.updateOrder(this.itemsArray[evt.newIndex].id);
+    },
+     
     languageIndex(translations) {
       const index = translations.findIndex(item => item.language_code === this.selectedLanguage);
       return index;
@@ -85,6 +95,18 @@ export default {
     emitDelete(id, title) {
       this.$emit('delete', {id, title})
     },
+
+    updateOrder(id) {
+  	  this.$service.API.patch('/SortDragAndDrop', {
+        idArray: this.idsArray,
+        positionArray: this.positionsArray,
+        itemId: id
+      })
+      .then(response => response.data)
+      .then(data => {
+        console.log(data);
+      });
+    }
   }
 }
 </script>
