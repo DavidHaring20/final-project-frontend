@@ -79,20 +79,14 @@ export default {
       this.$service.API.patch('/decrementCategoryPosition', {
         categoryId: this.category.id
       })
-      .then(response => response.data)
-      .then(data => {
-        console.log(data)
-      });
+      .then(this.$emit('refresh-categories'));
     },
 
     incrementCategoryPosition() {
       this.$service.API.patch('/incrementCategoryPosition', {
         categoryId: this.category.id
       })
-      .then(response => response.data)
-      .then(data => {
-        console.log(data);
-      });
+      .then(this.$emit('refresh-categories'));
     }
   }
 }
