@@ -96,9 +96,11 @@
             </div>
 
             <!-- Category iteration -->
-            <div v-for="category in restaurant.categories" v-bind:key="category.id">
+            <div v-for="(category, index) in restaurant.categories" v-bind:key="category.id">
               <div class="py-3 text-left text-2xl capitalize font-medium text-gray-500 uppercase tracking-wider flex">
                 <Category
+                  :index="index"
+                  :numberOfCategories="numberOfCategories"
                   :category="category"
                   :selectedLanguage="selectedLanguage"
                   @new="showNewModal($event.parent, $event.title, undefined)"
@@ -169,11 +171,12 @@ export default {
       item: null,
       modalTitle: String,
       type: String,
+      numberOfCategories: 0
     }     
   },
 
   mounted() {
-    this.getData();
+    this.getData()
   },
 
   computed: {
@@ -273,6 +276,7 @@ export default {
       this.$service.API.get("/restaurant/show/" + this.$route.params.restaurantId)
         .then(response => {
           this.restaurant = response.data.data.restaurant;
+          this.numberOfCategories = this.restaurant.categories.length;
         })
         .catch(err => {
           console.log(err);

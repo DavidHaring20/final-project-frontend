@@ -2,7 +2,7 @@
   <div>
   <div class="flex">
       <!-- Move category up/down -->
-      <Arrows @decrement-category-position="decrementCategoryPosition" @increment-category-position="incrementCategoryPosition"/>
+      <Arrows :numberOfCategories="numberOfCategories" :index="index" @decrement-category-position="decrementCategoryPosition" @increment-category-position="incrementCategoryPosition"/>
 
       <div class="flex flex-row items-center">
         {{ category.translations[languageIndex(category.translations)].name }}
@@ -48,7 +48,9 @@ export default {
   props: {
     styleObject: Object,
     category: undefined,
-    selectedLanguage: String
+    selectedLanguage: String,
+    index: Number,
+    numberOfCategories: Number
   },
 
   methods: {
