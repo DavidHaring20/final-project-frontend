@@ -274,7 +274,6 @@ export default {
 
   methods: {
     getData() {
-      console.log("GetData");
       this.$service.API.get("/restaurant/show/" + this.$route.params.restaurantId)
         .then(response => {
           this.restaurant = response.data.data.restaurant;

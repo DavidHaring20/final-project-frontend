@@ -2,7 +2,7 @@
   <div>
   <div class="flex">
       <!-- Move category up/down -->
-      <Arrows :numberOfCategories="numberOfCategories" :index="index" @decrement-category-position="decrementCategoryPosition" @increment-category-position="incrementCategoryPosition"/>
+      <Arrows :numberOfCategories="numberOfCategories" :type="'CategoryArrows'" :index="index" @decrement-category-position="decrementCategoryPosition" @increment-category-position="incrementCategoryPosition"/>
 
       <div class="flex flex-row items-center">
         {{ category.translations[languageIndex(category.translations)].name }}
@@ -15,9 +15,11 @@
         <Button btnText="Delete" @clicked="emitDelete(category.id, 'category')"/>
       </div>
     </div>
-      <div v-for="subcategory in category.subcategories" v-bind:key="subcategory.id">
+      <div v-for="(subcategory, index) in category.subcategories" v-bind:key="subcategory.id">
         <div class="py-3 text-left text-xs font-medium text-gray-500 capitalize tracking-wider flex">
           <Subcategory
+            :index="index"
+            :numberOfSubcategories="getNumberOfSubcategories"
             :subcategory="subcategory"
             :selectedLanguage="selectedLanguage"
             @add="emitShowAddModal($event.item, $event.title)"
@@ -51,6 +53,12 @@ export default {
     selectedLanguage: String,
     index: Number,
     numberOfCategories: Number
+  },
+
+  computed: {
+    getNumberOfSubcategories: function () {
+      return this.category.subcategories.length;
+    }
   },
 
   methods: {

@@ -1,12 +1,15 @@
 <template>
   <div>
-    <div class="flex">
-      {{ subcategory.translations[languageIndex(subcategory.translations)].name }}
+    <div class="flex py-2 sm:px-6 lg:px-8">
+      <!-- Move Subcategory up/down -->
+      <Arrows :numberOfSubcategories="numberOfSubcategories" :index="index"/>
+
+      <p class="text-sm self-center"> {{ subcategory.translations[languageIndex(subcategory.translations)].name }} </p>
 
       <!-- Edit subcategory -->
-      <Button btnText="Edit" @clicked="emitShowEditModal(subcategory.id, 'Subcategory', subcategory)" class="text-center pl-2"/>
+      <Button btnText="Edit" @clicked="emitShowEditModal(subcategory.id, 'Subcategory', subcategory)" class="self-center text-center pl-2"/>
       <!-- Delete subcategory -->
-      <Button btnText="Delete" @clicked="emitDelete(subcategory.id, 'subcategory')" class="px-2" />
+      <Button btnText="Delete" @clicked="emitDelete(subcategory.id, 'subcategory')" class="px-2 self-center" />
     </div>
       <ItemsTable
         :items="subcategory.items"
@@ -23,19 +26,23 @@
 <script>
 import ItemsTable from './ItemsTable.vue'
 import Button from './Button.vue'
+import Arrows from './Arrows.vue'
 
 export default {
   name: 'Subcategory',
 
   components: {
     ItemsTable,
-    Button
+    Button,
+    Arrows
   },
 
   props: {
     styleObject: Object,
     subcategory: undefined,
-    selectedLanguage: String
+    selectedLanguage: String,
+    index: Number,
+    numberOfSubcategories: Number
   },
 
   methods: {
