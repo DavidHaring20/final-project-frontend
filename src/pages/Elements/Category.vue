@@ -1,14 +1,19 @@
 <template>
   <div>
   <div class="flex">
-      {{ category.translations[languageIndex(category.translations)].name }}
+      <!-- Move category up/down -->
+      <Arrows @decrement-category-position="decrementCategoryPosition" @increment-category-position="incrementCategoryPosition"/>
 
-      <!-- New subcategory -->
-      <Button btnText="Add" @clicked="emitShowAddModal(category.id, 'Subcategory')" class="px-2"/>
-      <!-- Edit category -->
-      <Button btnText="Edit" @clicked="emitShowEditModal(category.id, 'Category', category)" class="pr-2"/>
-      <!-- Delete category -->
-      <Button btnText="Delete" @clicked="emitDelete(category.id, 'category')"/>
+      <div class="flex flex-row items-center">
+        {{ category.translations[languageIndex(category.translations)].name }}
+
+        <!-- New subcategory -->
+        <Button btnText="Add" @clicked="emitShowAddModal(category.id, 'Subcategory')" class="px-2"/>
+        <!-- Edit category -->
+        <Button btnText="Edit" @clicked="emitShowEditModal(category.id, 'Category', category)" class="pr-2"/>
+        <!-- Delete category -->
+        <Button btnText="Delete" @clicked="emitDelete(category.id, 'category')"/>
+      </div>
     </div>
       <div v-for="subcategory in category.subcategories" v-bind:key="subcategory.id">
         <div class="py-3 text-left text-xs font-medium text-gray-500 capitalize tracking-wider flex">
@@ -29,19 +34,21 @@
 <script>
 import Subcategory from './Subcategory.vue'
 import Button from './Button.vue'
+import Arrows from './Arrows.vue'
 
 export default {
   name: 'Category',
 
   components: {
     Subcategory,
-    Button
+    Button,
+    Arrows
   },
 
   props: {
     styleObject: Object,
     category: undefined,
-    selectedLanguage: String,
+    selectedLanguage: String
   },
 
   methods: {
@@ -65,6 +72,26 @@ export default {
     emitItemEdit(parentId, title, thing) {
       this.$emit('itemEdit', {parentId, title, thing});
     },
+
+    decrementCategoryPosition() {
+      this.$service.API.patch('/decrementCategoryPosition', {
+        categoryId: this.category.id
+      })
+      .then(response => response.data)
+      .then(data => {
+        console.log(data)
+      });
+    },
+
+    incrementCategoryPosition() {
+      this.$service.API.patch('/incrementCategoryPosition', {
+        categoryId: this.category.id
+      })
+      .then(response => response.data)
+      .then(data => {
+        console.log(data);
+      });
+    }
   }
 }
 </script>

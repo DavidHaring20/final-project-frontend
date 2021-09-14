@@ -97,7 +97,7 @@ export default {
     },
 
     updateOrder(id) {
-  	  this.$service.API.patch('/SortDragAndDrop', {
+      this.$service.API.patch('/SortDragAndDrop', {
         idArray: this.idsArray,
         positionArray: this.positionsArray,
         itemId: id
