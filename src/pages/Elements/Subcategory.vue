@@ -2,7 +2,12 @@
   <div>
     <div class="flex py-2 sm:px-6 lg:px-8">
       <!-- Move Subcategory up/down -->
-      <Arrows :numberOfSubcategories="numberOfSubcategories" :index="index"/>
+      <Arrows 
+        :numberOfSubcategories="numberOfSubcategories" 
+        :index="index" 
+        @decrement-subcategory-position="emitDecrementSubcategoryPosition"
+        @increment-subcategory-position="emitIncrementSubcategoryPosition"
+      />
 
       <p class="text-sm self-center"> {{ subcategory.translations[languageIndex(subcategory.translations)].name }} </p>
 
@@ -65,6 +70,20 @@ export default {
 
     emitDelete(id, title) {
       this.$emit('delete', {id, title});
+    },
+
+    emitDecrementSubcategoryPosition() {
+      this.$service.API.patch('/decrementSubcategoryPosition', {
+        subcategoryId: this.subcategory.id
+      })
+      .then(this.$emit('refresh-subcategories-decrement'));
+    },
+
+    emitIncrementSubcategoryPosition() {
+      this.$service.API.patch('/incrementSubcategoryPosition', {
+        subcategoryId: this.subcategory.id
+      })
+      .then(this.$emit('refresh-subcategories-increment'));
     }
   }
 }

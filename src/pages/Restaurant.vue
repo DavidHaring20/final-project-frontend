@@ -107,7 +107,10 @@
                   @edit="showNewModal($event.parentId, $event.title, $event.thing)"
                   @delete="alert($event)"
                   @itemEdit="showItemModal($event.parentId, $event.title, $event.thing)"
-                  @refresh-categories="getData()"
+                  @refresh-categories-increment="getData()"
+                  @refresh-categories-decrement="getData()"
+                  @refresh-subcategories-increment="getData()"
+                  @refresh-subcategories-decrement="getData()"
                   class="w-full"
                 />
               </div>

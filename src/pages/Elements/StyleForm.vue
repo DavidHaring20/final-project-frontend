@@ -9,8 +9,8 @@
                 <label class="block text-gray-700 text-xs mb-2 " for="input">
                     {{ style.key }}
                 </label>
+                
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            
                 name="input"
                 v-model="style.value"
                 />

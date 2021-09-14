@@ -26,6 +26,8 @@
             @edit="emitShowEditModal($event.parentId, $event.title, $event.thing)"
             @delete="emitDelete($event.id, $event.title)"
             @itemEdit="emitItemEdit($event.parentId, $event.title, $event.thing)"
+            @refresh-subcategories-decrement="refreshSubcategoriesDecrement"
+            @refresh-subcategories-increment="refreshSubcategoriesIncrement"
             class="w-full"
           />
         </div>
@@ -87,14 +89,22 @@ export default {
       this.$service.API.patch('/decrementCategoryPosition', {
         categoryId: this.category.id
       })
-      .then(this.$emit('refresh-categories'));
+      .then(this.$emit('refresh-categories-decrement'));
     },
 
     incrementCategoryPosition() {
       this.$service.API.patch('/incrementCategoryPosition', {
         categoryId: this.category.id
       })
-      .then(this.$emit('refresh-categories'));
+      .then(this.$emit('refresh-categories-increment'));
+    },
+
+    refreshSubcategoriesDecrement() {
+      this.$emit('refresh-subcategories-decrement');
+    },
+
+    refreshSubcategoriesIncrement() {
+      this.$emit('refresh-subcategories-increment');
     }
   }
 }
