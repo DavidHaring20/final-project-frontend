@@ -51,12 +51,10 @@ export default {
         },
 
         emitDecrementSubcategoryPosition() {
-            console.log("Hit Decrement Sub");
             this.$emit('decrement-subcategory-position');
         },
 
         emitIncrementSubcategoryPosition() {
-            console.log("Hit Increment Sub");
             this.$emit('increment-subcategory-position');
         }
     }

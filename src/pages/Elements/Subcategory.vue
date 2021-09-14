@@ -76,14 +76,18 @@ export default {
       this.$service.API.patch('/decrementSubcategoryPosition', {
         subcategoryId: this.subcategory.id
       })
-      .then(this.$emit('refresh-subcategories-decrement'));
+      .then(response => {
+        this.$emit('refresh-subcategories-decrement');
+      });
     },
 
     emitIncrementSubcategoryPosition() {
       this.$service.API.patch('/incrementSubcategoryPosition', {
         subcategoryId: this.subcategory.id
       })
-      .then(this.$emit('refresh-subcategories-increment'));
+      .then(response => {
+        this.$emit('refresh-subcategories-increment');
+      });
     }
   }
 }
