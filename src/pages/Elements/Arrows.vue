@@ -1,12 +1,14 @@
 <template>
     <div class="flex">
         <div v-if="type === 'CategoryArrows'" class="pr-6 self-center">
+            <!-- Arrow pointing to the top of the screen -->
             <div v-if="index !== 0" @click="emitDecrementCategoryPosition" class="cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                 </svg>
             </div>
 
+            <!-- Arrow pointing to the bottom of the screen -->
             <div v-if="index !== numberOfCategories - 1" @click="emitIncrementCategoryPosition" class="cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
@@ -15,12 +17,14 @@
         </div>
 
         <div v-else class="pr-4">
+            <!-- Arrow pointing to the top of the screen -->
             <div v-if="index !== 0" @click="emitDecrementSubcategoryPosition" class="cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                 </svg>
             </div>
 
+            <!-- Arrow pointing to the bottom of the screen -->
             <div v-if="index !== numberOfSubcategories - 1" @click="emitIncrementSubcategoryPosition" class="cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />

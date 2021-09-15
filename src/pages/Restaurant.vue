@@ -12,6 +12,7 @@
               @category-create="addNewCategory"
               @category-update="updateCategory"
               @close="hideModal"
+              @refesh-by-new-category="getData()"
             />
           </div>
 
@@ -383,6 +384,9 @@ export default {
           else if(type == 'item') {
             this.deleteItem(id);
           }
+        })
+        .then(response => {
+          this.getData();
         })
         .catch(err => {
           console.log(err);

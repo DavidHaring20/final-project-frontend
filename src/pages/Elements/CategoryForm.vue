@@ -61,8 +61,9 @@ export default {
         self.$nextTick(() => {
           self.$emit('category-create', response.data.data.category);
         });
-      }, response => {
-        console.log(response);
+      })
+      .then(response => {
+        this.$emit('refesh-by-new-category');
       });
     },
 
