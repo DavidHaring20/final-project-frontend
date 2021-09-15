@@ -26,15 +26,17 @@
                             >
                         </div>
                     </div>
-                    <div v-if="renderPasscodeSection == ''">
+                    <!-- <div v-if="renderPasscodeSection == ''"> -->
+                    <div>
                         <button 
                             @click="requestVerificationCode()"
                             class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
-                        >Send Verification code</button>
+                        >Log In</button>
+                        <!-- Send Verification code -->
                     </div>
                 </div>
 
-                <div v-if="renderPasscodeSection">
+                <!-- <div v-if="renderPasscodeSection">
                     <div class="flex flex-row mb-5">
                             <p class="pr-5 font-bold">Passcode: </p>
                             <input 
@@ -50,7 +52,7 @@
                         @click="authenticate()"
                         class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
                     >Log In</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -78,7 +80,7 @@
             setMessageStyle(code) {
                 if (code == 200) {
                     this.messageStyle = "border-solid border-2 rounded font-semibold border-green-600 text-green-400 p-3.5 mb-4";
-                    this.renderPasscodeSection = true;
+                    // this.renderPasscodeSection = true;
                 } else {
                     this.messageStyle = "border-solid border-2 rounded font-semibold border-red-600 text-red-400 p-3.5 mb-4";
                 }
@@ -122,7 +124,7 @@
                     }
                     this.message = data.message;
                     this.setMessageStyle(this.statusCode);
-                    this.logIn(data.authenticated)
+                    this.logIn(data.authenticated);
                 })
                 .catch(error => {
                     console.log(error);
@@ -136,9 +138,22 @@
                 .then(response => response.data)
                 .then(data => {
                     console.log(data);
+
+                    if (data.user) {
+                        // SESSION 
+                        this.$service.session.isEmailSubmitted =  true,
+                        this.$service.session.requestedEmail = this.email,
+                        
+                        this.statusCode = data.statusCode;
+
+                        this.user_id = data.user.id;
+                        this.user_role = data.user.role;
+                    }
+
                     this.message = data.message;
                     this.statusCode = data.statusCode; 
                     this.setMessageStyle(this.statusCode);
+                    this.logIn(data.authenticated);
                 })
                 .catch(error => {
                     console.log(error);
