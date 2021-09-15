@@ -41,6 +41,7 @@
               :type="type"
               @item-create="addNewItem($event.item, $event.categoryId)"
               @item-update="updateItem($event.item, $event.categoryId)"
+              @refresh-items="getData()"
               @close="hideModal"
             />
           </div>
@@ -277,6 +278,7 @@ export default {
 
   methods: {
     getData() {
+      console.log("Catch");
       this.$service.API.get("/restaurant/show/" + this.$route.params.restaurantId)
         .then(response => {
           this.restaurant = response.data.data.restaurant;
