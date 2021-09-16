@@ -26,17 +26,16 @@
                             >
                         </div>
                     </div>
-                    <!-- <div v-if="renderPasscodeSection == ''"> -->
-                    <div>
+                    
+                    <div v-if="renderPasscodeSection == false">
                         <button 
                             @click="requestVerificationCode()"
                             class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
-                        >Log In</button>
-                        <!-- Send Verification code -->
+                        >Send Verification Code</button>
                     </div>
                 </div>
 
-                <!-- <div v-if="renderPasscodeSection">
+                <div v-if="renderPasscodeSection">
                     <div class="flex flex-row mb-5">
                             <p class="pr-5 font-bold">Passcode: </p>
                             <input 
@@ -52,7 +51,7 @@
                         @click="authenticate()"
                         class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
                     >Log In</button>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -111,8 +110,6 @@
 
                     if (data.user) {
                         // SESSION 
-                    // SESSION 
-                        // SESSION 
                         this.$service.session.isEmailSubmitted =  true,
                         this.$service.session.requestedEmail = this.email,
                         
@@ -153,7 +150,10 @@
                     this.message = data.message;
                     this.statusCode = data.statusCode; 
                     this.setMessageStyle(this.statusCode);
-                    this.logIn(data.authenticated);
+                    
+                    if (data.user.status == 'active') {
+                        this.renderPasscodeSection = true;  
+                    }  
                 })
                 .catch(error => {
                     console.log(error);
