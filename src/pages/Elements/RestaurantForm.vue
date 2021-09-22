@@ -10,7 +10,6 @@
         </label>
       </div>
 
-
     <LanguageDropdownRestaurantForm @clicked="selectLanguage($event.selectedLanguage)" :languages="availableLanguages"/>
     </div>
 
@@ -32,10 +31,8 @@
       <label class="block text-gray-700 text-xs mb-2 uppercase" for="input">
         Name
       </label>
-      <div v-for="language in selectedLanguages" :key="language.id">
-        <label for="languageName" class="block text-gray-700 text-xs mb-2 uppercase"> {{ language }}</label>
-        <input v-model="restaurantNames[language]" name="languageName" type="text" class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-      </div>
+        <label for="languageName" class="block text-gray-700 text-xs mb-2 uppercase"> Hrvatski </label>
+        <input v-model="restaurantName" name="languageName" type="text" class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     
     <hr>
@@ -76,7 +73,7 @@ export default {
       languageNumber: 1,
       selectedLanguage: {},
       selectedLanguages: [ 'Hrvatski' ],
-      restaurantNames: { 'Hrvatski': '' },
+      restaurantName: "",
       restaurantFooters: { 'Hrvatski': '' }
     }
   },
@@ -91,7 +88,6 @@ export default {
 
   methods: {
     selectLanguage(language) {
-      // console.log(language);
       this.addNew(language);
     }, 
     
@@ -100,7 +96,7 @@ export default {
 
       this.$service.API.post('/restaurant/new', {
         currency: this.currency,
-        names: JSON.stringify(this.restaurantNames),
+        name: this.restaurantName,
         footers: JSON.stringify(this.restaurantFooters),
         languages: JSON.stringify(this.selectedLanguages),
         userId: JSON.stringify(this.$service.session.user_id)
@@ -116,14 +112,12 @@ export default {
     },
 
     addNew(selectedLanguage) {
-      // console.log(selectedLanguage);
       let languageName = selectedLanguage.language_name;
 
       if (!this.selectedLanguages.includes(languageName)) {
         
         // Add to array and to all objects
         this.selectedLanguages.push(languageName);
-        this.restaurantNames[languageName] = "";
         this.restaurantFooters[languageName] = "";
       } else {
 
@@ -131,7 +125,6 @@ export default {
         let selectedLang = this.selectedLanguages.filter(language => language !== languageName);
         this.selectedLanguages = selectedLang;
 
-        delete this.restaurantNames.languageName;
         delete this.restaurantFooters.languageName;
       }
     },
