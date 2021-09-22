@@ -84,7 +84,7 @@
           <br>
           <div class="flex-inital justify-end space-x-2">
             <input class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" type="file" @change="onFileSelected">
-            <button v-if="presignedUrl" class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="uploadPicture">Upload Picture</button>
+            <button v-if="fileSelected" class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="uploadPicture">Upload Picture</button>
 
             <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Social', undefined)">Socials</button>
             <button class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="showNewModal(restaurant.id, 'Style', undefined)">Styles</button>
@@ -473,28 +473,20 @@ export default {
     // Uploading Images
     onFileSelected(event) {
       this.fileSelected = event.target.files[0];
-      this.$service.API.post('/getPresignedUrl', {
-        userId: this.$service.session.user_id
-      })
-      .then(response => response.data)
-      .then(data => {
-        this.presignedUrl = data.presignedUrl;
-        console.log(this.presignedUrl);
-        console.log(this.fileSelected);
-      });
     },
 
 
     uploadPicture() {
-      var formData = new FormData();
+      let formData = new FormData();
       formData.append("image", this.fileSelected);
-      formData.append("url", this.presignedUrl);
 
       this.$service.API.post('/putPicture', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
       })
+      .then(response => response.data)
+      .then(data => console.log(data));
     }
   },
 }
