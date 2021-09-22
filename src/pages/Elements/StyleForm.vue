@@ -11,8 +11,8 @@
                 </label>
                 
                 <input class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                name="input"
-                v-model="style.value"
+                    name="input"
+                    v-model="style.value"
                 />
             </div>           
         </div>

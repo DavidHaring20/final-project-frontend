@@ -75,13 +75,29 @@
               @close="hideModal"
             />
           </div>
+
+          <div v-else-if="modalTitle == 'EditRestaurantName'">
+            <RestaurantFormRename 
+            :restaurantId="parentId"
+            :restaurantNameProp="thing"
+            @close="hideModal"
+            @updated-restaurant-name="updateRestaurantName($event.updatedRestaurantName)"/>
+          </div>
         </Modal>
 
       <div class="mb-auto min-h-screen">
         <!-- Restaurant name, add new category and export to JSON -->
         <div class="px-6 text-5xl font-medium md:text-right font-sans tracking-tighter capitalize subpixel-antialiased text-gray-600 sm:text-center">
-          {{ restaurant.translations[0].name }}
-          <br>
+          
+          <div class="flex flex-row justify-end mt-4">
+            <div class="self-center mb-4">
+              <Button btnText="Edit" @clicked="showNewModal(restaurant.id, 'EditRestaurantName', restaurant.translations[0].name)" class="mr-4 content-center items-center self-center"/>
+            </div>
+            <div class="self-center">
+              {{ restaurant.translations[0].name }}
+            </div>
+          </div>
+          
           <div class="flex-inital justify-end space-x-2">
             <input class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" type="file" @change="onFileSelected">
             <button v-if="fileSelected" class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="uploadPicture">Upload Picture</button>
@@ -154,7 +170,7 @@ import FooterForm from './Elements/FooterForm.vue'
 import FileSaver from 'file-saver'
 import StyleForm from './Elements/StyleForm.vue'
 import SocialForm from './Elements/SocialForm.vue'
-import axios from 'axios'
+import RestaurantFormRename from './Elements/RestaurantFormRename.vue'
 
 export default {
   name: 'Restaurant',
@@ -169,7 +185,8 @@ export default {
     ItemForm,
     FooterForm,
     StyleForm,
-    SocialForm
+    SocialForm,
+    RestaurantFormRename
   },
 
   data() {
@@ -182,13 +199,12 @@ export default {
       modalTitle: String,
       type: String,
       numberOfCategories: 0,
-      fileSelected: null,
-      presignedUrl: ""
+      fileSelected: null
     }     
   },
 
   mounted() {
-    this.getData()
+    this.getData();
   },
 
   computed: {
@@ -296,6 +312,11 @@ export default {
         });
     },
 
+    // Save newly updated restaurant name
+    updateRestaurantName(updateRestaurantName) {
+      this.restaurant.translations[0].name = updateRestaurantName;
+    },
+
     //Find the index of the translation that has the language code == selected language
     languageIndex(translations, language) {
       const index = translations.findIndex(item => item.language_code === language);
@@ -366,8 +387,6 @@ export default {
       this.thing = null;
       this.modalTitle = null;
       this.type = null;
-
-      console.log('Set Everything to null');
       this.item = null;
     },
 
