@@ -302,7 +302,6 @@ export default {
 
   methods: {
     getData() {
-      console.log("Catch");
       this.$service.API.get("/restaurant/show/" + this.$route.params.restaurantId)
         .then(response => {
           this.restaurant = response.data.data.restaurant;
@@ -456,7 +455,6 @@ export default {
     },
 
     addNewItem(item, categoryId) {
-      console.log('AddNewItem');
       let catId = this.getIndexById(categoryId, this.restaurant.categories);
       let subId = this.getIndexById(item.subcategory_id, this.restaurant.categories[catId].subcategories);
 
