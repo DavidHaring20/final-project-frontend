@@ -101,14 +101,19 @@ export default {
         languages: JSON.stringify(this.selectedLanguages),
         userId: JSON.stringify(this.$service.session.user_id)
       })
-      .then(response => {
-        console.log(response);
-        self.$nextTick(() => {
-          self.$emit('restaurant-create', response.data.data.restaurant);
-        });
-      }, response => {
-        console.log(response);
-      });
+      .then(response => response.data)
+      .then(data => {
+        console.log(data);
+        console.log(this.restaurantName);
+        if (data.error) {
+          this.$toastr.error(data.error, 'Warning');
+        } else {
+          self.$nextTick(() => {
+            self.$emit('restaurant-create', data.data.restaurant);
+          });
+          this.$toastr.success(`Restaurant ${this.restaurantName} is created !`, 'Success');
+        }
+      })
     },
 
     addNew(selectedLanguage) {
