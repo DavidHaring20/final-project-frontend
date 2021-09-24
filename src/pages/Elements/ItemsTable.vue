@@ -45,7 +45,9 @@ export default {
 
   data() {
     return {
-      itemArray: []
+      itemArray: [],
+      positionsArray: [],
+      idsArray: []
     }
   },
 
@@ -70,10 +72,10 @@ export default {
     checkEnd(evt) {
       console.log(evt);
 
-      // this.positionsArray = this.itemsArray.map(item => item.position);
-      // this.idsArray = this.itemsArray.map(item => item.id);
+      this.positionsArray = this.itemArray.map(item => item.position);
+      this.idsArray = this.itemArray.map(item => item.id);
       
-      // this.updateOrder(this.itemsArray[evt.newIndex].id);
+      this.updateOrder(this.itemArray[evt.newIndex].id);
     },
 
     updateOrder(id) {
