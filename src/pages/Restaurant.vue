@@ -42,7 +42,6 @@
               :type="type"
               @item-create="addNewItem($event.item, $event.categoryId)"
               @item-update="updateItem($event.item, $event.categoryId)"
-              @refresh-items="getData()"
               @close="hideModal"
             />
           </div>

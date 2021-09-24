@@ -142,9 +142,6 @@ props: {
           });
         }
       })
-      .then(response => {
-        this.$emit('refresh-items');
-      })
       .catch(error => {
         console.log(this.priceRequiredMessage);
       });

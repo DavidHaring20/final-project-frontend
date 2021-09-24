@@ -70,8 +70,6 @@ export default {
     },
 
     checkEnd(evt) {
-      console.log(evt);
-
       this.positionsArray = this.itemArray.map(item => item.position);
       this.idsArray = this.itemArray.map(item => item.id);
       
@@ -88,6 +86,14 @@ export default {
       .then(data => {
         console.log(data);
       });
+    }
+  },
+
+  watch: {
+    items: {
+      handler: function(newVal) {
+        this.itemArray = newVal;
+      }
     }
   }
 }
