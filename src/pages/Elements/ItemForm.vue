@@ -54,7 +54,6 @@
           </button>
         </div>
       </div>
-      <span v-if="priceRequiredMessage" class="border-solid border-2 rounded border-red-600 text-red-400 p-3.5"> {{ priceRequiredMessage }} </span>
       <label class="block text-gray-700 text-xs mb-2 uppercase mt-6" for="input">
         Price
       </label>
@@ -108,8 +107,7 @@ props: {
     return {
       prices: undefined,
       itemAmounts: undefined,
-      createdAmount: {},
-      priceRequiredMessage: ""
+      createdAmount: {}
     }
   },
 
@@ -135,7 +133,10 @@ props: {
         amounts: JSON.stringify(this.itemAmounts)
       })
       .then(response => {
-        this.priceRequiredMessage = response.data.message;
+        if (response.data.message) {
+          this.$toastr.error(response.data.message, 'Warning');
+        }
+        console.log(response);
         if (response.data.data.newItem) {
           self.$nextTick(() => {
             self.$emit('item-create', {item: response.data.data.newItem, categoryId: response.data.data.categoryId});
@@ -143,7 +144,7 @@ props: {
         }
       })
       .catch(error => {
-        console.log(this.priceRequiredMessage);
+        console.log(error);
       });
     },
 
@@ -157,11 +158,13 @@ props: {
         amounts: this.itemAmounts
       })
       .then(response => {
-        this.priceRequiredMessage = response.data.message;
+        if (response.data.message) {
+          this.$toastr.error(response.data.message, 'Warning');
+        }
         self.$emit('item-update', {item: response.data.data.updatedItem, categoryId: response.data.data.categoryId});
       })
       .catch(error => {
-        console.log(this.priceRequiredMessage);
+        console.log(error);
       });
     },
 
