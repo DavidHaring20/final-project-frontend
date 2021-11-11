@@ -157,11 +157,13 @@ export default {
       this.fileSelected = event.target.files[0];
       
       console.log(this.fileSelected);
+      console.log(this.$service.session.user_id);
     },
 
     uploadFile() {
       let formData = new FormData();
       formData.append("file", this.fileSelected);
+      formData.append("userID", this.$service.session.user_id);
 
       // API call
       this.$service.API.post('/import-json', formData, {
