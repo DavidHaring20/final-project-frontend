@@ -119,6 +119,9 @@ export default {
         .then(response => {
           let index = this.getIndexById(id, this.restaurants);
           this.restaurants.splice(index, 1);
+          if (response.data.message) {
+            this.$toastr.success('Restaurant Deleted', 'Success');
+          }
         })
         .catch(err => {
           console.log(err);
@@ -174,6 +177,12 @@ export default {
       .then(response => response.data)
       .then(data => {
         console.log(data);
+        if (data.errorMessage) {
+          this.$toastr.error(data.errorMessage, 'Error');
+        } else {
+          this.addNewRestaurant(data.newRestaurant);
+          this.$toastr.success(data.message, 'Success');
+        }
       })
     }
   }
