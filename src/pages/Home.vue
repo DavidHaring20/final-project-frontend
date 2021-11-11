@@ -2,15 +2,30 @@
   <div>
     <div v-if="restaurants">
       <Modal :width="500" :scrollable="true" height="auto" name="modal">
-        <RestaurantForm
-          @restaurant-create="addNewRestaurant"
-          @close="hideModal"/>
+        <div v-if="modalTitle == 'NewRestaurant'">
+          <RestaurantForm
+            @restaurant-create="addNewRestaurant"
+            @close="hideModal"/>
+        </div>
+
+        <div v-else-if="modalTitle == 'ImportJSON'">
+          <div class="px-16 py-8">
+            <h1 class="mb-6">Input your file here</h1>
+
+            <input class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" type="file" @change="onFileSelected">
+            <button v-if="fileSelected" class="flex-shrink-0 bg-gray-300 hover:bg-gray-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500" @click="uploadFile">Upload File</button>
+          </div>
+        </div>
       </Modal>
 
       <div class="justify-items-stretch">
         <div class="py-5 px-10 flex">
           List of businesses
-          <Button btnText="Add" @clicked="showNewModal()" class="px-2"/>
+          <Button btnText="Add" @clicked="showNewModal('NewRestaurant')" class="px-2"/>
+        </div>
+
+        <div class="py-5 px-10 flex">
+            <button @click="showNewModal('ImportJSON')" class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-3 rounded text-xs transition-colors duration-500">Import Restaurant From JSON File</button>
         </div>
 
         <div v-for="restaurant in restaurants" :key="restaurant.id" class="px-10 py-4 flex">
@@ -37,7 +52,9 @@ export default {
     return {
       restaurants: undefined,
       selectedLanguage: String,
-      availableLanguages: undefined
+      availableLanguages: undefined,
+      modalTitle: undefined,
+      fileSelected: undefined
     }
   },
 
@@ -52,6 +69,10 @@ export default {
   },
 
   methods: {
+    log() {
+      console.log("Click on Import");
+    },
+
     getRestaurantList() {
       this.$service.API.get("/restaurants/" + this.$service.session.user_id)
         .then(response => {
@@ -72,7 +93,9 @@ export default {
         });
     },
 
-    showNewModal() {
+    showNewModal(title) {
+      this.modalTitle = title;
+
       this.$modal.show('modal');
     },
 
@@ -127,6 +150,29 @@ export default {
 
     showLanguagesModal() {
       this.$modal.show('langModal');
+    },
+
+    // Methods for Importing JSON file
+    onFileSelected(event) {
+      this.fileSelected = event.target.files[0];
+      
+      console.log(this.fileSelected);
+    },
+
+    uploadFile() {
+      let formData = new FormData();
+      formData.append("file", this.fileSelected);
+
+      // API call
+      this.$service.API.post('/import-json', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.data)
+      .then(data => {
+        console.log(data);
+      })
     }
   }
 }
