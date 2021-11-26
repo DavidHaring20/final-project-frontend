@@ -1,58 +1,73 @@
 <template>   
-    <div>
-        <div class="h-screen w-screen overflow-x-hidden overflow-y-hidden absolute z-0">
-            <div class="relative bg-gray-400" style="top: -50%; left: 0px; height: 100%; width: 110%; transform: rotate(8deg)"></div>
-            <div class="relative bg-gray-400" style="top: -160%; left: 0px; height: 100%; width: 110%;"></div>
-        </div>
+    <div class="flex flex-row">
 
-        <div class="z-10 h-screen relative flex flex-col justify-center items-center">
+        <!-- Left side - Login form -->
+        <div class="w-full">
+            <!-- Image -->
+            <img :src="imgLeft" alt="Menu picture." class="w-full" style="height: 700px;">
 
-            <div class="border-solid bg-white p-20 text-center border-gray-600 shadow-xl" style="border-width: 4px; border-radius: 10%">
-            <div class="h-32 mb-8 justify-center flex">
-                <p v-if="message" v-bind:class="messageStyle" style="max-width: 35ch; max-height: 5rem; justify-items:center; align-self-center"> {{ message }}</p>
-            </div>
-                <div class="mb-8">
-                    <div class="flex flex-row mb-5">
-                        <div>
-                            <p class="pr-5 font-bold">E-mail: </p>
+            <!-- Transparent Layer -->
+
+            <!-- Login Form -->
+            <!-- <div class="z-10 h-screen relative flex flex-col justify-center items-center z-10">
+                <div class="border-solid bg-white p-20 text-center border-gray-600 shadow-xl" style="border-width: 4px; border-radius: 10%">
+                <div class="h-32 mb-8 justify-center flex">
+                    <p v-if="message" v-bind:class="messageStyle" style="max-width: 35ch; max-height: 5rem; justify-items:center; align-self-center"> {{ message }}</p>
+                </div>
+                    <div class="mb-8">
+                        <div class="flex flex-row mb-5">
+                            <div>
+                                <p class="pr-5 font-bold">E-mail: </p>
+                            </div>
+                            <div>
+                                <input
+                                    @keyup.enter="requestVerificationCode()"
+                                    v-model="email"
+                                    type="text" 
+                                    name="e-mail"
+                                    class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                >
+                            </div>
                         </div>
-                        <div>
-                            <input
-                                @keyup.enter="requestVerificationCode()"
-                                v-model="email"
-                                type="text" 
-                                name="e-mail"
-                                class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            >
+                        
+                        <div v-if="renderPasscodeSection">
+                            <button 
+                                @click="requestVerificationCode()"
+                                class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
+                            >Send Verification Code</button>
                         </div>
                     </div>
                     
                     <div v-if="renderPasscodeSection == false">
+                        <div class="flex flex-row mb-5">
+                                <p class="pr-5 font-bold">Passcode: </p>
+                                <input 
+                                    @keyup.enter="authenticate()"
+                                    v-model="passcode"
+                                    type="text"
+                                    name="passcode" 
+                                    class="shadow appearance-none border rounded ml-4 w-59 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                >
+                        </div> 
+
                         <button 
-                            @click="requestVerificationCode()"
+                            @click="authenticate()"
                             class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
-                        >Send Verification Code</button>
+                        >Log In</button>
                     </div>
                 </div>
+            </div> -->
 
-                <div v-if="renderPasscodeSection">
-                    <div class="flex flex-row mb-5">
-                            <p class="pr-5 font-bold">Passcode: </p>
-                            <input 
-                                @keyup.enter="authenticate()"
-                                v-model="passcode"
-                                type="text"
-                                name="passcode" 
-                                class="shadow appearance-none border rounded ml-4 w-59 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            >
-                    </div> 
-
-                    <button 
-                        @click="authenticate()"
-                        class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
-                    >Log In</button>
-                </div>
+            <!-- Bottom text -->
+            <div class="w-full">
+                <p class="text-lg h-full font-bold ml-12 mt-4">Powered by Exevio Ltd.</p>
             </div>
+        </div>
+
+        <!-- Right side - Introduction text -->
+        <div class="w-full">
+            <p class="text-2xl text-center font-bold mt-4 mb-3">PocketMenu</p>
+            <img :src="imgRight" alt="Menu picture." class="w-full" style="height: 700px;"> 
         </div>
     </div>
 </template>
@@ -71,7 +86,9 @@
                 user_id: 0,
                 auth_token: 0,
                 user_role: "",
-                renderPasscodeSection: false
+                renderPasscodeSection: false,
+                imgLeft: require('../../assets/images/menu1.jpg'),
+                imgRight: require('../../assets/images/menu2.jpg')
             }
         },
 
