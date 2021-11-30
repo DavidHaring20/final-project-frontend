@@ -4,8 +4,8 @@
         <!-- Left side - Login form -->
         <div class="w-full">
             <!-- Transparent Layer -->
-            <div class="ml-24 w-4/12 absolute" style="height: 700px;">
-                <div class="mt-36 flex flex-col bg-white p bg-opacity-70 rounded-lg">
+            <div class="ml-28 w-4/12 absolute" style="height: 700px;">
+                <div class="mt-36 flex flex-col bg-white bg-opacity-70 rounded-lg">
 
                     <!-- Login -->
                     <p class="text-3xl text-center font-bold mt-12">PocketMenu Login</p>
@@ -40,7 +40,7 @@
                             <div class="ml-5">
                                 <button 
                                     @click="requestVerificationCode()"
-                                    class="bg-black px-5 w-60 tracking-wider py-2 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
+                                    class="bg-black px-5 w-60 font-light tracking-wider py-2 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
                                 >Send Verification Code</button>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
 
                             <button 
                                 @click="authenticate()"
-                                class="ml-5 bg-black px-5 w-60 tracking-wider py-1.5 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
+                                class="ml-5 bg-black px-5 w-60 font-light tracking-wider py-1.5 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
                             >Log In</button>
                         </div>
                         <!-- </div> -->
@@ -79,7 +79,21 @@
 
         <!-- Right side - Introduction text -->
         <div class="w-full">
+
+            <!-- Title -->
             <p class="text-2xl text-center font-bold mt-4 mb-3">PocketMenu</p>
+
+            <!-- Transparent Layer -->
+            <div class="ml-28 w-4/12 absolute" style="height: 700px;">
+                <div class="mt-20 py-24 flex flex-col bg-white bg-opacity-70 rounded-lg">
+                    <p class="px-12 py-3 text-3xl font-light tracking-wider">PocketMenu offers easy and efficient way of managing restaurant’s, 
+                        fast food’s or caffe bar menu. We provide simple, easy to use, 
+                        but powerful way of changing, creating and keeping your menu up to date.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Image -->
             <img :src="imgRight" alt="Menu picture." class="w-full" style="height: 700px;"> 
         </div>
     </div>
