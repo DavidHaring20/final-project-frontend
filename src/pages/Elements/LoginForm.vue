@@ -8,57 +8,62 @@
                 <div class="mt-36 flex flex-col bg-white p bg-opacity-70">
 
                     <!-- Login -->
-                    <p class="text-2xl text-center font-bold mt-12">PocketMenu Login</p>
+                    <p class="text-3xl text-center font-bold mt-12">PocketMenu Login</p>
 
                     <!-- Login Form -->
-                    <div>
+                    <div class="flex flex-col w-full">
                         <!-- <div class="flex flex-col mt-24 justify-content content-center" style=""> -->
+                        
+                        <!-- Display notification message -->
                         <div>
                             <p v-if="message" v-bind:class="messageStyle" style="max-width: 35ch; max-height: 5rem; justify-items:center; align-self-center"> {{ message }}</p>
                         </div>
-                            <div class="mb-8">
-                                <div class="flex flex-row mb-5">
-                                    <div>
-                                        <p class="pr-5 font-bold">E-mail: </p>
-                                    </div>
-                                    <div>
-                                        <input
-                                            @keyup.enter="requestVerificationCode()"
-                                            v-model="email"
-                                            type="text" 
-                                            name="e-mail"
-                                            class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        >
-                                    </div>
+
+                        <!-- Section for email and verification code request -->
+                        <div class="mb-8 mt-20 ml-32">
+                            <div class="">
+                                <div>
+                                    <p class="mb-3 text-lg font-bold">E-mail </p>
                                 </div>
-                                
-                                <div v-if="renderPasscodeSection">
-                                    <button 
-                                        @click="requestVerificationCode()"
-                                        class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
-                                    >Send Verification Code</button>
+                                <div>
+                                    <input
+                                        @keyup.enter="requestVerificationCode()"
+                                        v-model="email"
+                                        type="text" 
+                                        name="e-mail"
+                                        class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    >
                                 </div>
                             </div>
                             
-                            <div v-if="renderPasscodeSection == false">
-                                <div class="flex flex-row mb-5">
-                                        <p class="pr-5 font-bold">Passcode: </p>
-                                        <input 
-                                            @keyup.enter="authenticate()"
-                                            v-model="passcode"
-                                            type="text"
-                                            name="passcode" 
-                                            class="shadow appearance-none border rounded ml-4 w-59 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        >
-                                </div> 
-
+                            <div v-if="renderPasscodeSection">
                                 <button 
-                                    @click="authenticate()"
+                                    @click="requestVerificationCode()"
                                     class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
-                                >Log In</button>
+                                >Send Verification Code</button>
                             </div>
                         </div>
-                    <!-- </div> -->
+                            
+                        <!-- Section for Passcode input and Login Button -->
+                        <div v-if="renderPasscodeSection == false">
+                            <div class="mt-4 ml-32">
+                                    <p class="mb-3 text-lg font-bold">Passcode </p>
+                                    <input 
+                                        @keyup.enter="authenticate()"
+                                        v-model="passcode"
+                                        type="text"
+                                        name="passcode" 
+                                        class="shadow appearance-none border rounded w-60 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    >
+                            </div> 
+
+                            <button 
+                                @click="authenticate()"
+                                class="bg-gray-200 ml-3 w-full px-3 py-2 rounded-md text-gray-500 hover:bg-gray-300 hover:text-white transition-colors duration-500"
+                            >Log In</button>
+                        </div>
+                        <!-- </div> -->
+                    </div>
                 </div>
             </div>
             
