@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind component;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: Roboto;
+        font-weight: 300;
+        src: url(/fonts/Roboto-Light.ttf) format('ttf');
+    }
+    @font-face {
+        font-family: Roboto;
+        font-weight: 700;
+        src: url(/fonts/Roboto-Bold.ttf) format('ttf');
+    }
+}

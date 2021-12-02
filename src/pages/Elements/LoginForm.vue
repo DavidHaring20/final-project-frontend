@@ -1,4 +1,5 @@
 <template>   
+<!-- style="font-family: Roboto" -->
     <div class="flex flex-row">
 
         <!-- Left side - Login form -->
@@ -14,16 +15,18 @@
                     <div class="flex flex-col w-full">
                         <!-- <div class="flex flex-col mt-24 justify-content content-center" style=""> -->
                         
-                        <!-- Display notification message -->
-                        <div>
-                            <p v-if="message" v-bind:class="messageStyle" style="max-width: 35ch; max-height: 5rem; justify-items:center; align-self-center"> {{ message }}</p>
-                        </div>
 
                         <!-- Section for email and verification code request -->
-                        <div class="flex flex-col mb-8 mt-20 ml-28">
+                        <div class="flex flex-col mt-8 ml-28 mb-4">
                             <div class="">
+                                
+                                <!-- Display notification message -->
                                 <div>
-                                    <p class="mb-3 text-lg font-bold">E-mail </p>
+                                    <p v-if="message" v-bind:class="messageStyle" style="max-width: 32ch; font-family: Roboto; font-weight: 300; font-size: 18px;"> {{ message }}</p>
+                                </div>
+
+                                <div>
+                                    <p class="mb-3 text-lg" style="font-family: Roboto; font-weight: 700;">E-mail </p>
                                 </div>
                                 <div>
                                     <input
@@ -40,27 +43,29 @@
                             <div class="ml-5">
                                 <button 
                                     @click="requestVerificationCode()"
-                                    class="bg-black px-5 w-60 font-light tracking-wider py-2 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
+                                    class="bg-black px-5 w-60 tracking-wider py-2 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500" 
+                                    style="font-family: Roboto; font-weight: 300;"
                                 >Send Verification Code</button>
                             </div>
                         </div>
                             
                         <!-- Section for Passcode input and Login Button -->
-                        <div v-if="renderPasscodeSection == false" class="mt-4 ml-28 pb-10">
+                        <div v-if="renderPasscodeSection == true" class="mt-4 ml-28 pb-10">
                             <div class="mb-3">
-                                    <p class="mb-3 text-lg font-bold">Passcode </p>
+                                    <p class="mb-3 text-lg" style="font-family: Roboto; font-weight: 700;">Passcode </p>
                                     <input 
                                         @keyup.enter="authenticate()"
                                         v-model="passcode"
                                         type="text"
                                         name="passcode" 
-                                        class="shadow appearance-none border-black border-2 rounded w-72 h-8 py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        class="shadow appearance-none border-black border-2 rounded w-72 h-8 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     >
                             </div> 
 
                             <button 
                                 @click="authenticate()"
-                                class="ml-5 bg-black px-5 w-60 font-light tracking-wider py-1.5 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
+                                class="ml-5 bg-black px-5 w-60 tracking-wider py-1.5 rounded-md text-white hover:bg-white hover:text-black transition-colors duration-500"
+                                style="font-family: Roboto; font-weight: 300;"
                             >Log In</button>
                         </div>
                         <!-- </div> -->
@@ -122,10 +127,11 @@
         methods: {
             setMessageStyle(code) {
                 if (code == 200) {
-                    this.messageStyle = "border-solid border-2 rounded font-semibold border-green-600 text-green-400 p-3.5 mb-4";
+                    // max-h-20
+                    this.messageStyle = "border-solid border-2 rounded border-green-600 text-green-400 bg-white text-center p-1.5 mb-4";
                     // this.renderPasscodeSection = true;
                 } else {
-                    this.messageStyle = "border-solid border-2 rounded font-semibold border-red-600 text-red-400 p-3.5 mb-4";
+                    this.messageStyle = "border-solid border-2 rounded border-red-600 text-red-400 bg-white text-center p-1.5 mb-4";
                 }
             },
 
@@ -138,8 +144,7 @@
                     console.log(this.$service.session);
                     this.$router.push({ name: 'Home'});
                 } else {
-                    
-                    this.messageStyle = "border-solid border-2 rounded font-semibold border-red-600 text-red-400 p-3.5 mb-4";
+                    this.messageStyle = "border-solid border-2 rounded border-red-600 text-red-400 bg-white text-center p-1.5 mb-4"
                 }
             },
 
