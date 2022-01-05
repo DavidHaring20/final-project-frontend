@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             
-                            <!-- v-if  -->
+                            <div v-if="mode == 'notdevelopment'"></div>
                             <div class="ml-5">
                                 <button 
                                     @click="requestVerificationCode()"
@@ -50,7 +50,8 @@
                         </div>
                             
                         <!-- Section for Passcode input and Login Button -->
-                        <div v-if="renderPasscodeSection == true" class="mt-4 ml-28 pb-10">
+                        <!-- <div v-if="renderPasscodeSection == true" class="mt-4 ml-28 pb-10"> -->
+                        <div v-if="mode == 'development'" class="mt-4 ml-28 pb-10">
                             <div class="mb-3">
                                     <p class="mb-3 text-lg" style="font-family: Roboto; font-weight: 700;">Passcode </p>
                                     <input 
@@ -120,7 +121,8 @@
                 user_role: "",
                 renderPasscodeSection: false,
                 imgLeft: require('../../assets/images/menu1.jpg'),
-                imgRight: require('../../assets/images/menu2.jpg')
+                imgRight: require('../../assets/images/menu2.jpg'),
+                mode: "development"
             }
         },
 
