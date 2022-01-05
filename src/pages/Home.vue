@@ -18,7 +18,8 @@
         </div>
       </Modal>
 
-      <div class="justify-items-stretch">
+      <!-- Old look -->
+      <!-- <div class="justify-items-stretch">
         <div class="py-5 px-10 flex">
           List of businesses
           <Button btnText="Add" @clicked="showNewModal('NewRestaurant')" class="px-2"/>
@@ -34,7 +35,43 @@
           </button>
           <Button btnText="Delete" @clicked="alert(restaurant.id, 'restaurant')" class="pl-2"/>
         </div>
+      </div> -->
+
+      <!-- New look -->
+      <!-- Home Page whole layer -->
+      <div class="w-full flex justify-center mt-32">
+
+        <!-- Layer for reduced width -->
+        <div class="w-11/12 flex flex-row ">
+          
+          <!-- Container for Actions -->
+          <div class="w-5/12 bg-red-200 flex flex-col justify-center" style="border-right: 2px solid black;">
+            <div class="flex justify-center mb-10">
+              <p>Actions</p>
+            </div>
+
+            <div class="flex justify-center">
+              <button class="border-2 border-green-500 w-2/5 mb-6">Create New Business</button>
+            </div>
+
+            <div class="flex justify-center">
+              <button class="border-2 border-red-500 w-2/5 mb-6">Delete Business</button>
+            </div>
+
+            <div class="flex justify-center">
+              <button class="border-2 border-purple-500 w-2/5 "> Import Business from JSON File</button>
+            </div>
+          </div>
+
+          <!-- Container for List of Businesses -->
+          <div class="w-full bg-yellow-200">
+            
+          </div>
+        </div>
       </div>
+
+
+
     </div>
   </div>
 </template>

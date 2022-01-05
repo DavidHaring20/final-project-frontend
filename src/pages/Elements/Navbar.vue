@@ -32,7 +32,7 @@
     </nav>
 
     <!-- Second row - becomes visible only to admin's if they click on arrow -->
-    <div v-if="clicked === true" class="mt-2 mb-10 w-full flex flex-row" style="font-family: Roboto; font-weight: 300;">
+    <div v-if="clicked === true" class="mb-10 w-full flex flex-row" style="font-family: Roboto; font-weight: 300;">
         <button @click="goToLanguageAdministration()" class="py-2 w-full border border-white text-white text-center bg-black hover:bg-white hover:text-black transition-colors duration-300">Language Administration</button>
         <button @click="goToStyleAdministration()" class="w-full border border-white text-white text-center bg-black hover:bg-white hover:text-black transition-colors duration-300">Style Administration</button>
         <button @click="goToSlugOrIdAdministration()" class="w-full border border-white text-white text-center bg-black hover:bg-white hover:text-black transition-colors duration-300">Slug/ID Administration</button>
