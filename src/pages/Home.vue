@@ -45,29 +45,44 @@
         <div class="w-11/12 flex flex-row ">
           
           <!-- Container for Actions -->
-          <div class="w-5/12 bg-red-200 flex flex-col justify-center" style="border-right: 2px solid black;">
+          <div class="w-5/12 flex flex-col justify-center" style="border-right: 2px solid black;">
+            <!-- Header for Actions -->
             <div class="flex justify-center mb-10">
               <p>Actions</p>
             </div>
 
             <div class="flex justify-center">
-              <button class="border-2 border-green-500 w-2/5 mb-6">Create New Business</button>
+              <button @click="showNewModal('NewRestaurant')" 
+              class="border-2 rounded border-green-500 w-2/5 mb-6 py-1"
+              >Create New Business
+              </button>
             </div>
 
             <div class="flex justify-center">
-              <button class="border-2 border-red-500 w-2/5 mb-6">Delete Business</button>
+              <button class="border-2 rounded border-red-500 w-2/5 mb-6 py-1">Delete Business</button>
             </div>
 
             <div class="flex justify-center">
-              <button class="border-2 border-purple-500 w-2/5 "> Import Business from JSON File</button>
+              <button class="border-2 rounded border-purple-500 w-2/5 py-1"> Import Business from JSON File</button>
             </div>
           </div>
 
           <!-- Container for List of Businesses -->
           <div class="w-full bg-yellow-200">
-            
+            <!-- Header for Businesses -->
+            <div class="ml-36 mb-10">
+              <p>Businesses</p>
+            </div>
+
+            <!-- List of businesses -->
+            <div v-for="restaurant in restaurants" :key="restaurant.id" class="flex flex-col ml-24">
+              <button @click="openRestaurant(restaurant.id)" class="border-2 border-black rounded py-1 w-44 mb-6">
+                {{ restaurant.translations[0].name }}
+              </button>
+              <!-- <Button btnText="Delete" @clicked="alert(restaurant.id, 'restaurant')" class="pl-2"/> -->
+            </div>
           </div>
-        </div>
+        </div>  
       </div>
 
 
@@ -131,6 +146,7 @@ export default {
     },
 
     showNewModal(title) {
+      console.log("New restaurant modal.");
       this.modalTitle = title;
 
       this.$modal.show('modal');
