@@ -63,12 +63,12 @@
             </div>
 
             <div class="flex justify-center">
-              <button class="border-2 rounded border-purple-500 w-2/5 py-1"> Import Business from JSON File</button>
+              <button @click="showNewModal('ImportJSON')" class="border-2 rounded border-purple-500 w-2/5 py-1"> Import Business from JSON File</button>
             </div>
           </div>
 
           <!-- Container for List of Businesses -->
-          <div class="w-full bg-yellow-200">
+          <div class="w-full">
             <!-- Header for Businesses -->
             <div class="ml-36 mb-10">
               <p>Businesses</p>
@@ -76,10 +76,10 @@
 
             <!-- List of businesses -->
             <div v-for="restaurant in restaurants" :key="restaurant.id" class="flex flex-col ml-24">
-              <button v-if="deleteMode == false" @click="openRestaurant(restaurant.id)" class="border-2 border-black rounded py-1 w-44 mb-6">
+              <button v-if="deleteMode == false" @click="openRestaurant(restaurant.id)" class="border-2 border-black rounded py-1 w-44 mb-6 hover:bg-black hover:text-white transition-colors duration-500">
                 {{ restaurant.translations[0].name }}
               </button>
-              <button v-if="deleteMode == true" @click="alert(restaurant.id, 'restaurant')" class="border-2 border-black rounded py-1 w-44 mb-6">
+              <button v-if="deleteMode == true" @click="alert(restaurant.id, 'restaurant')" class="border-2 border-red-500 hover:bg-red-500 transition-colors duration-500 rounded py-1 w-44 mb-6">
                 {{ restaurant.translations[0].name }}
               </button>
             </div>
