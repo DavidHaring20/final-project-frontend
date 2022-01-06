@@ -59,7 +59,7 @@
             </div>
 
             <div class="flex justify-center">
-              <button class="border-2 rounded border-red-500 w-2/5 mb-6 py-1">Delete Business</button>
+              <button @click="switchDeleteMode" class="border-2 rounded border-red-500 w-2/5 mb-6 py-1">Delete Business</button>
             </div>
 
             <div class="flex justify-center">
@@ -76,10 +76,12 @@
 
             <!-- List of businesses -->
             <div v-for="restaurant in restaurants" :key="restaurant.id" class="flex flex-col ml-24">
-              <button @click="openRestaurant(restaurant.id)" class="border-2 border-black rounded py-1 w-44 mb-6">
+              <button v-if="deleteMode == false" @click="openRestaurant(restaurant.id)" class="border-2 border-black rounded py-1 w-44 mb-6">
                 {{ restaurant.translations[0].name }}
               </button>
-              <!-- <Button btnText="Delete" @clicked="alert(restaurant.id, 'restaurant')" class="pl-2"/> -->
+              <button v-if="deleteMode == true" @click="alert(restaurant.id, 'restaurant')" class="border-2 border-black rounded py-1 w-44 mb-6">
+                {{ restaurant.translations[0].name }}
+              </button>
             </div>
           </div>
         </div>  
@@ -102,6 +104,7 @@ export default {
 
   data() {
     return {
+      deleteMode: false,
       restaurants: undefined,
       selectedLanguage: String,
       availableLanguages: undefined,
@@ -150,6 +153,17 @@ export default {
       this.modalTitle = title;
 
       this.$modal.show('modal');
+    },
+
+    switchDeleteMode() {
+      console.log("Switch delete mode.");
+      if (this.deleteMode == false) {
+        this.deleteMode = true;
+      } else if (this.deleteMode == true) {
+        this.deleteMode = false;
+      }
+
+      console.log(this.deleteMode);
     },
 
     hideModal() {
